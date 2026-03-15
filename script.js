@@ -173,55 +173,53 @@ function renderFilms(list) {
 }
 
 // --- MODAL DETTAGLI ---
-function openModal(film, index) {
-    editingIndex = index;
-
-    modalContent.innerHTML = `
+function buildFilmModalContent(film, index) {
+    return `
         <div class="favorite-toggle-modal" data-id="${film.id}">
             ${film.preferito ? "⭐" : "☆"}
         </div>
-    
+
         <h2>${film.titolo} (${film.anno})</h2>
 
-       <div class="modal-grid">
-    <div class="modal-grid-item">
-        <h3>Regista</h3>
-        <p>${film.regista.join(", ")}</p>
-    </div>
+        <div class="modal-grid">
+            <div class="modal-grid-item">
+                <h3>Regista</h3>
+                <p>${film.regista.join(", ")}</p>
+            </div>
 
-    <div class="modal-grid-item">
-        <h3>Attori</h3>
-        <p>${film.attori.join(", ")}</p>
-    </div>
+            <div class="modal-grid-item">
+                <h3>Attori</h3>
+                <p>${film.attori.join(", ")}</p>
+            </div>
 
-    <div class="modal-grid-item">
-        <h3>Genere</h3>
-        <p>${film.genere.length > 0 ? film.genere.join(", ") : "Nessuno"}</p>
-    </div>
+            <div class="modal-grid-item">
+                <h3>Genere</h3>
+                <p>${film.genere.length > 0 ? film.genere.join(", ") : "Nessuno"}</p>
+            </div>
 
-    <div class="modal-grid-item">
-        <h3>Categoria</h3>
-        <p>${film.categoria_personale.join(", ")}</p>
-    </div>
-</div>
+            <div class="modal-grid-item">
+                <h3>Categoria</h3>
+                <p>${film.categoria_personale.join(", ")}</p>
+            </div>
+        </div>
 
         <div class="modal-section">
             <h3>Stato</h3>
             <div class="modal-buttons">
                 <button class="stato-btn ${film.stato === "Da vedere" ? "active" : ""}" data-value="Da vedere">Da vedere</button>
-<button class="stato-btn ${film.stato === "Visto" ? "active" : ""}" data-value="Visto">Visto</button>
-<button class="stato-btn ${film.stato === "Rivedere" ? "active" : ""}" data-value="Rivedere">Rivedere</button>
+                <button class="stato-btn ${film.stato === "Visto" ? "active" : ""}" data-value="Visto">Visto</button>
+                <button class="stato-btn ${film.stato === "Rivedere" ? "active" : ""}" data-value="Rivedere">Rivedere</button>
             </div>
         </div>
 
         <div class="modal-section">
             <h3>Valutazione</h3>
             <div id="ratingButtons" class="modal-buttons">
-    ${Array.from({ length: 10 }, (_, i) => {
-        const n = i + 1;
-        return `<button class="rating-btn ${film.valutazione == n ? "active" : ""}" data-value="${n}">${n}</button>`;
-    }).join("")}
-</div>
+                ${Array.from({ length: 10 }, (_, i) => {
+                    const n = i + 1;
+                    return `<button class="rating-btn ${film.valutazione == n ? "active" : ""}" data-value="${n}">${n}</button>`;
+                }).join("")}
+            </div>
         </div>
 
         <div class="modal-section">
@@ -230,48 +228,60 @@ function openModal(film, index) {
         </div>
 
         <div class="modal-buttons">
-    <button onclick="closeModal()">Chiudi</button>
-    <button id="openEditModalBtn">Modifica</button>
-    <button class="danger-btn" onclick="openDeleteModal(${index})">Elimina</button>
-</div>
+            <button onclick="closeModal()">Chiudi</button>
+            <button id="openEditModalBtn">Modifica</button>
+            <button class="danger-btn" onclick="openDeleteModal(${index})">Elimina</button>
+        </div>
     `;
-    
-    // CLICK SULLA STELLINA NEL MODAL
-modalContent.querySelector(".favorite-toggle-modal").onclick = function () {
-    film.preferito = !film.preferito;
-    this.textContent = film.preferito ? "⭐" : "☆";
-    saveToLocalStorage();
-    applyAllFilters();
-};
-    
-// Stato
-const statoButtons = modalContent.querySelectorAll(".stato-btn");
-setupStateButtons(statoButtons, films[editingIndex]);
+}
 
-// Rating
-const ratingButtons = modalContent.querySelectorAll("#ratingButtons .rating-btn");
-ratingButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        ratingButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        films[editingIndex].valutazione = Number(btn.dataset.value);
+function bindFilmModalEvents(film) {
+    const favoriteBtn = modalContent.querySelector(".favorite-toggle-modal");
+    const statoButtons = modalContent.querySelectorAll(".stato-btn");
+    const ratingButtons = modalContent.querySelectorAll(".rating-btn");
+    const commentInput = modalContent.querySelector("#commentInput");
+
+    // Preferito
+    favoriteBtn.onclick = function () {
+        film.preferito = !film.preferito;
+        this.textContent = film.preferito ? "⭐" : "☆";
         saveToLocalStorage();
         applyAllFilters();
+    };
+
+    // Stato
+    setupStateButtons(statoButtons, films[editingIndex]);
+
+    // Rating
+    ratingButtons.forEach(btn => {
+        btn.onclick = () => {
+            ratingButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            films[editingIndex].valutazione = Number(btn.dataset.value);
+            saveToLocalStorage();
+            applyAllFilters();
+        };
     });
-});
 
-// Commento
-const commentInput = modalContent.querySelector("#commentInput");
-commentInput.addEventListener("input", () => {
-    films[editingIndex].commento = commentInput.value;
-    saveToLocalStorage();
-});
-
-    modal.classList.remove("hidden");
+    // Commento
+    commentInput.oninput = () => {
+        films[editingIndex].commento = commentInput.value;
+        saveToLocalStorage();
+    };
 
     document.getElementById("openEditModalBtn").onclick = function () {
         openEditModalForEditing();
     };
+}
+
+function openModal(film, index) {
+    editingIndex = index;
+
+    modalContent.innerHTML = buildFilmModalContent(film, index);
+
+    bindFilmModalEvents(film);
+
+    modal.classList.remove("hidden");
 }
 
 function openEditModalForEditing() {
