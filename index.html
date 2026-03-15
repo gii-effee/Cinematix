@@ -21,11 +21,13 @@
 </header>
 
 <section id="filters">
+
     <!-- RIGA 1 — Ricerca + Aggiungi -->
     <div class="filter-row" id="row-search-add">
         <input type="text" id="searchInput" placeholder="Cerca per titolo, regista, attore" class="search-bar">
         <button id="addFilmBtn" class="filter-btn">Aggiungi film</button>
     </div>
+
     <!-- RIGA 2 — Stato + Preferiti -->
     <div class="filter-row" id="row-stato-preferiti">
         <div id="statoButtons" class="stato-group">
@@ -35,23 +37,28 @@
             <button class="stato-btn" data-value="Rivedere">Rivedere</button>
         </div>
     </div>
+
     <!-- RIGA 3 — Filtri principali -->
     <div class="filter-row" id="row-filtri-principali">
+
         <div id="filtroGenereBlock" class="filter-block">
             <span class="filter-label">Genere</span>
             <div class="filter-block-value" id="filtroGenereValue">Nessuno</div>
             <div class="filter-block-reset hidden" id="resetFiltroGenere">X</div>
         </div>
+
         <div id="filtroRegistaBlock" class="filter-block">
             <span class="filter-label">Regista</span>
             <div class="filter-block-value" id="filtroRegistaValue">Nessuno</div>
             <div class="filter-block-reset hidden" id="resetFiltroRegista">X</div>
         </div>
+
         <div id="filtroCategoriaBlock" class="filter-block">
             <span class="filter-label">Categoria</span>
             <div class="filter-block-value" id="filtroCategoriaValue">Nessuno</div>
             <div class="filter-block-reset hidden" id="resetFiltroCategoria">X</div>
         </div>
+
         <div id="filtroAttoreBlock" class="filter-block">
             <span class="filter-label">Attori</span>
             <div class="filter-block-value" id="filtroAttoreValue">Nessuno</div>
@@ -59,8 +66,10 @@
         </div>
 
     </div>
+
     <!-- RIGA 4 — Ordina + Reset -->
     <div class="filter-row" id="row-ordina-reset">
+
         <div class="sort-wrapper">
             <label for="sortFilter">Ordina:</label>
             <select id="sortFilter">
@@ -70,23 +79,34 @@
                 <option value="valutazione">Valutazione (alta → bassa)</option>
             </select>
         </div>
+
         <button id="resetFilters" class="filter-btn">Reset filtri</button>
+
     </div>
+
 </section>
 
 <!-- MODAL AGGIUNTA FILM -->
 <section id="filmList"></section>
+
+<div id="modal" class="hidden">
+    <div id="modalContent"></div>
+</div>
+
 <div id="editModal" class="hidden" tabindex="0">
     <div id="editModalContent">
+
         <h2 id="editModalTitle">Aggiungi film</h2>
+
         <div class="modal-body">
-         
+
             <!-- 1. TITOLO + ANNO -->
             <div class="modal-section edit-two-cols">
                 <div class="edit-col">
                     <label for="editTitolo">Titolo</label>
                     <input id="editTitolo" type="text">
                 </div>
+
                 <div class="edit-col">
                     <label for="editAnno">Anno</label>
                     <input id="editAnno" type="number">
@@ -101,6 +121,7 @@
                         <input id="editRegistaInput" type="text" placeholder="Aggiungi regista e premi Invio">
                     </div>
                 </div>
+
                 <div class="edit-col">
                     <label>Attori</label>
                     <div id="editAttoriTags" class="tag-input">
@@ -118,6 +139,7 @@
                         <div class="filter-block-reset hidden" id="resetEditGenere">X</div>
                     </div>
                 </div>
+
                 <div class="edit-col">
                     <label>Categorie</label>
                     <div id="editCategorieTags" class="tag-input">
@@ -135,6 +157,7 @@
                     <button class="stato-btn" data-value="Rivedere">Rivedere</button>
                 </div>
             </div>
+
             <!-- 5. PULSANTI -->
             <div class="modal-buttons">
                 <button id="cancelEditBtn">Annulla</button>
@@ -145,15 +168,18 @@
     </div>
 </div>
 
+
 <!-- MODAL FILTRO STATO -->
 <div id="modalFiltroStato" class="hidden filter-modal">
     <div class="filter-modal-content">
         <h2>Stato</h2>
+
         <div class="filter-modal-options">
             <button data-value="Da vedere" class="filter-option-btn">Da vedere</button>
             <button data-value="Visto" class="filter-option-btn">Visto</button>
             <button data-value="Rivedere" class="filter-option-btn">Rivedere</button>
         </div>
+        
     </div>
 </div>
 
@@ -161,9 +187,13 @@
 <div id="modalFiltroGenere" class="hidden filter-modal">
     <div class="filter-modal-content">
         <h2>Filtra per Genere</h2>
+        
         <input id="genereSearchInput" type="text" placeholder="Cerca genere...">
+
         <div class="filter-modal-options" id="genereOptions">
+            <!-- I pulsanti verranno generati da JS -->
         </div>
+
         <div class="filter-modal-actions">
     <button id="annullaFiltroGenere" class="annulla-btn">Annulla</button>
 <button id="applicaFiltroGenere" class="applica-btn">Applica</button>
@@ -175,8 +205,11 @@
 <div id="modalFiltroCategoria" class="hidden filter-modal">
     <div class="filter-modal-content">
         <h2>Filtra per Categoria</h2>
+
         <input id="categoriaSearchInput" type="text" placeholder="Cerca categoria...">
+
         <div class="filter-modal-options" id="categoriaOptions"></div>
+
         <div class="filter-modal-actions">
             <button id="annullaFiltroCategoria" class="annulla-btn">Annulla</button>
             <button id="applicaFiltroCategoria" class="applica-btn">Applica</button>
@@ -188,9 +221,13 @@
 <div id="modalFiltroRegista" class="hidden filter-modal" tabindex="0">
     <div class="filter-modal-content">
         <h2>Filtra per Regista</h2>
+
         <input id="registaSearchInput" type="text" placeholder="Cerca regista...">
+
         <div class="filter-modal-options" id="registaOptions">
+            <!-- pulsanti generati da JS -->
         </div>
+
         <div class="filter-modal-actions">
             <button id="annullaFiltroRegista" class="annulla-btn">Annulla</button>
             <button id="applicaFiltroRegista" class="applica-btn">Applica</button>
@@ -202,139 +239,16 @@
 <div id="modalFiltroAttore" class="hidden filter-modal" tabindex="0">
     <div class="filter-modal-content">
         <h2>Filtra per Attore</h2>
+
         <input id="attoreSearchInput" type="text" placeholder="Cerca attore...">
+
         <div class="filter-modal-options" id="attoreOptions">
+            <!-- pulsanti generati da JS -->
         </div>
+
         <div class="filter-modal-actions">
             <button id="annullaFiltroAttore" class="annulla-btn">Annulla</button>
             <button id="applicaFiltroAttore" class="applica-btn">Applica</button>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL DETTAGLI FILM -->
-<div id="detailsModal" class="hidden modal-overlay" tabindex="0">
-    <div id="detailsModalContent" class="modal-box">
-
-        <h2 id="detailsTitle"></h2>
-
-        <div id="detailsFavorite" class="favorite-toggle-modal"></div>
-
-        <div class="modal-grid">
-            <div class="modal-grid-item">
-                <h3>Regista</h3>
-                <p id="detailsRegista"></p>
-            </div>
-
-            <div class="modal-grid-item">
-                <h3>Attori</h3>
-                <p id="detailsAttori"></p>
-            </div>
-
-            <div class="modal-grid-item">
-                <h3>Genere</h3>
-                <p id="detailsGenere"></p>
-            </div>
-
-            <div class="modal-grid-item">
-                <h3>Categoria</h3>
-                <p id="detailsCategoria"></p>
-            </div>
-        </div>
-
-        <div class="modal-section">
-            <h3>Stato</h3>
-            <div id="detailsStatoButtons" class="modal-buttons"></div>
-        </div>
-
-        <div class="modal-section">
-            <h3>Valutazione</h3>
-            <div id="detailsRatingButtons" class="modal-buttons"></div>
-        </div>
-
-        <div class="modal-section">
-            <h3>Commento</h3>
-            <textarea id="detailsComment" rows="4"></textarea>
-        </div>
-
-        <div class="modal-buttons">
-            <button id="detailsCloseBtn">Chiudi</button>
-            <button id="detailsEditBtn">Modifica</button>
-            <button id="detailsDeleteBtn" class="danger-btn">Elimina</button>
-        </div>
-
-    </div>
-</div>
-
-<!-- MODAL MODIFICA FILM -->
-<div id="editModal" class="hidden modal-overlay" tabindex="0">
-    <div id="editModalContent" class="modal-box">
-
-        <h2 id="editModalTitle">Aggiungi film</h2>
-
-        <div class="modal-body">
-
-            <!-- 1. TITOLO + ANNO -->
-            <div class="modal-section edit-two-cols">
-                <div class="edit-col">
-                    <label for="editTitolo">Titolo</label>
-                    <input id="editTitolo" type="text">
-                </div>
-                <div class="edit-col">
-                    <label for="editAnno">Anno</label>
-                    <input id="editAnno" type="number">
-                </div>
-            </div>
-
-            <!-- 2. REGISTI + ATTORI -->
-            <div class="modal-section edit-two-cols">
-                <div class="edit-col">
-                    <label>Registi</label>
-                    <div id="editRegistaTags" class="tag-input">
-                        <input id="editRegistaInput" type="text" placeholder="Aggiungi regista e premi Invio">
-                    </div>
-                </div>
-                <div class="edit-col">
-                    <label>Attori</label>
-                    <div id="editAttoriTags" class="tag-input">
-                        <input id="editAttoriInput" type="text" placeholder="Aggiungi attore e premi Invio">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. GENERE + CATEGORIE -->
-            <div class="modal-section edit-two-cols">
-                <div class="edit-col">
-                    <label>Genere</label>
-                    <div id="editGenereBlock" class="filter-block">
-                        <div class="filter-block-value" id="editGenereValue">Nessuno</div>
-                        <div class="filter-block-reset hidden" id="resetEditGenere">X</div>
-                    </div>
-                </div>
-                <div class="edit-col">
-                    <label>Categorie</label>
-                    <div id="editCategorieTags" class="tag-input">
-                        <input id="editCategorieInput" type="text" placeholder="Aggiungi categoria e premi Invio">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. STATO -->
-            <div class="modal-section">
-                <label>Stato</label>
-                <div id="editStatoButtons">
-                    <button class="stato-btn" data-value="Da vedere">Da vedere</button>
-                    <button class="stato-btn" data-value="Visto">Visto</button>
-                    <button class="stato-btn" data-value="Rivedere">Rivedere</button>
-                </div>
-            </div>
-
-            <!-- 5. PULSANTI -->
-            <div class="modal-buttons">
-                <button id="cancelEditBtn">Annulla</button>
-                <button id="saveFilmBtn" class="primary-btn">Salva</button>
-            </div>
-
         </div>
     </div>
 </div>
@@ -343,9 +257,11 @@
 <div id="modalDelete" class="hidden modal-overlay" tabindex="0">
     <div id="modalDeleteContent" class="modal-box">
         <h2>Elimina film</h2>
+
         <p class="modal-delete-text">
             Sei sicuro di voler eliminare questo film?
         </p>
+
         <div class="modal-buttons">
             <button id="annullaDelete" class="cancel-btn">Annulla</button>
             <button id="confermaDelete" class="primary-btn">Elimina</button>
@@ -357,9 +273,11 @@
 <div id="modalEditGenere" class="hidden filter-modal" tabindex="0">
     <div class="filter-modal-content">
         <h2>Seleziona generi</h2>
+
         <div class="filter-modal-options" id="editGenereOptions">
             <!-- pulsanti generati da JS -->
         </div>
+
         <div class="filter-modal-actions">
             <button id="annullaEditGenere">Annulla</button>
             <button id="applicaEditGenere">Applica</button>
