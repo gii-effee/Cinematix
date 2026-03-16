@@ -10,7 +10,9 @@ var films = [
         stato: "Visto",
         preferito: true,
         valutazione: 9,
-        commento: ""
+        commento: "",
+        addedAt: new Date("2026-01-01 18:00").getTime()
+
     },
     {
         titolo: "Million Dollar Baby",
@@ -22,7 +24,8 @@ var films = [
         stato: "Da vedere",
         preferito: false,
         valutazione: null,
-        commento: ""
+        commento: "",
+        addedAt: new Date("2026-02-01 18:00").getTime()
     },
     {
         titolo: "Dune",
@@ -34,7 +37,8 @@ var films = [
         stato: "Rivedere",
         preferito: false,
         valutazione: 7,
-        commento: ""
+        commento: "",
+        addedAt: new Date("2026-03-01 18:00").getTime()
     }
 ];
 
@@ -452,13 +456,13 @@ confermaDelete.onclick = function () {
         // 5. Chiudi anche il modal dettagli
         closeModal();
 
-    }, 260); // leggermente più lungo dell'animazione
+    }, 260);
 };
 
 modalDelete.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
         e.preventDefault();
-        annullaDelete.onclick(); // <-- chiama direttamente la funzione corretta
+        annullaDelete.onclick();
     }
 });
 
@@ -1282,7 +1286,8 @@ saveFilmBtn.onclick = function () {
             genere: generiSelezionatiEdit.slice(),
             stato: statoSelezionato,
             valutazione: null,
-            commento: ""
+            commento: "",
+            addedAt: Date.now()
         };
 
         films.push(nuovoFilm);
