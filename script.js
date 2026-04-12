@@ -348,10 +348,13 @@ function updateState(index, nuovoStato) {
 }
 
 function setRating(index, value, btn) {
-    films[index].valutazione = value;
+      if (films[index].valutazione === value) {
+        films[index].valutazione = null;
+    } else {
+        films[index].valutazione = value;
+    }
     saveToLocalStorage();
-
-    // aggiorna subito la UI dei bottoni
+    
     document.querySelectorAll('#modalRatingBtns .rating-btn')
         .forEach(b => b.classList.remove('active'));
         
@@ -359,7 +362,6 @@ function setRating(index, value, btn) {
         btn.classList.add('active');
     }
 
-    // mantieni la lista aggiornata sotto
     applyAllFilters();
 }
 
