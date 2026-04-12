@@ -986,6 +986,7 @@ function populateAdvancedFilters() {
 }
 
 function applyAllFilters() {
+    console.log("applyAllFilters PARTITA");
     let base = films;
 
     // sezione Preferiti → la base diventa solo i preferiti
@@ -1063,11 +1064,8 @@ function applyAllFilters() {
             return vb - va;
         });
     }
-
-    // LOG CONSOLE
-    console.log("sort usato:", sort);
-    console.log("ordine titoli:", result.map(f => f.titolo + " (" + f.anno + ")"));
     
+    console.log("applyAllFilters FINITA");
     renderFilms(result);
 }
 
