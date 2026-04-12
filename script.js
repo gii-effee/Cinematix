@@ -123,20 +123,19 @@ document.querySelector('[data-section="preferiti"]').onclick = goPreferiti;
 
 // --- FUNZIONE PER I BOTTONI STATO ---
 function setupStateButtons(buttons, film) {
+    // sincronizza SEMPRE lo stato visivo all'apertura del modal
     buttons.forEach(btn => {
+        btn.classList.remove("active");
+
+        if (btn.dataset.value === film.stato) {
+            btn.classList.add("active");
+        }
+
         btn.onclick = () => {
+            buttons.forEach(b => b.classList.remove("active"));
 
-            // se clicco quello già attivo → tolgo stato
-            if (btn.classList.contains("active")) {
-                btn.classList.remove("active");
-                film.stato = null;
-            } else {
-
-                buttons.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-
-                film.stato = btn.dataset.value;
-            }
+            btn.classList.add("active");
+            film.stato = btn.dataset.value;
 
             saveToLocalStorage();
             applyAllFilters();
@@ -202,116 +201,37 @@ function renderFilms(list) {
     });
 }
 
-// --- MODAL DETTAGLI ---
-function buildFilmModalContent(film, index) {
-    return `
-        <div class="favorite-toggle-modal" data-id="${film.id}">
-            ${film.preferito ? "⭐" : "☆"}
-        </div>
-
-        <h2>${film.titolo} (${film.anno})</h2>
-
-        <div class="modal-grid">
-            <div class="modal-grid-item">
-                <h3>Regista</h3>
-                <p>${film.regista.join(", ")}</p>
-            </div>
-
-            <div class="modal-grid-item">
-                <h3>Attori</h3>
-                <p>${film.attori.join(", ")}</p>
-            </div>
-
-            <div class="modal-grid-item">
-                <h3>Genere</h3>
-                <p>${film.genere.length > 0 ? film.genere.join(", ") : "Nessuno"}</p>
-            </div>
-
-            <div class="modal-grid-item">
-                <h3>Categoria</h3>
-                <p>${film.categoria_personale.join(", ")}</p>
-            </div>
-        </div>
-
-        <div class="modal-section">
-            <h3>Stato</h3>
-            <div class="modal-buttons">
-                <button class="stato-btn ${film.stato === "Da vedere" ? "active" : ""}" data-value="Da vedere">Da vedere</button>
-                <button class="stato-btn ${film.stato === "Visto" ? "active" : ""}" data-value="Visto">Visto</button>
-                <button class="stato-btn ${film.stato === "Rivedere" ? "active" : ""}" data-value="Rivedere">Rivedere</button>
-            </div>
-        </div>
-
-        <div class="modal-section">
-            <h3>Valutazione</h3>
-            <div id="ratingButtons" class="modal-buttons">
-                ${Array.from({ length: 10 }, (_, i) => {
-                    const n = i + 1;
-                    return `<button class="rating-btn ${film.valutazione == n ? "active" : ""}" data-value="${n}">${n}</button>`;
-                }).join("")}
-            </div>
-        </div>
-
-        <div class="modal-section">
-            <h3>Commento</h3>
-            <textarea id="commentInput" rows="4">${film.commento || ""}</textarea>
-        </div>
-
-        <div class="modal-buttons">
-            <button onclick="closeModal()">Chiudi</button>
-            <button id="openEditModalBtn">Modifica</button>
-            <button class="danger-btn" onclick="openDeleteModal(${index})">Elimina</button>
-        </div>
-    `;
-}
-
-function bindFilmModalEvents(film) {
-    const favoriteBtn = modalContent.querySelector(".favorite-toggle-modal");
-    const statoButtons = modalContent.querySelectorAll(".stato-btn");
-    const ratingButtons = modalContent.querySelectorAll(".rating-btn");
-    const commentInput = modalContent.querySelector("#commentInput");
-
-    // Preferito
-    favoriteBtn.onclick = function () {
-        film.preferito = !film.preferito;
-        this.textContent = film.preferito ? "⭐" : "☆";
-        saveToLocalStorage();
-        applyAllFilters();
-    };
-
-    // Stato
-    setupStateButtons(statoButtons, films[editingIndex]);
-
-    // Rating
-    ratingButtons.forEach(btn => {
-        btn.onclick = () => {
-            ratingButtons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            films[editingIndex].valutazione = Number(btn.dataset.value);
-            saveToLocalStorage();
-            applyAllFilters();
-        };
-    });
-
-    // Commento
-    commentInput.oninput = () => {
-        films[editingIndex].commento = commentInput.value;
-        saveToLocalStorage();
-    };
-
-    document.getElementById("openEditModalBtn").onclick = function () {
-        openEditModalForEditing();
-    };
-}
-
 function openModal(film, index) {
     editingIndex = index;
 
-    modalContent.innerHTML = buildFilmModalContent(film, index);
-
-    bindFilmModalEvents(film);
-
-    modal.classList.remove("hidden");
+    document.getElementById('modalTitoloFilm').textContent = film.titolo + ' (' + film.anno + ')';
+    document.getElementById('modalRegista').textContent = (film.regista || []).join(', ') || '-';
+    document.getElementById('modalAttori').textContent = (film.attori || []).join(', ') || '-';
+    document.getElementById('modalGenere').textContent = (film.genere || []).join(', ') || 'Nessuno';
+    document.getElementById('modalCategorie').textContent = (film.categoria_personale || []).join(', ') || '-';
+    document.getElementById('modalCommentInput').value = film.commento || '';
+        
+    setupStateButtons(
+    document.querySelectorAll('#modalStatoBtns .stato-btn'),
+    films[editingIndex]
+);
+   
+    document.querySelector('.favorite-toggle-modal').onclick = () => {
+        film.preferito = !film.preferito;
+        document.querySelector('.favorite-toggle-modal').textContent = film.preferito ? '⭐' : '☆';
+        saveToLocalStorage();
+        applyAllFilters();
+    };
+    
+    document.getElementById('openEditModalBtn').onclick = openEditModalForEditing;
+    document.getElementById('btnDeleteFilm').onclick = () => openDeleteModal(editingIndex);
+    
+    document.getElementById('modalCommentInput').oninput = () => {
+        films[editingIndex].commento = document.getElementById('modalCommentInput').value;
+        saveToLocalStorage();
+    };
+    
+    modal.classList.remove('hidden');
 }
 
 function openEditModalForEditing() {
@@ -361,8 +281,6 @@ function openEditModalForEditing() {
 
     // 🔥 fondamentale: inizializziamo tempStato
     tempStato = film.stato;
-    
-    setupStateButtons(editStatoButtons);
 
     modal.classList.add("hidden");
     editModal.classList.remove("hidden");
@@ -1276,7 +1194,6 @@ saveFilmBtn.onclick = function () {
 
     // --- MODALITÀ AGGIUNTA ---
     if (editingIndex === -1) {
-
         var nuovoFilm = {
             titolo: editTitolo.value.trim(),
             anno: Number(editAnno.value),
@@ -1582,80 +1499,6 @@ setTimeout(() => {
     editTitolo.focus();
 }, 0);
 
-};
-
-saveFilmBtn.onclick = function () {
-    var titolo = editTitolo.value.trim();
-    var anno = Number(editAnno.value);
-    var registi = editRegistaTags
-        .map(function (s) { return s.trim(); })
-        .filter(Boolean);
-    var attori = editAttoriTags
-        .map(function (s) { return s.trim(); })
-        .filter(Boolean);
-    var generi = generiSelezionatiEdit.slice();
-
-    // --- VALIDAZIONI ---
-    if (!titolo) {
-        alert("Il titolo non può essere vuoto.");
-        return;
-    }
-
-    if (!anno || isNaN(anno) || anno < 1888 || anno > 2100) {
-        alert("Inserisci un anno valido (1888–2100).");
-        return;
-    }
-
-    if (registi.length === 0) {
-        alert("Inserisci almeno un regista.");
-        return;
-    }
-
-    if (attori.length === 0) {
-        alert("Inserisci almeno un attore.");
-        return;
-    }
-
-    // --- CATEGORIA ---
-    var categorie = editCategorieTags
-        .map(function (s) { return s.trim(); })
-        .filter(Boolean);
-
-    // Rimuove duplicati
-    categorie = Array.from(new Set(categorie));
-
-    if (categorie.length === 0) {
-        categorie = ["Senza categoria"];
-    }
-
-// --- CREAZIONE OGGETTO FILM ---
-const activeStatoBtn = document.querySelector("#statoButtons .stato-btn.active");
-
-var filmData = {
-    titolo: titolo,
-    anno: anno,
-    regista: registi,
-    attori: attori,
-    categoria_personale: categorie,
-    genere: generi,
-    stato: activeStatoBtn ? activeStatoBtn.dataset.value : "Da vedere",
-    valutazione: null,
-    commento: ""
-};
-
-    // --- AGGIUNTA O MODIFICA ---
-    if (editingIndex === -1) {
-        films.push(filmData);
-    } else {
-        films[editingIndex] = filmData;
-    }
-
-    saveToLocalStorage();
-    editModal.classList.add("hidden");
-
-    applyAllFilters();
-
-    editingIndex = -1;
 };
 
 // --- INIZIALIZZAZIONE ---
