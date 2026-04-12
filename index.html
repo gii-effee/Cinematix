@@ -90,7 +90,56 @@
 <section id="filmList"></section>
 
 <div id="modal" class="hidden">
-    <div id="modalContent"></div>
+    <div id="modalContent">
+        <div class="favorite-toggle-modal" data-id="0">☆</div>
+        <h2 id="modalTitoloFilm">Titolo film</h2>
+        
+        <div class="modal-grid">
+            <div class="modal-grid-item">
+                <h3>Regista</h3>
+                <p id="modalRegista">-</p>
+            </div>
+            <div class="modal-grid-item">
+                <h3>Attori</h3>
+                <p id="modalAttori">-</p>
+            </div>
+            <div class="modal-grid-item">
+                <h3>Genere</h3>
+                <p id="modalGenere">-</p>
+            </div>
+            <div class="modal-grid-item">
+                <h3>Categoria</h3>
+                <p id="modalCategorie">-</p>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Stato</h3>
+            <div id="modalStatoBtns" class="modal-buttons">
+                <button class="stato-btn" data-value="Da vedere">Da vedere</button>
+                <button class="stato-btn" data-value="Visto">Visto</button>
+                <button class="stato-btn" data-value="Rivedere">Rivedere</button>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Valutazione</h3>
+            <div id="modalRatingBtns" class="modal-buttons">
+                <!-- JS popola -->
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Commento</h3>
+            <textarea id="modalCommentInput" rows="4"></textarea>
+        </div>
+
+        <div class="modal-buttons">
+            <button onclick="closeModal()">Chiudi</button>
+            <button id="openEditModalBtn">Modifica</button>
+            <button class="danger-btn" id="btnDeleteFilm">Elimina</button>
+        </div>
+    </div>
 </div>
 
 <div id="editModal" class="hidden" tabindex="0">
