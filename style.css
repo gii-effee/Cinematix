@@ -301,7 +301,8 @@ header {
     margin-top: 6px;
 }
 
-.stato-btn {
+.stato-btn,
+.tipo-btn {  
     padding: 6px 12px;
     border: 1px solid #555;
     background: #333;
@@ -312,13 +313,15 @@ header {
     transition: 0.2s;
 }
 
-.stato-btn:hover:not(.active) {
+.stato-btn:hover:not(.active),
+.tipo-btn:hover:not(.active) {
     background: #444;
     border-color: #666;
     color: #fff;
 }
 
-.stato-btn.active {
+.stato-btn.active,
+.tipo-btn.active {
     background: #b02a37;
     border-color: #b02a37;
     color: #fff;
@@ -1711,5 +1714,7 @@ input:focus {
 }
 
 .tipo-buttons {
-  display: flex;
-  gap: var(--space
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
