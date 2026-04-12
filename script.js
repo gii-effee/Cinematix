@@ -988,23 +988,22 @@ function populateAdvancedFilters() {
 function applyAllFilters() {
     let base = films;
 
-    // sezione Preferiti → la base diventa solo i preferiti
     if (currentSection === "preferiti") {
         base = base.filter(f => f.preferito === true);
     }
     
     if (currentSection === "film") {
-        base = base.filter(f => f.tipo === "film");
-    } else if (currentSection === "serie") {
-        base = base.filter(f => f.tipo === "serie");
-  }
+    base = base.filter(f => !f.tipo || f.tipo === "film");
+} else if (currentSection === "serie") {
+    base = base.filter(f => f.tipo === "serie");
+}
 
     let result = base.slice();
 
     // 1. STATO
-    if (filtroStato) {
-        result = result.filter(f => f.stato === filtroStato);
-    }
+if (filtroStato && filtroStato !== "Tutti") {
+    result = result.filter(f => f.stato === filtroStato);
+}
 
     // 2. GENERE (OR interno)
     if (generiSelezionati.length > 0) {
@@ -1013,7 +1012,7 @@ function applyAllFilters() {
         );
     }
 
-    // 3. CATEGORIA (OR interno)
+    // 3. CATEGORIA
     if (categorieSelezionate.length > 0) {
         result = result.filter(f =>
             f.categoria_personale.some(c => categorieSelezionate.includes(c))
@@ -1107,7 +1106,7 @@ document.querySelectorAll("#statoButtons .stato-btn")
     .forEach(b => b.classList.remove("active"));
 
 // simula click su "Tutti"
-const btnTutti = document.querySelector('#statoButtons .stato-btn[data-value=""]');
+const btnTutti = document.querySelector('#statoButtons .stato-btn[data-value="Tutti"]');
 if (btnTutti) btnTutti.click();   
     
     // reset UI del blocco Genere
