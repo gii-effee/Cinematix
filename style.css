@@ -1709,3 +1709,7 @@ input:focus {
 #main-header.scrolled {
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
+
+.tipo-buttons {
+  display: flex;
+  gap: var(--space
