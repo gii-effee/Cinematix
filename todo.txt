@@ -1,12 +1,9 @@
 MIGLIORAMENTO CODICE
 
-
 BUG
-Una volta impostato il rating non lo posso togliere: se clicco sul voto impostato deve togliersi
 
 DA FARE
 Sistemare grafica della parte filtri
-Sistemare filtri "Ordina"
 Modificare dati visualizzati nella card
 
 NOTE
@@ -14,4 +11,4 @@ Ha senso sistemare l'estetica del modal Genere se tanto poi verrà autoalimentat
 
 IMPLEMENTAZIONI
 Studiare la creazione di una sezione da condividere con altri utenti e alimenatata dagli utenti che ne fanno parte          
-Es. playlist condivise su Spotify)
+Es. playlist condivise su Spotify
