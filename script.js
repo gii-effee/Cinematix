@@ -986,7 +986,6 @@ function populateAdvancedFilters() {
 }
 
 function applyAllFilters() {
-    console.log("applyAllFilters PARTITA");
     let base = films;
 
     // sezione Preferiti → la base diventa solo i preferiti
@@ -1049,23 +1048,44 @@ function applyAllFilters() {
     }
 
     // 5. ORDINAMENTO
-    if (sort === "titolo") {
-        result.sort(function (a, b) {
-            return a.titolo.localeCompare(b.titolo);
-        });
-    } else if (sort === "anno") {
-        result.sort(function (a, b) {
-            return b.anno - a.anno;
-        });
-    } else if (sort === "valutazione") {
-        result.sort(function (a, b) {
-            var va = a.valutazione || 0;
-            var vb = b.valutazione || 0;
-            return vb - va;
-        });
-    }
+    if (sort === "addedAt-desc") {
+    result.sort(function (a, b) {
+        return (b.addedAt || 0) - (a.addedAt || 0);
+    });
+} else if (sort === "addedAt-asc") {
+    result.sort(function (a, b) {
+        return (a.addedAt || 0) - (b.addedAt || 0);
+    });
+} else if (sort === "titolo-asc") {
+    result.sort(function (a, b) {
+        return a.titolo.localeCompare(b.titolo);
+    });
+} else if (sort === "titolo-desc") {
+    result.sort(function (a, b) {
+        return b.titolo.localeCompare(a.titolo);
+    });
+} else if (sort === "anno-desc") {
+    result.sort(function (a, b) {
+        return b.anno - a.anno;
+    });
+} else if (sort === "anno-asc") {
+    result.sort(function (a, b) {
+        return a.anno - b.anno;
+    });
+} else if (sort === "valutazione-desc") {
+    result.sort(function (a, b) {
+        var va = (a.valutazione === null || a.valutazione === undefined) ? -1 : a.valutazione;
+        var vb = (b.valutazione === null || b.valutazione === undefined) ? -1 : b.valutazione;
+        return vb - va;
+    });
+} else if (sort === "valutazione-asc") {
+    result.sort(function (a, b) {
+        var va = (a.valutazione === null || a.valutazione === undefined) ? 999 : a.valutazione;
+        var vb = (b.valutazione === null || b.valutazione === undefined) ? 999 : b.valutazione;
+        return va - vb;
+    });
+}
     
-    console.log("applyAllFilters FINITA");
     renderFilms(result);
 }
 
