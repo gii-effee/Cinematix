@@ -8,6 +8,7 @@ var films = [
         categoria_personale: ["Cinema Pop", "Cult"],
         genere: [],
         stato: "Visto",
+        tipo: "Film",
         preferito: true,
         valutazione: 9,
         commento: "",
@@ -22,6 +23,7 @@ var films = [
         categoria_personale: ["Trasformista"],
         genere: ["Dramma"],
         stato: "Da vedere",
+        tipo: "Film",
         preferito: false,
         valutazione: null,
         commento: "",
@@ -35,6 +37,7 @@ var films = [
         categoria_personale: ["Blockbuster", "Saga"],
         genere: [],
         stato: "Rivedere",
+        tipo: "Film",
         preferito: false,
         valutazione: 7,
         commento: "",
@@ -209,6 +212,7 @@ function openModal(film, index) {
     document.getElementById('modalAttori').textContent = (film.attori || []).join(', ') || '-';
     document.getElementById('modalGenere').textContent = (film.genere || []).join(', ') || 'Nessuno';
     document.getElementById('modalCategorie').textContent = (film.categoria_personale || []).join(', ') || '-';
+    document.getElementById('modalTipo').textContent = film.tipo === "serie" ? "Serie TV" : "Film";
     document.getElementById('modalCommentInput').value = film.commento || '';
         
     setupStateButtons(
@@ -405,6 +409,9 @@ function loadFromLocalStorage() {
     films.forEach(f => {
         if (!Array.isArray(f.genere)) {
             f.genere = [];
+        }
+        if (!f.tipo) {
+          f.tipo = "film";
         }
     });
 }
