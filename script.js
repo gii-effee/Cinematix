@@ -1013,11 +1013,11 @@ if (filtroStato && filtroStato !== "Tutti") {
     }
 
     // 3. CATEGORIA
-    if (categorieSelezionate.length > 0) {
-        result = result.filter(f =>
-            f.categoria_personale.some(c => categorieSelezionate.includes(c))
-        );
-    }
+    // if (categorieSelezionate.length > 0) {
+    //    result = result.filter(f =>
+    //        f.categoria_personale.some(c => categorieSelezionate.includes(c))
+    //    );
+    // }
 
     // 4. FILTRI AVANZATI
     var sort = sortFilter.value;
