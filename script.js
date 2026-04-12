@@ -1,3 +1,4 @@
+
 // --- DATI DEI FILM ---
 var films = [
     {
@@ -1047,44 +1048,23 @@ function applyAllFilters() {
     }
 
     // 5. ORDINAMENTO
-var sort = sortFilter.value;
+    if (sort === "titolo") {
+        result.sort(function (a, b) {
+            return a.titolo.localeCompare(b.titolo);
+        });
+    } else if (sort === "anno") {
+        result.sort(function (a, b) {
+            return b.anno - a.anno;
+        });
+    } else if (sort === "valutazione") {
+        result.sort(function (a, b) {
+            var va = a.valutazione || 0;
+            var vb = b.valutazione || 0;
+            return vb - va;
+        });
+    }
 
-if (sort === "addedAt-desc") {
-    result.sort(function (a, b) {
-        return (b.addedAt || 0) - (a.addedAt || 0);
-    });
-} else if (sort === "addedAt-asc") {
-    result.sort(function (a, b) {
-        return (a.addedAt || 0) - (b.addedAt || 0);
-    });
-} else if (sort === "titolo-asc") {
-    result.sort(function (a, b) {
-        return a.titolo.localeCompare(b.titolo);
-    });
-} else if (sort === "titolo-desc") {
-    result.sort(function (a, b) {
-        return b.titolo.localeCompare(a.titolo);
-    });
-} else if (sort === "anno-desc") {
-    result.sort(function (a, b) {
-        return b.anno - a.anno;
-    });
-} else if (sort === "anno-asc") {
-    result.sort(function (a, b) {
-        return a.anno - b.anno;
-    });
-} else if (sort === "valutazione-desc") {
-    result.sort(function (a, b) {
-        var va = a.valutazione ?? -1;
-        var vb = b.valutazione ?? -1;
-        return vb - va;
-    });
-} else if (sort === "valutazione-asc") {
-    result.sort(function (a, b) {
-        var va = a.valutazione ?? 999;
-        var vb = b.valutazione ?? 999;
-        return va - vb;
-    });
+    renderFilms(result);
 }
 
 // --- EVENTI ---
@@ -1101,7 +1081,7 @@ resetFilters.addEventListener("click", function () {
     document.querySelectorAll('.filter-btn.active-filter')
         .forEach(b => b.classList.remove('active-filter'));
 
-    sortFilter.value = "addedAt-desc";
+    sortFilter.value = "";
     searchInput.value = "";
     
     // reset stato → rimuovi active da tutti
