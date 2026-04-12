@@ -1023,6 +1023,7 @@ function applyAllFilters() {
 
     // 4. FILTRI AVANZATI
     var sort = sortFilter.value;
+    if (!sort) sort = "addedAt-desc";  // default se vuoto
     var query = searchInput.value.toLowerCase();
 
     // 4a. REGISTA
