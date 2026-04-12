@@ -1,4 +1,3 @@
-
 // --- DATI DEI FILM ---
 var films = [
     {
@@ -1065,6 +1064,10 @@ function applyAllFilters() {
         });
     }
 
+    // LOG CONSOLE
+    console.log("sort usato:", sort);
+    console.log("ordine titoli:", result.map(f => f.titolo + " (" + f.anno + ")"));
+    
     renderFilms(result);
 }
 
