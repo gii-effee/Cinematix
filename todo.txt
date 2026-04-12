@@ -1,18 +1,17 @@
 MIGLIORAMENTO CODICE
-Allineare le logiche dei Modal aggiunta e modifica al resto dei modal
+
 
 BUG
-Quando aggiungo un film non viene salvato lo stato che impsoto
 Una volta impostato il rating non lo posso togliere: se clicco sul voto impostato deve togliersi
 
 DA FARE
-Implementare tag Film\Serie TV
 Sistemare grafica della parte filtri
 Sistemare filtri "Ordina"
-Modificare dati visualizzati in anteprima card
+Modificare dati visualizzati nella card
 
 NOTE
 Ha senso sistemare l'estetica del modal Genere se tanto poi verrà autoalimentato dall'API?
 
 IMPLEMENTAZIONI
-Studiare la creazione di una sezione da condividere con altri utenti e alimenatata dagli utenti che ne fanno parte           Es. playlist condivise su Spotify)
+Studiare la creazione di una sezione da condividere con altri utenti e alimenatata dagli utenti che ne fanno parte          
+Es. playlist condivise su Spotify)
