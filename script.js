@@ -230,7 +230,26 @@ function openModal(film, index) {
     document.getElementById('modalCategorie').textContent = (film.categoria_personale || []).join(', ') || '-';
     document.getElementById('modalTipo').textContent = film.tipo === "serie" ? "Serie TV" : "Film";
     document.getElementById('modalCommentInput').value = film.commento || '';
-        
+
+    var modalRatingBtns = document.getElementById("modalRatingBtns");
+modalRatingBtns.innerHTML = "";
+
+for (let i = 1; i <= 10; i++) {
+    const btn = document.createElement("button");
+    btn.className = "rating-btn";
+    btn.textContent = i;
+
+    if (film.valutazione === i) {
+        btn.classList.add("active");
+    }
+
+    btn.onclick = function () {
+        setRating(index, i, btn);
+    };
+
+    modalRatingBtns.appendChild(btn);
+}
+    
     setupStateButtons(
     document.querySelectorAll('#modalStatoBtns .stato-btn'),
     films[editingIndex]
@@ -333,7 +352,7 @@ function setRating(index, value, btn) {
     saveToLocalStorage();
 
     // aggiorna subito la UI dei bottoni
-    document.querySelectorAll('#ratingButtons .rating-btn')
+    document.querySelectorAll('#modalRatingBtns .rating-btn')
         .forEach(b => b.classList.remove('active'));
         
     if (btn) {
