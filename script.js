@@ -348,17 +348,20 @@ function updateState(index, nuovoStato) {
 }
 
 function setRating(index, value, btn) {
-      if (films[index].valutazione === value) {
+    const ratingButtons = document.querySelectorAll('#modalRatingBtns .rating-btn');
+    const isSameRating = films[index].valutazione === value;
+
+    if (isSameRating) {
         films[index].valutazione = null;
     } else {
         films[index].valutazione = value;
     }
+
     saveToLocalStorage();
-    
-    document.querySelectorAll('#modalRatingBtns .rating-btn')
-        .forEach(b => b.classList.remove('active'));
-        
-    if (btn) {
+
+    ratingButtons.forEach(b => b.classList.remove('active'));
+
+    if (!isSameRating && btn) {
         btn.classList.add('active');
     }
 
