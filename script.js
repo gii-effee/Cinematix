@@ -1047,8 +1047,6 @@ function applyAllFilters() {
     }
 
     // 5. ORDINAMENTO
-var sort = sortFilter.value;
-
 if (sort === "addedAt-desc") {
     result.sort(function (a, b) {
         return (b.addedAt || 0) - (a.addedAt || 0);
@@ -1075,14 +1073,14 @@ if (sort === "addedAt-desc") {
     });
 } else if (sort === "valutazione-desc") {
     result.sort(function (a, b) {
-        var va = a.valutazione ?? -1;
-        var vb = b.valutazione ?? -1;
+        var va = (a.valutazione === null || a.valutazione === undefined) ? -1 : a.valutazione;
+        var vb = (b.valutazione === null || b.valutazione === undefined) ? -1 : b.valutazione;
         return vb - va;
     });
 } else if (sort === "valutazione-asc") {
     result.sort(function (a, b) {
-        var va = a.valutazione ?? 999;
-        var vb = b.valutazione ?? 999;
+        var va = (a.valutazione === null || a.valutazione === undefined) ? 999 : a.valutazione;
+        var vb = (b.valutazione === null || b.valutazione === undefined) ? 999 : b.valutazione;
         return va - vb;
     });
 }
