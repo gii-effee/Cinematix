@@ -120,9 +120,25 @@ function goPreferiti() {
     applyAllFilters();
 }
 
+function goFilm() {
+  currentSection = "film";
+  activateNav("film");
+  resetFilters.click();
+  applyAllFilters();
+}
+
+function goSerie() {
+  currentSection = "serie";
+  activateNav("serie");
+  resetFilters.click();
+  applyAllFilters();
+}
+
 document.querySelector('[data-section="home"]').onclick = goHome;
 document.getElementById('nav-home').onclick = goHome;
 document.querySelector('[data-section="preferiti"]').onclick = goPreferiti;
+document.querySelector('[data-section="film"]').onclick = goFilm;
+document.querySelector('[data-section="serie"]').onclick = goSerie;
 
 // --- FUNZIONE PER I BOTTONI STATO ---
 function setupStateButtons(buttons, film) {
@@ -944,6 +960,12 @@ function applyAllFilters() {
     if (currentSection === "preferiti") {
         base = base.filter(f => f.preferito === true);
     }
+    
+    if (currentSection === "film") {
+        base = base.filter(f => f.tipo === "film");
+    } else if (currentSection === "serie") {
+        base = base.filter(f => f.tipo === "serie");
+  }
 
     let result = base.slice();
 
