@@ -201,26 +201,27 @@
                 </div>
             </div>
 
-            <!-- 4. STATO -->
-            <div class="modal-section">
-                <label>Stato</label>
-                <div id="editStatoButtons">
-                    <button class="stato-btn" data-value="Da vedere">Da vedere</button>
-                    <button class="stato-btn" data-value="Visto">Visto</button>
-                    <button class="stato-btn" data-value="Rivedere">Rivedere</button>
-                </div>
-            </div>
+            <!-- 4. TIPO + STATO -->
+<div class="modal-section edit-two-cols">
+    <div class="edit-col">
+        <label>Tipo</label>
+        <div id="editTipoButtons" class="tipo-buttons">
+            <button class="tipo-btn active" data-tipo="film">Film</button>
+            <button class="tipo-btn" data-tipo="serie">Serie TV</button>
+        </div>
+    </div>
 
-            <!-- 5. TIPO FILM/SERIE TV -->
-            <div class="modal-section">
-                <label>Tipo</label>
-                <div id="editTipoButtons" class="tipo-buttons">
-                    <button class="tipo-btn active" data-tipo="film">Film</button>
-                    <button class="tipo-btn" data-tipo="serie">Serie TV</button>
-                </div>
-            </div>
+    <div class="edit-col">
+        <label>Stato</label>
+        <div id="editStatoButtons">
+            <button class="stato-btn" data-value="Da vedere">Da vedere</button>
+            <button class="stato-btn" data-value="Visto">Visto</button>
+            <button class="stato-btn" data-value="Rivedere">Rivedere</button>
+        </div>
+    </div>
+</div>
 
-            <!-- 6. PULSANTI -->
+            <!-- 5. PULSANTI -->
             <div class="modal-buttons">
                 <button id="cancelEditBtn">Annulla</button>
                 <button id="saveFilmBtn" class="primary-btn">Salva</button>
