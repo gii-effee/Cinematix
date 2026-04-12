@@ -302,6 +302,14 @@ function openEditModalForEditing() {
     // 🔥 fondamentale: inizializziamo tempStato
     tempStato = film.stato;
 
+    editTipoButtons.forEach(b => b.classList.remove("active"));
+editTipoButtons.forEach(btn => {
+    if (btn.dataset.tipo === film.tipo) {
+        btn.classList.add("active");
+    }
+});
+tempTipo = film.tipo;
+
     modal.classList.add("hidden");
     editModal.classList.remove("hidden");
     
@@ -1116,9 +1124,13 @@ addFilmBtn.onclick = function () {
     editGenereBlock.classList.remove("active");
     resetEditGenere.classList.add("hidden");
 
-    // 🔥 reset stato PRIMA di aprire il modal
+    // reset stato PRIMA di aprire il modal
     editStatoButtons.forEach(b => b.classList.remove("active"));
     tempStato = null;
+
+    // reset tipo PRIMA di aprire il modal
+    editTipoButtons.forEach(b => b.classList.remove("active"));
+    tempTipo = null;
 
     editModal.classList.remove("hidden");
 
@@ -1180,8 +1192,14 @@ return;
 var editTitolo = document.getElementById("editTitolo");
 var editAnno = document.getElementById("editAnno");
 var editStatoButtons = document.querySelectorAll("#editStatoButtons .stato-btn");
+var editTipoButtons = document.querySelectorAll("#editTipoButtons .tipo-btn");
+var tempTipo = null;
 
 editStatoButtons.forEach(btn => {
+    btn.addEventListener("mousedown", e => e.preventDefault());
+});
+
+editTipoButtons.forEach(btn => {
     btn.addEventListener("mousedown", e => e.preventDefault());
 });
 
@@ -1192,6 +1210,14 @@ editStatoButtons.forEach(btn => {
         tempStato = btn.dataset.value;
     });
 });
+
+editTipoButtons.forEach(btn =>
+    btn.addEventListener("click", () => {
+        editTipoButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        tempTipo = btn.dataset.tipo;
+    })
+);
 
 var editRegistaTagsContainer = document.getElementById("editRegistaTags");
 var editRegistaInput = document.getElementById("editRegistaInput");
@@ -1221,6 +1247,12 @@ saveFilmBtn.onclick = function () {
         return;
     }
 
+    // --- TIPO OBBLIGATORIO ---
+    if (!tempTipo) {
+        alert('Seleziona se è "Film" o "Serie TV".');
+        return;
+    }    
+
     // --- MODALITÀ AGGIUNTA ---
     if (editingIndex === -1) {
         var nuovoFilm = {
@@ -1231,6 +1263,7 @@ saveFilmBtn.onclick = function () {
             categoria_personale: editCategorieTags.slice(),
             genere: generiSelezionatiEdit.slice(),
             stato: statoSelezionato,
+            tipo: tempTipo,
             valutazione: null,
             commento: "",
             addedAt: Date.now()
@@ -1253,6 +1286,7 @@ saveFilmBtn.onclick = function () {
     film.categoria_personale = editCategorieTags.slice();
     film.genere = generiSelezionatiEdit.slice();
     film.stato = statoSelezionato;
+    film.tipo = tempTipo;
 
     saveToLocalStorage();
     applyAllFilters();
