@@ -988,22 +988,23 @@ function populateAdvancedFilters() {
 function applyAllFilters() {
     let base = films;
 
+    // sezione Preferiti → la base diventa solo i preferiti
     if (currentSection === "preferiti") {
         base = base.filter(f => f.preferito === true);
     }
     
     if (currentSection === "film") {
-    base = base.filter(f => !f.tipo || f.tipo === "film");
-} else if (currentSection === "serie") {
-    base = base.filter(f => f.tipo === "serie");
-}
+        base = base.filter(f => f.tipo === "film");
+    } else if (currentSection === "serie") {
+        base = base.filter(f => f.tipo === "serie");
+  }
 
     let result = base.slice();
 
     // 1. STATO
-if (filtroStato && filtroStato !== "Tutti") {
-    result = result.filter(f => f.stato === filtroStato);
-}
+    if (filtroStato) {
+        result = result.filter(f => f.stato === filtroStato);
+    }
 
     // 2. GENERE (OR interno)
     if (generiSelezionati.length > 0) {
@@ -1012,12 +1013,12 @@ if (filtroStato && filtroStato !== "Tutti") {
         );
     }
 
-    // 3. CATEGORIA
-    // if (categorieSelezionate.length > 0) {
-    //    result = result.filter(f =>
-    //        f.categoria_personale.some(c => categorieSelezionate.includes(c))
-    //    );
-    // }
+    // 3. CATEGORIA (OR interno)
+    if (categorieSelezionate.length > 0) {
+        result = result.filter(f =>
+            f.categoria_personale.some(c => categorieSelezionate.includes(c))
+        );
+    }
 
     // 4. FILTRI AVANZATI
     var sort = sortFilter.value;
@@ -1046,6 +1047,8 @@ if (filtroStato && filtroStato !== "Tutti") {
     }
 
     // 5. ORDINAMENTO
+var sort = sortFilter.value;
+
 if (sort === "addedAt-desc") {
     result.sort(function (a, b) {
         return (b.addedAt || 0) - (a.addedAt || 0);
@@ -1072,14 +1075,14 @@ if (sort === "addedAt-desc") {
     });
 } else if (sort === "valutazione-desc") {
     result.sort(function (a, b) {
-        var va = (a.valutazione === null || a.valutazione === undefined) ? -1 : a.valutazione;
-        var vb = (b.valutazione === null || b.valutazione === undefined) ? -1 : b.valutazione;
+        var va = a.valutazione ?? -1;
+        var vb = b.valutazione ?? -1;
         return vb - va;
     });
 } else if (sort === "valutazione-asc") {
     result.sort(function (a, b) {
-        var va = (a.valutazione === null || a.valutazione === undefined) ? 999 : a.valutazione;
-        var vb = (b.valutazione === null || b.valutazione === undefined) ? 999 : b.valutazione;
+        var va = a.valutazione ?? 999;
+        var vb = b.valutazione ?? 999;
         return va - vb;
     });
 }
@@ -1106,7 +1109,7 @@ document.querySelectorAll("#statoButtons .stato-btn")
     .forEach(b => b.classList.remove("active"));
 
 // simula click su "Tutti"
-const btnTutti = document.querySelector('#statoButtons .stato-btn[data-value="Tutti"]');
+const btnTutti = document.querySelector('#statoButtons .stato-btn[data-value=""]');
 if (btnTutti) btnTutti.click();   
     
     // reset UI del blocco Genere
