@@ -71,13 +71,17 @@
     <div class="filter-row" id="row-ordina-reset">
 
         <div class="sort-wrapper">
-            <label for="sortFilter">Ordina:</label>
-            <select id="sortFilter">
-                <option value="">Titolo</option>
-                <option value="titolo">Titolo (A-Z)</option>
-                <option value="anno">Anno (dal più recente)</option>
-                <option value="valutazione">Valutazione (alta → bassa)</option>
-            </select>
+          <label for="sortFilter">Ordina per</label>
+          <select id="sortFilter">
+            <option value="addedAt-desc">Più recenti aggiunti</option>
+            <option value="addedAt-asc">Meno recenti aggiunti</option>
+            <option value="titolo-asc">Titolo A-Z</option>
+            <option value="titolo-desc">Titolo Z-A</option>
+            <option value="anno-desc">Anno più recente</option>
+            <option value="anno-asc">Anno più vecchio</option>
+            <option value="valutazione-desc">Valutazione alta-bassa</option>
+            <option value="valutazione-asc">Valutazione bassa-alta</option>
+          </select>
         </div>
 
         <button id="resetFilters" class="filter-btn">Reset filtri</button>
