@@ -1104,6 +1104,7 @@ resetFilters.addEventListener("click", function () {
         .forEach(b => b.classList.remove('active-filter'));
 
     sortFilter.value = "addedAt-desc";
+    sortFilter.dispatchEvent(new Event('change'));
     searchInput.value = "";
     
     // reset stato → rimuovi active da tutti
