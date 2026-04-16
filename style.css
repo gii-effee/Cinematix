@@ -1,169 +1,135 @@
-/* --- BASE CINEMA DARK PREMIUM --- */
-:root {
-  --bg: #111111;
-  --surface: #181818;
-  --surface-2: #1f1f1f;
-  --surface-3: #26211f;
-  --border: #332b28;
-
-  --text: #f4efe8;
-  --text-muted: #c7beb4;
-  --text-soft: #8f847a;
-
-  --accent: #8f2332;
-  --accent-hover: #a52b3d;
-  --accent-soft: rgba(143, 35, 50, 0.16);
-
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.28);
-  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.34);
-
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
-
-  --transition: 0.22s ease;
+/* --- BASE --- */
+body {
+    margin: 0;
+    background: #1b1b1b;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
 }
 
-body {
-  margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(143, 35, 50, 0.10), transparent 28%),
-    radial-gradient(circle at top right, rgba(255, 214, 170, 0.05), transparent 24%),
-    linear-gradient(180deg, #121212 0%, #0f0f0f 100%);
-  color: var(--text);
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+header {
+    padding: 20px;
+    background: #242424;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #3a3a3a;
 }
 
 #searchInput {
-  padding: 11px 14px;
-  width: 240px;
-  border-radius: 12px;
-  border: 1px solid rgba(199, 190, 180, 0.14);
-  background: rgba(255, 255, 255, 0.035);
-  color: var(--text);
+    padding: 10px;
+    width: 240px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #333;
+    color: #fff;
 }
 
-/* --- FILTRI CINEMA DARK PREMIUM --- */
+/* --- FILTRI (VERSIONE PULITA E DEFINITIVA) --- */
 #filters {
-  margin: 28px 32px 18px;
-  padding: 22px;
-  background: linear-gradient(180deg, rgba(31, 31, 31, 0.94), rgba(24, 24, 24, 0.96));
-  border: 1px solid rgba(199, 190, 180, 0.10);
-  border-radius: 22px;
-  box-shadow: var(--shadow-soft);
+    padding: 20px;
 }
 
 #filters h2 {
-  margin-top: 26px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: 0.3px;
+    margin-top: 24px;
+    margin-bottom: 8px;
 }
 
 #filters .filters-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 26px;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 8px;
 }
 
 #filters .filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .filter-btn {
-  background: rgba(255, 255, 255, 0.035);
-  color: var(--text-muted);
-  border: 1px solid rgba(199, 190, 180, 0.14);
-  padding: 10px 14px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), color var(--transition), transform 0.12s ease;
+    background: #3a3a3a;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .filter-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(199, 190, 180, 0.22);
-  color: var(--text);
+    background: #b02a37;
+    border-color: #b02a37;
 }
 
 .filter-btn.active-filter {
-  background: linear-gradient(180deg, var(--accent-hover), var(--accent)) !important;
-  color: #fff !important;
-  border-color: transparent !important;
-  box-shadow: 0 10px 22px rgba(143, 35, 50, 0.22);
+    background-color: #b02a37 !important;
+    color: #fff !important;
+    border-color: #b02a37 !important;
 }
 
 #resetFilters {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(199, 190, 180, 0.14);
+    background: #444;
+    border-color: #666;
 }
 
 #resetFilters:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(199, 190, 180, 0.24);
-  color: var(--text);
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
 }
 
 /* --- FILTRI AVANZATI: SELECT --- */
 #filters select {
-  background: rgba(255, 255, 255, 0.035);
-  color: var(--text);
-  border: 1px solid rgba(199, 190, 180, 0.14);
-  border-radius: 12px;
-  padding: 10px 14px;
-  font-size: 14px;
+    background: #2f2f2f;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
 }
 
 #filters select option {
-  background: #1f1f1f;
-  color: var(--text);
+    background: #2f2f2f;
+    color: #fff;
 }
 
 #filters select + select {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 /* --- LISTA FILM --- */
 #filmList {
-  padding: 20px 32px 32px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 22px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
 
 .film-card {
-  background: linear-gradient(180deg, rgba(38, 33, 31, 0.92), rgba(24, 24, 24, 0.98));
-  padding: 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(199, 190, 180, 0.10);
-  cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: var(--shadow-card);
+    background: #262626;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #3a3a3a;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .film-card:hover {
-  background: linear-gradient(180deg, rgba(44, 37, 35, 0.96), rgba(29, 29, 29, 1));
-  border-color: rgba(165, 43, 61, 0.72);
-  transform: translateY(-4px);
+    background: #2f2f2f;
+    border-color: #b02a37;
 }
 
 .tag {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-muted);
-  padding: 5px 9px;
-  border-radius: 999px;
-  margin-right: 6px;
-  margin-top: 6px;
-  font-size: 12px;
-  border: 1px solid rgba(199, 190, 180, 0.08);
+    display: inline-block;
+    background: #444;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    font-size: 12px;
 }
 
 /* --- MODAL BASE --- */
@@ -188,20 +154,6 @@ body {
     box-sizing: border-box;
 }
 
-#modalContent,
-#editModalContent {
-  background: linear-gradient(180deg, rgba(31, 31, 31, 0.98), rgba(22, 22, 22, 0.98));
-  padding: 24px 34px;
-  border-radius: 18px;
-  width: 90%;
-  max-width: 600px;
-  max-height: calc(100vh - 40px);
-  overflow-y: auto;
-  border: 1px solid rgba(199, 190, 180, 0.10);
-  box-shadow: var(--shadow-soft);
-  box-sizing: border-box;
-}
-
 #modalContent label,
 #editModalContent label {
     display: block;
@@ -213,7 +165,7 @@ body {
 #editModalContent h2 {
     font-size: 22px;
     margin-bottom: 12px;
-    color: var(--text);
+    color: #ffffff;
     font-weight: 600;
 }
 
@@ -222,7 +174,7 @@ body {
     font-size: 15px;
     margin-top: 18px;
     margin-bottom: 6px;
-    color: var(--text-muted);
+    color: #d0d0d0;
     font-weight: 500;
 }
 
@@ -240,158 +192,166 @@ body {
     border-bottom: none;
 }
 
+/* --- INPUT MODAL --- */
+#editModalContent input:focus,
+#editModalContent textarea:focus {
+    border-color: #b02a37;
+    box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
+    outline: none;
+}
+
 /* --- TAG INPUT --- */
 .tag-input {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 6px 8px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(199, 190, 180, 0.14);
-  border-radius: 12px;
-  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px 6px;
+    background: #2f2f2f;
+    border: 1px solid #555;
+    border-radius: 8px;
+    transition: 0.2s;
 }
 
 .tag-input:focus-within {
-  border-color: rgba(165, 43, 61, 0.95);
-  box-shadow: 0 0 0 3px rgba(143, 35, 50, 0.20);
+    border-color: #b02a37;
+    box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
 }
 
 .tag-input input {
-  border: none;
-  background: transparent;
-  color: var(--text);
-  padding: 4px;
-  min-width: 120px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    padding: 4px;
+    min-width: 120px;
 }
 
 .tag-pill {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(199, 190, 180, 0.10);
-  border-radius: 999px;
-  padding: 6px 10px;
-  font-size: 13px;
-  color: var(--text-muted);
-  gap: 6px;
+    display: inline-flex;
+    align-items: center;
+    background: #3a3a3a;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 13px;
+    gap: 6px;
 }
 
 .tag-pill button {
-  color: var(--text-soft);
-  background: transparent;
-  border: none;
-  padding: 0;
-  font-size: 14px;
-  cursor: pointer;
-  transition: color var(--transition);
+    color: #aaa;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .tag-pill button:hover {
-  color: var(--text);
+    color: #fff;
 }
 
 /* --- BOTTONI MODAL --- */
 .modal-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
 }
 
 .modal-buttons button,
-#modalContent .modal-buttons button,
-#editModalContent .modal-buttons button {
-  flex: 1;
-  padding: 10px 14px;
-  font-size: 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(199, 190, 180, 0.12);
-  cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), color var(--transition), transform 0.12s ease;
+#modalContent .modal-buttons button {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.22s ease, border-color 0.22s ease, transform 0.12s ease;
 }
 
-.modal-buttons button:not(.primary-btn) {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-muted);
-}
-
-.modal-buttons button:not(.primary-btn):hover {
-  background: rgba(255, 255, 255, 0.09);
-  color: var(--text);
-}
-
-.modal-buttons .primary-btn,
 #saveFilmBtn {
-  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 8px 18px rgba(143, 35, 50, 0.20);
+    background: #b02a37;
+    color: #fff;
 }
 
-.modal-buttons .primary-btn:hover,
 #saveFilmBtn:hover {
-  filter: brightness(1.05);
+    background: #8c1f2c;
 }
 
 #cancelEditBtn {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-muted);
-  border: 1px solid rgba(199, 190, 180, 0.12);
+    background: #555;
+    color: #eee;
+}
+
+#modalContent .modal-buttons button:not(.primary-btn) {
+    background: #555;
+    color: #eee;
 }
 
 #cancelEditBtn:hover {
-  background: rgba(255, 255, 255, 0.09);
-  color: var(--text);
+    background: #666;
 }
 
-/* --- BOTTONI STATO, RATING E TIPO ---*/
+#modalContent .modal-buttons button:not(.primary-btn):hover {
+    background: #666;
+}
+
+/* --- BOTTONI STATO MODAL --- */
+#statoButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
 
 .stato-btn,
-.rating-btn,
-.tipo-btn {
-  padding: 8px 12px;
-  border: 1px solid rgba(199, 190, 180, 0.14);
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--text-muted);
-  transition: background var(--transition), border-color var(--transition), color var(--transition), transform 0.12s ease;
+.tipo-btn {  
+    padding: 6px 12px;
+    border: 1px solid #555;
+    background: #333;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #eee;
+    transition: 0.2s;
 }
 
 .stato-btn:hover:not(.active),
-.rating-btn:hover:not(.active),
 .tipo-btn:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(199, 190, 180, 0.22);
-  color: var(--text);
+    background: #444;
+    border-color: #666;
+    color: #fff;
 }
 
 .stato-btn.active,
-.rating-btn.active,
 .tipo-btn.active {
-  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
-  border-color: transparent;
-  color: #fff;
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+/* --- RATING BUTTONS --- */
+.rating-btn {
+    background: #333;
+    border: 1px solid #555;
+    color: #eee;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 /* --- TEXTAREA MODAL --- */
-#modalContent textarea,
-#editModalContent textarea {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(199, 190, 180, 0.14);
-  color: var(--text);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 14px;
-  line-height: 1.4;
-  min-height: 70px;
-  max-height: 160px;
-  resize: vertical;
-  overflow-y: auto;
+#modalContent textarea {
+    width: 100%;
+    background: #2f2f2f;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 14px;
+    line-height: 1.3;
+    min-height: 60px;
+    max-height: 140px;
+    resize: vertical;
+    overflow-y: auto;
 }
 
 /* --- HOVER GLOBALE BOTTONI --- */
@@ -403,181 +363,377 @@ button:hover {
     transform: translateY(-1px);
 }
 
-/* --- MODAL FILTRI / FILTER BLOCK --- */
-.filter-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(5, 5, 5, 0.72);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  padding: 12px 20px 20px;
-  pointer-events: none;
+/* --- DASHBOARD MODERNA: FILTRI CHIARI E LEGGIBILI --- */
+
+/* Contenitore filtri */
+#filters {
+    padding: 20px;
 }
 
-.filter-modal.fade-in {
-  opacity: 1;
-  pointer-events: auto;
+/* Titoli delle sezioni */
+#filters h2 {
+    margin-top: 26px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #f2f2f2;
+    letter-spacing: 0.3px;
 }
 
-.filter-modal-content {
-  background: linear-gradient(180deg, rgba(31, 31, 31, 0.98), rgba(22, 22, 22, 0.98));
-  border: 1px solid rgba(199, 190, 180, 0.10);
-  box-shadow: var(--shadow-soft);
-  border-radius: 18px;
-  padding: 18px;
-  width: 90%;
-  max-width: 420px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  height: 400px;
+/* Header con titolo + reset */
+#filters .filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 26px;
+    margin-bottom: 10px;
 }
 
-.filter-modal-content h2 {
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+/* Righe dei filtri */
+#filters .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
 }
 
-.filter-modal-options {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  overflow-y: auto;
-  margin-top: 10px;
-  margin-bottom: 0;
-  padding-bottom: 6px;
+/* --- BOTTONI (Stato + Categorie + Reset) --- */
+.filter-btn,
+#resetFilters {
+    background: #3a3a3a;
+    color: #fff;
+    border: 1px solid #666;
+    padding: 9px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
 }
 
-.filter-option-btn {
-  width: 100%;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(199, 190, 180, 0.12);
-  border-radius: 10px;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 14px;
-  transition: background var(--transition), border-color var(--transition), color var(--transition), transform 0.12s ease;
+.filter-btn:hover,
+#resetFilters:hover {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
 }
 
-.filter-option-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(199, 190, 180, 0.22);
-  color: var(--text);
+.filter-btn.active-filter {
+    background-color: #b02a37 !important;
+    border-color: #b02a37 !important;
+    color: #fff !important;
 }
 
-.filter-option-btn.active {
-  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
-  border-color: transparent;
-  color: #fff;
-  box-shadow: 0 8px 18px rgba(143, 35, 50, 0.20);
+/* Reset più visibile */
+#resetFilters {
+    background: #4a4a4a;
+    border-color: #777;
 }
 
-.filter-option-btn:active {
-  transform: scale(0.97);
+/* --- SELECT MODERNI (Filtri avanzati) --- */
+#filters select {
+    background: #3a3a3a;
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    min-width: 160px;
+    transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.12s ease;
 }
 
-.filter-modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 12px;
+#filters select:hover {
+    border-color: #b02a37;
 }
 
-.filter-modal-actions button {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background var(--transition), border-color var(--transition), color var(--transition), transform 0.12s ease;
+#filters select:focus {
+    border-color: #b02a37;
+    box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.25);
+    outline: none;
 }
 
-.filter-modal-actions .annulla-btn {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-muted);
-  border: 1px solid rgba(199, 190, 180, 0.12);
+#filters select option {
+    background: #2f2f2f;
+    color: #fff;
 }
 
-.filter-modal-actions .annulla-btn:hover {
-  background: rgba(255, 255, 255, 0.09);
-  color: var(--text);
+/* Spaziatura tra select */
+#filters select + select {
+    margin-left: 12px;
 }
 
-.filter-modal-actions .applica-btn {
-  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
-  color: #fff;
-  border: none;
-  box-shadow: 0 8px 18px rgba(143, 35, 50, 0.20);
-}
-
-.filter-modal-actions .applica-btn:hover {
-  filter: brightness(1.05);
-}
-
-.filter-modal-actions button:active {
-  transform: scale(0.97);
+/* Hover globale bottoni */
+button:hover {
+    transform: translateY(-1px);
 }
 
 .filter-block {
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(199, 190, 180, 0.12);
-  padding: 10px 14px;
-  border-radius: 14px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  transition: background var(--transition), border-color var(--transition), transform 0.12s ease;
-  min-height: 42px;
+    background: #2f2f2f;
+    border: 1px solid #555;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.filter-block:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(199, 190, 180, 0.22);
-}
-
-.filter-block.active {
-  border-color: rgba(165, 43, 61, 0.75);
-  box-shadow: inset 0 0 0 1px rgba(165, 43, 61, 0.18);
+.filter-block-title {
+    font-size: 14px;
+    color: #ccc;
 }
 
 .filter-block-value {
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  flex: 1;
-  text-transform: capitalize;
-  color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
 }
 
-.filter-block:focus-within {
-  outline: none;
-  border-color: rgba(165, 43, 61, 0.75);
-  box-shadow: 0 0 0 3px rgba(143, 35, 50, 0.16);
+.filter-block-reset {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #b02a37;
 }
 
-@media (max-width: 900px) {
-  .filter-block {
+.filter-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-  }
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-modal-content {
+    background: #242424;
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 420px;
+}
+
+.filter-option-btn {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.filter-option-btn:hover {
+    background: #b02a37;
+    border-color: #b02a37;
+}
+
+/* MODAL FILTRI — VERSIONE DEFINITIVA */
+.filter-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    padding: 6px 20px 20px 20px;
+}
+
+.filter-modal.fade-in {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.filter-modal-content {
+    background: #242424;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 420px;
+    border: 1px solid #3a3a3a;
+}
+
+.filter-modal-content h2 {
+    margin: 0 0 14px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.filter-modal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.filter-option-btn {
+    padding: 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 6px;
+    color: #eee;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.filter-option-btn:hover {
+    background: #b02a37;
+    border-color: #b02a37;
+}
+
+.filter-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;              /* spazio tra Annulla e Applica */
+    margin-top: 10px;       /* un po' di respiro sopra */
+}
+
+.filter-modal-actions button {
+    padding: 10px 16px;     /* più comodi da cliccare */
+    background: #555;
+    border: none;
+    border-radius: 6px;
+    color: #eee;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-modal-actions button:hover {
+    background: #b02a37;
+    color: #fff;
+}
+
+.filter-modal-actions button {
+    padding: 8px 14px;
+    background: #555;
+    border: none;
+    border-radius: 6px;
+    color: #eee;
+    cursor: pointer;
+}
+
+.filter-modal-actions button:hover {
+    background: #666;
+}
+
+/* BLOCCO FILTRO — VERSIONE DEFINITIVA */
+.filter-block {
+    background: #2f2f2f;
+    border: 1px solid #555;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;   /* CENTRA TUTTO */
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s;
+    min-height: 38px;
+}
+
+.filter-block:hover {
+    border-color: #b02a37;
+}
+
+.filter-block-value {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    flex: 1;                   /* CENTRA IL TESTO ANCHE CON LA X */
+}
+
+.filter-block-reset {
+    cursor: pointer;
+    color: #b02a37;
+    font-size: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .filter-block {
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
-  .filter-block {
-    width: 100%;
-    padding: 10px 12px;
-  }
+    .filter-block {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+.filter-modal-actions button {
+    padding: 8px 14px;
+    background: #555;
+    border: none;
+    border-radius: 6px;
+    color: #eee;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-modal-actions button:hover {
+    background: #b02a37;
+    color: #fff;
+}
+
+.filter-modal-actions button:active {
+    background: #8c1f2c;
+    transform: scale(0.97);
+}
+
+.filter-modal-options {
+    margin-top: 10px;     /* prima era troppo attaccato */
+    margin-bottom: 14px;  /* prima era troppo distante */
+}
+
+.filter-modal-actions {
+    margin-top: 6px;      /* riduce lo spazio enorme */
+}
+
+.filter-modal-content {
+    padding: 18px;   /* prima era 20–26 */
+}
+
+.filter-modal-content h2 {
+    margin-bottom: 10px;
+}
+
+.filter-modal-options {
+    gap: 6px;
+    margin-bottom: 0;
+    padding-bottom: 6px;
+}
+
+.filter-modal-actions {
+    margin-top: 0;
+}
+
+.filter-option-btn:active {
+    transform: scale(0.97);
+}
+
+.filter-block-value {
+    text-transform: capitalize;
+    color: #e6e6e6;
+}
+
+.filter-block.active {
+    border-color: #b02a37;
+}
+
+.filter-option-btn.active {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
 }
 
 #modalEditGenere .filter-modal-actions {
@@ -602,29 +758,21 @@ button:hover {
 #editModalContent input[type="text"],
 #editModalContent input[type="number"] {
     width: 100%;
-    padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.035);
-    border: 1px solid rgba(199, 190, 180, 0.14);
-    border-radius: 12px;
-    color: var(--text);
+    padding: 8px 10px;
+    background: #2f2f2f;
+    border: 1px solid #555;
+    border-radius: 8px;
+    color: #fff;
     font-size: 14px;
     box-sizing: border-box;
 }
 
-#searchInput:focus,
-#sortFilter:focus,
-#filters select:focus,
-#categoriaSearchInput:focus,
-#genereSearchInput:focus,
-#registaSearchInput:focus,
-#attoreSearchInput:focus,
-#modalContent textarea:focus,
-#editModalContent textarea:focus,
+/* Focus coerente con gli altri campi */
 #editModalContent input[type="text"]:focus,
 #editModalContent input[type="number"]:focus {
+    border-color: #b02a37;
+    box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
     outline: none;
-    border-color: rgba(165, 43, 61, 0.95);
-    box-shadow: 0 0 0 3px rgba(143, 35, 50, 0.20);
 }
 
 /* Allineamento Titolo + Anno */
@@ -638,6 +786,26 @@ button:hover {
     flex: 1;
 }
 
+/* Salva = rosso */
+#modalContent .primary-btn {
+    background: #b02a37;
+    color: #fff;
+}
+
+#modalContent .primary-btn:hover {
+    background: #8c1f2c;
+}
+
+/* Modifica + Chiudi = scuri */
+#modalContent .modal-buttons button:not(.primary-btn) {
+    background: #555;
+    color: #eee;
+}
+
+#modalContent .modal-buttons button:not(.primary-btn):hover {
+    background: #666;
+}
+
 /* Griglia 2×2 per le info del film */
 .modal-grid {
     display: grid;
@@ -645,19 +813,19 @@ button:hover {
     gap: 20px 30px;
     margin-bottom: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(199, 190, 180, 0.10);
+    border-bottom: 1px solid #333;
 }
 
 .modal-grid-item h3 {
     margin-bottom: 6px;
     font-size: 15px;
-    color: var(--text-muted);
+    color: #d0d0d0;
 }
 
 .modal-grid-item p {
     margin: 0;
     line-height: 1.4;
-    color: var(--text);
+    color: #eee;
 }
 
 /* Responsive: su mobile torna a una colonna */
@@ -667,6 +835,22 @@ button:hover {
     }
 }
 
+/* Commento nel modal dettagli — larghezza armonizzata */
+#modalContent textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: #2f2f2f;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 14px;
+    line-height: 1.3;
+    min-height: 70px;
+    resize: vertical;
+}
+
 /* Allineamento estetico con la griglia */
 .modal-section textarea {
     margin-top: 6px;
@@ -674,6 +858,56 @@ button:hover {
 
 .filter-modal:not(.fade-in) {
     pointer-events: none !important;
+}
+
+/* Forza i bottoni STATO a restare rossi quando attivi */
+#modalContent .modal-section .stato-btn.active {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+#editModalContent .stato-btn.active {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+/* Forza i bottoni STATO a restare rossi anche in hover */
+#modalContent .stato-btn.active:hover {
+    background: #b02a37 !important;
+    border-color: #b02a37 !important;
+    color: #fff !important;
+}
+
+/* Hover solo se NON è attivo */
+.rating-btn:hover:not(.active) {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+/* Attivo: resta rosso sempre, anche in hover */
+.rating-btn.active,
+.rating-btn.active:hover {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+/* Hover solo se NON è attivo (rating) */
+#modalContent .modal-section .rating-btn:hover:not(.active) {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+/* Attivo: resta rosso sempre, anche in hover (rating) */
+#modalContent .modal-section .rating-btn.active,
+#modalContent .modal-section .rating-btn.active:hover {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
 }
 
 /* Effetto pressione */
@@ -702,25 +936,173 @@ button:hover {
     transform: scale(0.96);
 }
 
-.filter-option-btn:focus:not(:focus-visible),
-.filter-modal-actions button:focus:not(:focus-visible) {
-  outline: none;
-  box-shadow: none;
+/* --- BOTTONI ANNULLA / APPLICA NEI MODAL FILTRO --- */
+.filter-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;                 /* spazio tra i bottoni */
+    margin-top: 14px;          /* respiro sopra */
 }
 
-#categoriaSearchInput,
-#genereSearchInput,
+.filter-modal-actions button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.22s ease, 
+                border-color 0.22s ease, 
+                transform 0.12s ease;
+}
+
+/* ANNULLA */
+.filter-modal-actions button:first-child {
+    background: #555;
+    color: #eee;
+}
+
+.filter-modal-actions button:first-child:hover {
+    background: #666;
+}
+
+/* APPLICA */
+.filter-modal-actions button:last-child {
+    background: #b02a37;
+    color: #fff;
+}
+
+.filter-modal-actions button:last-child:hover {
+    background: #8c1f2c;
+}
+
+/* Effetto pressione */
+.filter-modal-actions button:active {
+    transform: scale(0.96);
+}
+
+/* --- BOTTONI ANNULLA / APPLICA — MODAL FILTRI (Stato, Genere, Categoria) --- */
+.filter-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;                 /* spazio tra i bottoni */
+    margin-top: 14px;          /* respiro sopra */
+}
+
+.filter-modal-actions button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.22s ease,
+                border-color 0.22s ease,
+                transform 0.12s ease;
+}
+
+/* --- ANNULLA (sempre grigio in tutti i modal filtro) --- */
+.filter-modal-actions button.annulla-btn {
+    background: #555;
+    color: #eee;
+}
+
+.filter-modal-actions button.annulla-btn:hover {
+    background: #666;
+}
+
+/* --- APPLICA (rosso, come Salva) --- */
+.filter-modal-actions button.applica-btn {
+    background: #b02a37;
+    color: #fff;
+}
+
+.filter-modal-actions button.applica-btn:hover {
+    background: #8c1f2c;
+}
+
+/* Effetto pressione */
+.filter-modal-actions button:active {
+    transform: scale(0.96);
+}
+
+.filter-option-btn:focus,
+.filter-modal-actions button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#modalFiltroCategoria input:focus {
+    border-color: #b02a37;
+    box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
+    outline: none;
+}
+
+#categoriaSearchInput {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #2f2f2f;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+#genereSearchInput {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #2f2f2f;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+#genereSearchInput:focus {
+    border-color: #b02a37;
+    box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
+    outline: none;
+}
+
 #registaSearchInput,
 #attoreSearchInput {
     width: 100%;
-    padding: 10px 12px;
+    padding: 8px 10px;
     margin-bottom: 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(199, 190, 180, 0.14);
-    background: rgba(255, 255, 255, 0.035);
-    color: var(--text);
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #2f2f2f;
+    color: #fff;
     font-size: 14px;
     box-sizing: border-box;
+}
+
+#registaSearchInput:focus,
+#attoreSearchInput:focus {
+    border-color: #b02a37;
+    box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
+    outline: none;
+}
+
+/* Modal filtro: altezza fissa */
+.filter-modal-content {
+    height: 420px;              /* altezza fissa */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* La lista delle opzioni scrolla dentro */
+.filter-modal-options {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.filter-modal-content {
+    height: 400px;
 }
 
 /* Modal filtro STATO: altezza automatica */
@@ -730,7 +1112,41 @@ button:hover {
 }
 
 #editModalContent {
+    background: #242424;
+    padding: 24px 34px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 0 18px rgba(0,0,0,0.45);
+    box-sizing: border-box;
+}
+
+#editModalContent h2 {
+    padding: 0 0 10px 0;
+    margin: 0 0 14px 0;
+    border-bottom: 1px solid #333;
+}
+
+#modalContent,
+#editModalContent {
+    max-height: calc(100vh - 40px);
+}
+
+#editModalContent {
     margin-top: 0;
+}
+
+#editModalContent .modal-buttons {
+    margin-bottom: 6px;
+}
+
+#editModalContent .modal-buttons {
+    padding: 10px 0 0 0;
+    border-top: 1px solid #333;
+    background: #242424;
 }
 
 #editModalContent .modal-section {
@@ -744,7 +1160,53 @@ button:hover {
     overflow-y: auto;
 }
 
-/* --- MODAL DETTAGLIO / EDIT --- */
+/* --- FIX CARD FILM (VERSIONE 0.4.3) --- */
+.film-card {
+    background: #262626 !important;
+    border: 1px solid #3a3a3a !important;
+    padding: 16px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35) !important;
+    transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+}
+
+.film-card:hover {
+    background: #2f2f2f !important;
+    border-color: #b02a37 !important;
+    transform: translateY(-3px) !important;
+}
+
+.film-card h3 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.film-card p {
+    margin: 4px 0;
+    color: #ccc;
+}
+
+.film-card .tag {
+    background: #444;
+    color: #eee;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+#modalContent {
+    background: #242424;
+    padding: 24px 34px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 0 18px rgba(0,0,0,0.45);
+}
+
 #editModalContent label {
     margin-bottom: 4px;
 }
@@ -764,6 +1226,12 @@ button:hover {
     .edit-two-cols {
         grid-template-columns: 1fr;
     }
+}
+
+.edit-two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 .edit-col {
@@ -794,30 +1262,30 @@ button:active,
 }
 
 .danger-btn {
-  background: linear-gradient(180deg, #8e2a36, #721f2a);
-  color: #fff;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  padding: 10px 14px;
-  cursor: pointer;
+    background: #7a1f1f;
+    color: #fff;
 }
 
 .danger-btn:hover {
-  filter: brightness(1.06);
+    background: #a62828;
+}
+
+.danger-btn {
+    background: #7a1f1f;
+    color: #fff;
+}
+
+.danger-btn:hover {
+    background: #a62828;
 }
 
 .cancel-btn {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-muted);
-  border: 1px solid rgba(199, 190, 180, 0.12);
-  border-radius: 12px;
-  padding: 10px 14px;
-  cursor: pointer;
+    background: #555;
+    color: #eee;
 }
 
 .cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.09);
-  color: var(--text);
+    background: #666;
 }
 
 /* --- MODAL ELIMINAZIONE (stile identico ai modal principali) --- */
@@ -835,16 +1303,16 @@ button:active,
 }
 
 .modal-box {
-  background: linear-gradient(180deg, rgba(31, 31, 31, 0.98), rgba(22, 22, 22, 0.98));
-  padding: 24px 34px;
-  border-radius: 18px;
-  width: 90%;
-  max-width: 480px;
-  border: 1px solid rgba(199, 190, 180, 0.10);
-  box-shadow: var(--shadow-soft);
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+    background: #242424;
+    padding: 24px 34px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 480px;
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 0 18px rgba(0,0,0,0.45);
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 #modalDelete.fade-in .modal-box {
@@ -854,8 +1322,22 @@ button:active,
 
 .modal-delete-text {
     margin-bottom: 20px;
-    color: var(--text-muted);
+    color: #ccc;
     font-size: 15px;
+}
+
+/* Bottoni coerenti */
+.cancel-btn {
+    background: #555;
+    color: #eee;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background: #666;
 }
 
 /* --- Rifiniture modal eliminazione --- */
@@ -867,12 +1349,21 @@ button:active,
 #modalDeleteContent h2 {
     margin: 0 0 10px 0;
     padding-bottom: 8px;
-    color: var(--text);
-    border-bottom: 1px solid rgba(199, 190, 180, 0.10);
+    border-bottom: 1px solid #333;
 }
 
 #modalDeleteContent .modal-buttons {
     margin-top: 14px;
+}
+
+#modalDeleteContent .primary-btn {
+    background: #b02a37 !important;
+    color: #fff !important;
+    border: none;
+}
+
+#modalDeleteContent .primary-btn:hover {
+    background: #8c1f2c !important;
 }
 
 @keyframes delete-shake {
@@ -891,8 +1382,148 @@ button:active,
     outline: none;
 }
 
+html:focus,
+body:focus {
+    outline: none !important;
+}
+
+#modalDelete:focus {
+    outline: none !important;
+}
+
 #modal.no-animation #modalContent {
     animation: none !important;
+}
+
+#editModalContent .stato-btn:focus {
+    background: #333 !important;
+    border-color: #555 !important;
+    color: #eee !important;
+    transform: none !important;
+}
+
+#editModalContent .stato-btn {
+    outline: none !important;
+}
+
+#editModalContent .stato-btn:focus {
+    outline: none !important;
+    background: #333 !important;
+    border-color: #555 !important;
+    color: #eee !important;
+}
+
+#modalFiltroRegista .filter-modal-content,
+#modalFiltroAttore .filter-modal-content {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#modalFiltroRegista .filter-modal-options,
+#modalFiltroAttore .filter-modal-options {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 10px;
+    gap: 6px;
+    padding-bottom: 6px;
+}
+
+#modalFiltroRegista .filter-modal-actions,
+#modalFiltroAttore .filter-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+#modalFiltroRegista .filter-modal-actions button,
+#modalFiltroAttore .filter-modal-actions button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.22s ease,
+                border-color 0.22s ease,
+                transform 0.12s ease;
+}
+
+#modalFiltroRegista .annulla-btn,
+#modalFiltroAttore .annulla-btn {
+    background: #555;
+    color: #eee;
+}
+
+#modalFiltroRegista .annulla-btn:hover,
+#modalFiltroAttore .annulla-btn:hover {
+    background: #666;
+}
+
+#modalFiltroRegista .applica-btn,
+#modalFiltroAttore .applica-btn {
+    background: #b02a37;
+    color: #fff;
+}
+
+#modalFiltroRegista .applica-btn:hover,
+#modalFiltroAttore .applica-btn:hover {
+    background: #8c1f2c;
+}
+
+#modalFiltroRegista .filter-option-btn,
+#modalFiltroAttore .filter-option-btn {
+    padding: 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 6px;
+    color: #eee;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+#modalFiltroRegista .filter-option-btn:hover,
+#modalFiltroAttore .filter-option-btn:hover {
+    background: #b02a37;
+    border-color: #b02a37;
+}
+
+#modalFiltroRegista .filter-option-btn.active,
+#modalFiltroAttore .filter-option-btn.active {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+.filter-modal {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.filter-modal.fade-in {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#modalFiltroRegista,
+#modalFiltroAttore {
+    opacity: 0;
+}
+
+#modalFiltroRegista.fade-in,
+#modalFiltroAttore.fade-in {
+    opacity: 1;
+}
+
+#modalFiltroRegista .filter-modal-content,
+#modalFiltroAttore .filter-modal-content {
+    background: #242424;
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 0 18px rgba(0,0,0,0.45);
+    border-radius: 10px;
+    padding: 20px;
 }
 
 .filter-row-two-cols {
@@ -941,6 +1572,18 @@ button:active,
     transform: scale(1.2);
 }
 
+#modalContent {
+    position: relative;
+}
+
+textarea:focus,
+input:focus {
+    outline: none !important;
+    border-color: #d9534f !important; /* rosso del sito */
+    box-shadow: 0 0 0 2px rgba(217, 83, 79, 0.3) !important; /* alone rosso elegante */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 /* X più spessa e più visibile */
 .filter-block-reset {
     width: 28px;
@@ -972,6 +1615,11 @@ button:active,
     outline: none;
 }
 
+.filter-block:focus-within {
+    outline: none;
+    border-color: transparent;
+}
+
 #row-search-add {
     display: flex;
     align-items: center;
@@ -992,102 +1640,77 @@ button:active,
     margin-bottom: 20px;
 }
 
+.sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 #main-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: 18px 32px 14px;
-  background:
-    linear-gradient(180deg, rgba(10, 10, 10, 0.96), rgba(14, 14, 14, 0.88));
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(199, 190, 180, 0.08);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+    display: flex;
+    align-items: center;
+    padding: 20px 40px; /* <-- questo crea il margine dal bordo */
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#header-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.site-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    cursor: pointer;
+    color: var(--accent-color);
+}
+
+#main-nav {
+    display: flex;
+    gap: 24px;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 6px 0;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-color);
+}
+
+.nav-link.active {
+    color: var(--accent-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+#main-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+
+    padding: 12px 40px;
+    margin-bottom: 0px;
+
+    background-color: #1b1b1b;
+    border-bottom: 1px solid var(--border-color);
+    transition: box-shadow 0.25s ease;
 }
 
 #main-header.scrolled {
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.site-title {
-  margin: 0;
-  font-size: 2.15rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: #f6f1ea;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  line-height: 1;
-}
-
-.site-title span,
-.site-title .emoji {
-  opacity: 0.72;
-  font-size: 1.55rem;
-}
-
-#main-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-link {
-  appearance: none;
-  border: 1px solid rgba(199, 190, 180, 0.10);
-  background: rgba(255, 255, 255, 0.035);
-  color: var(--text-muted);
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 500;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    background var(--transition),
-    color var(--transition),
-    border-color var(--transition),
-    transform 0.12s ease,
-    box-shadow var(--transition);
-}
-
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text);
-  border-color: rgba(199, 190, 180, 0.18);
-  transform: translateY(-1px);
-}
-
-.nav-link.active {
-  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 8px 18px rgba(143, 35, 50, 0.18);
-}
-
-@media (max-width: 700px) {
-  #main-header {
-    padding: 16px 18px 12px;
-  }
-
-  #header-content {
-    gap: 10px;
-  }
-
-  .site-title {
-    font-size: 1.7rem;
-  }
-
-  #main-nav {
-    gap: 6px;
-  }
-
-  .nav-link {
-    padding: 8px 12px;
-    font-size: 0.88rem;
-  }
 }
 
 .tipo-buttons {
@@ -1118,45 +1741,28 @@ button:active,
 .sort-wrapper label {
   font-size: 14px;
   font-weight: 600;
-  color: var(--text-muted);
+  color: #d0d0d0;
   white-space: nowrap;
-}
-
-#sortFilter option {
-  background: #1f1f1f;
-  color: var(--text);
 }
 
 #sortFilter {
   min-width: 220px;
-  height: 42px;
-  padding: 0 14px;
-  background: rgba(255, 255, 255, 0.035);
-  color: var(--text);
-  border: 1px solid rgba(199, 190, 180, 0.14);
-  border-radius: 12px;
+  height: 40px;
+  padding: 0 12px;
+  background: #2f2f2f;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 8px;
   font-size: 14px;
-  font-weight: 500;
-  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 #sortFilter:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(199, 190, 180, 0.22);
+  border-color: #b02a37;
 }
 
 #sortFilter:focus {
   outline: none;
-  border-color: rgba(165, 43, 61, 0.95);
-  box-shadow: 0 0 0 3px rgba(143, 35, 50, 0.20);
-}
-
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-.filter-block:focus-visible,
-.filter-option-btn:focus-visible {
-  outline: 2px solid rgba(165, 43, 61, 0.95);
-  outline-offset: 2px;
+  border-color: #b02a37;
+  box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.25);
 }
