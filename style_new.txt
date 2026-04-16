@@ -996,18 +996,98 @@ button:active,
   position: sticky;
   top: 0;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  padding: 12px 40px;
-  margin-bottom: 0;
-  background: rgba(17, 17, 17, 0.82);
+  padding: 18px 32px 14px;
+  background:
+    linear-gradient(180deg, rgba(10, 10, 10, 0.96), rgba(14, 14, 14, 0.88));
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(199, 190, 180, 0.08);
-  transition: box-shadow 0.25s ease;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
 }
 
 #main-header.scrolled {
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.site-title {
+  margin: 0;
+  font-size: 2.15rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #f6f1ea;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1;
+}
+
+.site-title span,
+.site-title .emoji {
+  opacity: 0.72;
+  font-size: 1.55rem;
+}
+
+#main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  appearance: none;
+  border: 1px solid rgba(199, 190, 180, 0.10);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform 0.12s ease,
+    box-shadow var(--transition);
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border-color: rgba(199, 190, 180, 0.18);
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(143, 35, 50, 0.18);
+}
+
+@media (max-width: 700px) {
+  #main-header {
+    padding: 16px 18px 12px;
+  }
+
+  #header-content {
+    gap: 10px;
+  }
+
+  .site-title {
+    font-size: 1.7rem;
+  }
+
+  #main-nav {
+    gap: 6px;
+  }
+
+  .nav-link {
+    padding: 8px 12px;
+    font-size: 0.88rem;
+  }
 }
 
 .tipo-buttons {
