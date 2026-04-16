@@ -34,16 +34,6 @@ body {
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
 }
 
-header {
-  padding: 20px;
-  background: rgba(17, 17, 17, 0.88);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(199, 190, 180, 0.08);
-  backdrop-filter: blur(14px);
-}
-
 #searchInput {
   padding: 11px 14px;
   width: 240px;
@@ -196,6 +186,20 @@ header {
     /* uniformità visiva */
     padding: 2px 20px 20px 20px;
     box-sizing: border-box;
+}
+
+#modalContent,
+#editModalContent {
+  background: linear-gradient(180deg, rgba(31, 31, 31, 0.98), rgba(22, 22, 22, 0.98));
+  padding: 24px 34px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 600px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border: 1px solid rgba(199, 190, 180, 0.10);
+  box-shadow: var(--shadow-soft);
+  box-sizing: border-box;
 }
 
 #modalContent label,
@@ -435,11 +439,6 @@ button:hover {
   height: 400px;
 }
 
-#modalFiltroStato .filter-modal-content {
-  height: auto !important;
-  min-height: 0 !important;
-}
-
 .filter-modal-content h2 {
   margin: 0 0 10px 0;
   font-size: 18px;
@@ -562,32 +561,10 @@ button:hover {
   color: var(--text);
 }
 
-.filter-block-reset {
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0;
-  background-size: 22px;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
-
-.filter-block-reset:hover {
-  transform: scale(1.2);
-  filter: brightness(0) saturate(100%) invert(32%) sepia(72%) saturate(749%) hue-rotate(340deg) brightness(92%) contrast(95%);
-}
-
-.filter-block-reset:focus {
-  outline: none;
-}
-
 .filter-block:focus-within {
   outline: none;
   border-color: rgba(165, 43, 61, 0.75);
+  box-shadow: 0 0 0 3px rgba(143, 35, 50, 0.16);
 }
 
 @media (max-width: 900px) {
@@ -668,19 +645,19 @@ button:hover {
     gap: 20px 30px;
     margin-bottom: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid rgba(199, 190, 180, 0.10);
 }
 
 .modal-grid-item h3 {
     margin-bottom: 6px;
     font-size: 15px;
-    color: #d0d0d0;
+    color: var(--text-muted);
 }
 
 .modal-grid-item p {
     margin: 0;
     line-height: 1.4;
-    color: #eee;
+    color: var(--text);
 }
 
 /* Responsive: su mobile torna a una colonna */
@@ -725,58 +702,10 @@ button:hover {
     transform: scale(0.96);
 }
 
-/* --- BOTTONI ANNULLA / APPLICA NEI MODAL FILTRO --- */
-.filter-modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;                 /* spazio tra i bottoni */
-    margin-top: 14px;          /* respiro sopra */
-}
-
-.filter-modal-actions button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.22s ease, 
-                border-color 0.22s ease, 
-                transform 0.12s ease;
-}
-
-/* Effetto pressione */
-.filter-modal-actions button:active {
-    transform: scale(0.96);
-}
-
-/* --- BOTTONI ANNULLA / APPLICA — MODAL FILTRI (Stato, Genere, Categoria) --- */
-.filter-modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;                 /* spazio tra i bottoni */
-    margin-top: 14px;          /* respiro sopra */
-}
-
-.filter-modal-actions button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.22s ease,
-                border-color 0.22s ease,
-                transform 0.12s ease;
-}
-
-/* Effetto pressione */
-.filter-modal-actions button:active {
-    transform: scale(0.96);
-}
-
-.filter-option-btn:focus,
-.filter-modal-actions button:focus {
-    outline: none;
-    box-shadow: none;
+.filter-option-btn:focus:not(:focus-visible),
+.filter-modal-actions button:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
 }
 
 #categoriaSearchInput,
@@ -794,34 +723,10 @@ button:hover {
     box-sizing: border-box;
 }
 
-/* Modal filtro: altezza fissa */
-.filter-modal-content {
-    height: 420px;              /* altezza fissa */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-/* La lista delle opzioni scrolla dentro */
-.filter-modal-options {
-    flex: 1;
-    overflow-y: auto;
-    margin-top: 10px;
-}
-
-.filter-modal-content {
-    height: 400px;
-}
-
 /* Modal filtro STATO: altezza automatica */
 #modalFiltroStato .filter-modal-content {
     height: auto !important;
     min-height: 0 !important;
-}
-
-#modalContent,
-#editModalContent {
-    max-height: calc(100vh - 40px);
 }
 
 #editModalContent {
@@ -840,18 +745,6 @@ button:hover {
 }
 
 /* --- MODAL DETTAGLIO / EDIT --- */
-#modalContent {
-    background: #242424;
-    padding: 24px 34px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 85vh;
-    overflow-y: auto;
-    border: 1px solid #3a3a3a;
-    box-shadow: 0 0 18px rgba(0,0,0,0.45);
-}
-
 #editModalContent label {
     margin-bottom: 4px;
 }
@@ -965,20 +858,6 @@ button:active,
     font-size: 15px;
 }
 
-/* Bottoni coerenti */
-.cancel-btn {
-    background: #555;
-    color: #eee;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 14px;
-    cursor: pointer;
-}
-
-.cancel-btn:hover {
-    background: #666;
-}
-
 /* --- Rifiniture modal eliminazione --- */
 
 #modalDeleteContent {
@@ -1010,15 +889,6 @@ button:active,
 
 #modalDelete:focus-visible {
     outline: none;
-}
-
-html:focus,
-body:focus {
-    outline: none !important;
-}
-
-#modalDelete:focus {
-    outline: none !important;
 }
 
 #modal.no-animation #modalContent {
@@ -1102,11 +972,6 @@ body:focus {
     outline: none;
 }
 
-.filter-block:focus-within {
-    outline: none;
-    border-color: transparent;
-}
-
 #row-search-add {
     display: flex;
     align-items: center;
@@ -1125,12 +990,6 @@ body:focus {
     align-items: center;
     gap: 12px;
     margin-bottom: 20px;
-}
-
-.sort-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 #main-header {
@@ -1210,4 +1069,14 @@ body:focus {
   outline: none;
   border-color: rgba(165, 43, 61, 0.95);
   box-shadow: 0 0 0 3px rgba(143, 35, 50, 0.20);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.filter-block:focus-visible,
+.filter-option-btn:focus-visible {
+  outline: 2px solid rgba(165, 43, 61, 0.95);
+  outline-offset: 2px;
 }
