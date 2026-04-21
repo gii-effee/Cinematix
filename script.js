@@ -1,3 +1,142 @@
+// ===== CONFIGURAZIONE TMDb =====
+const TMDB_API_KEY = "a8c46a149ef5e317934d85c5cf179a82";
+const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w342";
+const APP_NAME = "Cinematix";
+
+// ===== FUNZIONI TMDb =====
+async function searchMoviesTMDb(query) {
+  const url = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=it-IT`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Errore ricerca TMDb");
+  const data = await res.json();
+  return data.results.slice(0, 8);
+}
+
+async function getMovieDetailsTMDb(movieId) {
+  const url = `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=it-IT&append_to_response=credits`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Errore dettagli TMDb");
+  return await res.json();
+}
+
+function showTmdbResults(movies) {
+  const container = document.getElementById("tmdb-results");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (movies.length === 0) {
+    container.innerHTML = '<div style="padding: 12px; color: #666;">Nessun risultato trovato</div>';
+    container.style.display = "block";
+    return;
+  }
+
+  movies.forEach(movie => {
+    const div = document.createElement("div");
+    div.style.cssText = "display:flex; gap:12px; padding:12px; border:1px solid #444; border-radius:8px; margin-bottom:8px; cursor:pointer; background:#2a2a2a;";
+
+    const overview = movie.overview
+      ? movie.overview.slice(0, 120) + (movie.overview.length > 120 ? "..." : "")
+      : "Nessuna descrizione disponibile";
+
+    const year = movie.release_date ? movie.release_date.slice(0, 4) : "?";
+
+    const posterHtml = movie.poster_path
+      ? `<img src="${TMDB_IMAGE_BASE}${movie.poster_path}" style="width:60px; height:90px; object-fit:cover; border-radius:4px;">`
+      : `<div style="width:60px; height:90px; background:#333; display:flex; align-items:center; justify-content:center; color:#666; font-size:12px;">No Poster</div>`;
+
+    div.innerHTML = `
+      ${posterHtml}
+      <div style="flex:1;">
+        <strong style="color:white; display:block;">${movie.title} (${year})</strong>
+        <div style="color:#aaa; font-size:14px;">${overview}</div>
+      </div>
+      <button type="button" style="background:#b02a37; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">Seleziona</button>
+    `;
+
+    div.addEventListener("click", () => selectTmdbMovie(movie.id));
+
+    const button = div.querySelector("button");
+    if (button) {
+      button.addEventListener("click", (e) => {
+        e.stopPropagation();
+        selectTmdbMovie(movie.id);
+      });
+    }
+
+    container.appendChild(div);
+  });
+
+  container.style.display = "block";
+}
+
+async function selectTmdbMovie(movieId) {
+  try {
+    const movie = await getMovieDetailsTMDb(movieId);
+
+    const titoloInput = document.getElementById("editTitolo");
+    const annoInput = document.getElementById("editAnno");
+    const risultatiBox = document.getElementById("tmdb-results");
+
+    if (titoloInput) titoloInput.value = movie.title || "";
+    if (annoInput) annoInput.value = movie.release_date ? movie.release_date.slice(0, 4) : "";
+
+    const regista = movie.credits && movie.credits.crew
+      ? movie.credits.crew.find(person => person.job === "Director")
+      : null;
+
+    editRegistaTags = regista ? [regista.name] : [];
+    renderRegistaTags();
+
+    editAttoriTags = movie.credits && movie.credits.cast
+      ? movie.credits.cast.slice(0, 5).map(person => person.name)
+      : [];
+    renderAttoriTags();
+
+    generiSelezionatiEdit = movie.genres ? movie.genres.map(g => g.name) : [];
+    editGenereValue.textContent = generiSelezionatiEdit.length > 0
+      ? generiSelezionatiEdit.join(", ")
+      : "Nessuno";
+
+    resetEditGenere.classList.toggle("hidden", generiSelezionatiEdit.length === 0);
+    editGenereBlock.classList.toggle("active", generiSelezionatiEdit.length > 0);
+
+    window.selectedTmdbPoster = movie.poster_path
+      ? TMDB_IMAGE_BASE + movie.poster_path
+      : null;
+
+    if (risultatiBox) risultatiBox.style.display = "none";
+  } catch (err) {
+    console.error(err);
+    alert("Errore caricamento dettagli");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tmdbSearchBtn = document.getElementById("tmdb-search-btn");
+
+  if (!tmdbSearchBtn) return;
+
+  tmdbSearchBtn.addEventListener("click", async () => {
+    const titoloInput = document.getElementById("editTitolo");
+    const query = titoloInput ? titoloInput.value.trim() : "";
+
+    if (!query) {
+      alert("Inserisci un titolo da cercare");
+      return;
+    }
+
+    try {
+      const results = await searchMoviesTMDb(query);
+      showTmdbResults(results);
+    } catch (err) {
+      console.error(err);
+      alert("Errore nella ricerca TMDb");
+    }
+  });
+});
+
 // --- DATI DEI FILM ---
 var films = [
     {
