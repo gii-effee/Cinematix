@@ -1,12 +1,11 @@
 // ===== CONFIGURAZIONE TMDb =====
-const TMDB_API_KEY = "a8c46a149ef5e317934d85c5cf179a82";
-const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+const TMDB_PROXY_BASE = "https://cinematix.greta-c2b.workers.dev";
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w342";
 const APP_NAME = "Cinematix";
 
 // ===== FUNZIONI TMDb =====
 async function searchMoviesTMDb(query) {
-  const url = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=it-IT`;
+  const url = `${TMDB_PROXY_BASE}/search?q=${encodeURIComponent(query)}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error("Errore ricerca TMDb");
   const data = await res.json();
@@ -14,7 +13,7 @@ async function searchMoviesTMDb(query) {
 }
 
 async function getMovieDetailsTMDb(movieId) {
-  const url = `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=it-IT&append_to_response=credits`;
+  const url = `${TMDB_PROXY_BASE}/movie/${movieId}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error("Errore dettagli TMDb");
   return await res.json();
