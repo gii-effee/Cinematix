@@ -158,10 +158,10 @@
         <div class="modal-body">
 
             <!-- 1. TITOLO + ANNO -->
-            <div class="modal-section edit-two-cols">
-                <div class="edit-col">
-                    <label for="editTitolo">Titolo</label>
-                    <input id="editTitolo" type="text">
+            <div class="form-group">
+                  <label for="editTitolo">Titolo <span id="tmdb-search-btn" style="color: #b02a37; cursor: pointer; font-weight: bold;"> 🔍 Cerca su TMDb</span></label>
+                  <input type="text" id="editTitolo" placeholder="es. Pulp Fiction">
+                  <div id="tmdb-results" style="display: none; margin-top: 8px;"></div>
                 </div>
 
                 <div class="edit-col">
