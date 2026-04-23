@@ -1,10 +1,9 @@
-ROADMAP:
-Fase 1: TMDb + aggiunta film automatica. - FATTO
-
-Fase 2: archivio personale privato ben strutturato.
-
-Fase 3: categorie e navigazione per singolo utente.
-
-Fase 4: archivio condiviso con persone scelte.
-
-Fase 5: schermata minima per visitatori anonimi.
+| Fase | Contenuto                                    | Note                                                                                        | Stato   |
+| ---- | -------------------------------------------- | ------------------------------------------------------------------------------------------- | ------- |
+|  1   | TMDb + aggiunta film automatica              | Proxy Cloudflare già attivo e compilazione assistita già implementata.                      | Fatto   |
+|  2   | Archivio personale privato ben strutturato   | Revisione grafico-funzionale del prodotto, consolidamento UX e struttura archivio.          | Da fare |
+|  3   | Categorie e navigazione per singolo utente   | Base logica del catalogo personale e delle categorie custom per utente.                     | Da fare |
+|  4   | Account utente, login e modello dati         | Serve per associare i dati a un utente preciso e preparare il passaggio al cloud.           | Da fare |
+|  5   | Sync cloud al posto del localStorage         | Necessario per allineare 2 PC e telefono e superare il limite attuale del localStorage.     | Da fare |
+|  6   | Archivio condiviso con persone scelte        | Funzione successiva al login/sync, perché richiede identità utente e permessi di accesso.   | Da fare |
+|  7   | Vista minima per visitatori anonimi          | Solo dopo aver definito bene confini tra privato, condiviso e pubblico.                     | Da fare |
