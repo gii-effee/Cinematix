@@ -1714,42 +1714,6 @@ editAttoriInput.addEventListener("keydown", function (e) {
     }
 });
 
-document.getElementById("addFilmBtn").onclick = function () {
-    editingIndex = -1;
-
-    editModalTitle.textContent = "Aggiungi film";
-    editTitolo.value = "";
-editAnno.value = "";
-
-// reset dei bottoni dello stato
-editStatoButtons.forEach(b => b.classList.remove("active"));
-
-    // inizializza i tag vuoti
-editCategorieTags = [];
-renderCategorieTags();
-editRegistaTags = [];
-renderRegistaTags();
-editAttoriTags = [];
-renderAttoriTags();
-
-// reset GENERE
-generiSelezionatiEdit = [];
-editGenereValue.textContent = "Nessuno";
-resetEditGenere.classList.add("hidden");
-editGenereBlock.classList.remove("active");
-document.querySelectorAll("#editGenereOptions .filter-option-btn")
-    .forEach(b => b.classList.remove("active"));
-
-modal.classList.add("hidden");
-editModal.classList.remove("hidden");
-
-setTimeout(() => {
-    editModal.focus();
-    editTitolo.focus();
-}, 0);
-
-};
-
 // --- INIZIALIZZAZIONE ---
 loadFromLocalStorage();
 populateAdvancedFilters();
@@ -1763,6 +1727,7 @@ modal.addEventListener("click", function (e) {
 editModal.addEventListener("click", function (e) {
     if (e.target === editModal) {
         editModal.classList.add("hidden");
+        reopenDetailsModal();
     }
 });
 
