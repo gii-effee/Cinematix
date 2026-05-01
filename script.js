@@ -359,42 +359,56 @@ window.addEventListener("scroll", () => {
 
 // --- RENDER LISTA FILM ---
 function renderFilms(list) {
-    filmList.innerHTML = "";
-    list.forEach(function (film, index) {
-        var card = document.createElement("div");
-        card.className = "film-card";
-
-        var tagsHtml = "";
-        film.categoria_personale.forEach(function (t) {
-            tagsHtml += '<span class="tag">' + t + '</span>';
-        });
-
-        card.innerHTML =
-            '<div class="favorite-toggle" data-id="' + film.id + '">' +
-                (film.preferito ? "⭐" : "☆") +
-            '</div>' +
-            '<h3>' + film.titolo + ' (' + film.anno + ')</h3>' +
-            '<p>di ' + film.regista.join(", ") + '</p>' +
-            '<div>' + tagsHtml + '</div>' +
-            '<p>Stato: ' + film.stato + '</p>';
-
-        card.onclick = function () {
-            var realIndex = films.indexOf(film);
-            openModal(film, realIndex);
-        };
-        
-        card.querySelector(".favorite-toggle").onclick = function (e) {
-    e.stopPropagation();
-
-    film.preferito = !film.preferito;
-    this.textContent = film.preferito ? "⭐" : "☆";
-    saveToLocalStorage();
-
-    applyAllFilters();
-};
-
-        filmList.appendChild(card);
+  filmList.innerHTML = "";
+  
+  list.forEach(function (film, index) {
+    var card = document.createElement("div");
+    card.className = "film-card";
+    
+    var posterHtml = "";
+    if (film.poster) {
+      posterHtml = `<img src="${film.poster}" alt="${film.titolo}" 
+                    style="width:120px; height:180px; object-fit:cover; border-radius:8px; 
+                           box-shadow: 0 4px 12px rgba(0,0,0,0.3);">`;
+    } else {
+      posterHtml = `<div style="width:120px; height:180px; background:#333; 
+                    border-radius:8px; display:flex; align-items:center; 
+                    justify-content:center; color:#666; font-size:14px;">
+                    No Poster</div>`;
+    }
+    
+    var tagsHtml = "";
+    film.categoria_personale.forEach(function (t) {
+      tagsHtml += '<span class="tag">' + t + '</span>';
     });
+    
+    card.innerHTML = `
+      ${posterHtml}
+      <div style="flex:1; padding-left:16px;">
+        <div class="favorite-toggle" data-id="${film.id}">
+          ${film.preferito ? "⭐" : "☆"}
+        </div>
+        <h3>${film.titolo} (${film.anno})</h3>
+        <p>di ${film.regista.join(", ")}</p>
+        <div>${tagsHtml}</div>
+        <p>Stato: <strong>${film.stato}</strong></p>
+      </div>`;
+    
+    card.onclick = function () {
+      var realIndex = films.indexOf(film);
+      openModal(film, realIndex);
+    };
+    
+    card.querySelector(".favorite-toggle").onclick = function (e) {
+      e.stopPropagation();
+      film.preferito = !film.preferito;
+      this.textContent = film.preferito ? "⭐" : "☆";
+      saveToLocalStorage();
+      applyAllFilters();
+    };
+    
+    filmList.appendChild(card);
+  });
 }
 
 function openModal(film, index) {
