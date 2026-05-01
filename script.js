@@ -171,53 +171,44 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // --- DATI DEI FILM ---
-var films = [
-    {
-        titolo: "Pulp Fiction",
-        anno: 1994,
-        regista: ["Quentin Tarantino"],
-        attori: ["John Travolta", "Samuel L. Jackson", "Uma Thurman"],
-        categoria_personale: ["Cinema Pop", "Cult"],
-        genere: [],
-        stato: "Visto",
-        tipo: "film",
-        preferito: true,
-        valutazione: 9,
-        commento: "",
-        addedAt: new Date("2026-01-01 18:00").getTime()
+var films = [];
 
-    },
-    {
-        titolo: "Million Dollar Baby",
-        anno: 2004,
-        regista: ["Clint Eastwood"],
-        attori: ["Hilary Swank", "Morgan Freeman"],
-        categoria_personale: ["Trasformista"],
-        genere: ["Dramma"],
-        stato: "Da vedere",
-        tipo: "film",
-        preferito: false,
-        valutazione: null,
-        commento: "",
-        addedAt: new Date("2026-02-01 18:00").getTime()
-    },
-    {
-        titolo: "Dune",
-        anno: 2021,
-        regista: ["Denis Villeneuve"],
-        attori: ["Timothée Chalamet", "Zendaya"],
-        categoria_personale: ["Blockbuster", "Saga"],
-        genere: [],
-        stato: "Rivedere",
-        tipo: "film",
-        preferito: false,
-        valutazione: 7,
-        commento: "",
-        addedAt: new Date("2026-03-01 18:00").getTime()
+function loadFromLocalStorage() {
+    var saved = localStorage.getItem("myCinemaDB");
+    if (!saved) {
+        films = [];
+        return;
     }
-];
 
-let currentSection = "home";
+    try {
+        films = JSON.parse(saved);
+
+        if (!Array.isArray(films)) {
+            films = [];
+        }
+
+        films.forEach(f => {
+            if (!Array.isArray(f.genere)) f.genere = [];
+            if (!Array.isArray(f.regista)) f.regista = [];
+            if (!Array.isArray(f.attori)) f.attori = [];
+            if (!Array.isArray(f.categoria_personale)) f.categoria_personale = [];
+            if (!f.tipo) f.tipo = "film";
+            if (!("tmdbId" in f)) f.tmdbId = null;
+            if (!("tmdbType" in f)) f.tmdbType = null;
+            if (!("poster" in f)) f.poster = null;
+            if (!("overview" in f)) f.overview = "";
+            if (!("tagline" in f)) f.tagline = "";
+            if (!("commento" in f)) f.commento = "";
+            if (!("preferito" in f)) f.preferito = false;
+            if (!("valutazione" in f)) f.valutazione = null;
+            if (!("addedAt" in f)) f.addedAt = Date.now();
+        });
+
+    } catch (err) {
+        console.error("Errore lettura localStorage:", err);
+        films = [];
+    }
+}
 
 var filters = {
     stato: "",
@@ -268,6 +259,7 @@ var generiDisponibili = [
 ];
 
 var editingIndex = -1;
+var currentSection = "home";
 
 function activateNav(section) {
     document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
@@ -642,38 +634,6 @@ modalDelete.addEventListener("keydown", function (e) {
 // --- LOCAL STORAGE ---
 function saveToLocalStorage() {
     localStorage.setItem("myCinemaDB", JSON.stringify(films));
-}
-
-function loadFromLocalStorage() {
-    var saved = localStorage.getItem("myCinemaDB");
-    if (!saved) return;
-
-    films = JSON.parse(saved);
-
-    // FIX retrocompatibilità: aggiunge "genere" se manca
-    films.forEach(f => {
-        if (!Array.isArray(f.genere)) {
-            f.genere = [];
-        }
-        if (!f.tipo) {
-          f.tipo = "film";
-        }
-        if (!("tmdbId" in f)) {
-          f.tmdbId = null;
-        }
-        if (!("tmdbType" in f)) {
-          f.tmdbType = null;
-        }
-        if (!("poster" in f)) {
-          f.poster = null;
-        }
-        if (!("overview" in f)) {
-          f.overview = "";
-        }
-        if (!("tagline" in f)) {
-          f.tagline = "";
-        }      
-    });
 }
 
 // --- CATEGORIE PERSONALI ---
