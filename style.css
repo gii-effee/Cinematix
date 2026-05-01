@@ -1766,3 +1766,57 @@ input:focus {
   border-color: #b02a37;
   box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.25);
 }
+
+.film-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.film-card-media {
+  flex: 0 0 110px;
+}
+
+.film-card-poster {
+  width: 110px;
+  height: 165px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  background: #2a2a2a;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.film-card-poster-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a8a8a;
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.film-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.film-card-body h3 {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .film-card {
+    gap: 12px;
+  }
+
+  .film-card-media {
+    flex-basis: 86px;
+  }
+
+  .film-card-poster {
+    width: 86px;
+    height: 129px;
+  }
+}
