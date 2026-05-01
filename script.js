@@ -85,6 +85,12 @@ async function selectTmdbTitle(id, mediaType) {
     const annoInput = document.getElementById("editAnno");
     const risultatiBox = document.getElementById("tmdb-results");
 
+    tempTmdbId = item.id;
+    tempTmdbType = mediaType;
+    tempTmdbPoster = item.poster_path ? TMDB_IMAGE_BASE + item.poster_path : null;
+    tempTmdbOverview = item.overview || "";
+    tempTmdbTagline = item.tagline || "";
+
     const titolo = item.title || item.name || "";
     const data = item.release_date || item.first_air_date || "";
     const anno = data ? data.slice(0, 4) : "";
@@ -122,10 +128,6 @@ async function selectTmdbTitle(id, mediaType) {
 
     resetEditGenere.classList.toggle("hidden", generiSelezionatiEdit.length === 0);
     editGenereBlock.classList.toggle("active", generiSelezionatiEdit.length > 0);
-
-    window.selectedTmdbPoster = item.poster_path
-      ? TMDB_IMAGE_BASE + item.poster_path
-      : null;
 
     editTipoButtons.forEach(b => b.classList.remove("active"));
     const tipoDaImpostare = mediaType === "tv" ? "serie" : "film";
@@ -339,6 +341,11 @@ var modal = document.getElementById("modal");
 var modalContent = document.getElementById("modalContent");
 var sortFilter = document.getElementById("sortFilter");
 var resetFilters = document.getElementById("resetFilters");
+var tempTmdbId = null;
+var tempTmdbType = null;
+var tempTmdbPoster = null;
+var tempTmdbOverview = "";
+var tempTmdbTagline = "";
 
 window.addEventListener("scroll", () => {
     const header = document.getElementById("main-header");
@@ -445,6 +452,12 @@ for (let i = 1; i <= 10; i++) {
 
 function openEditModalForEditing() {
     var film = films[editingIndex];
+
+    tempTmdbId = film.tmdbId || null;
+    tempTmdbType = film.tmdbType || null;
+    tempTmdbPoster = film.poster || null;
+    tempTmdbOverview = film.overview || "";
+    tempTmdbTagline = film.tagline || "";
 
     editModalTitle.textContent = "Modifica film";
 
@@ -631,6 +644,21 @@ function loadFromLocalStorage() {
         if (!f.tipo) {
           f.tipo = "film";
         }
+        if (!("tmdbId" in f)) {
+          f.tmdbId = null;
+        }
+        if (!("tmdbType" in f)) {
+          f.tmdbType = null;
+        }
+        if (!("poster" in f)) {
+          f.poster = null;
+        }
+        if (!("overview" in f)) {
+          f.overview = "";
+        }
+        if (!("tagline" in f)) {
+          f.tagline = "";
+        }      
     });
 }
 
@@ -1350,6 +1378,12 @@ addFilmBtn.onclick = function () {
     editTipoButtons.forEach(b => b.classList.remove("active"));
     tempTipo = null;
 
+    tempTmdbId = null;
+    tempTmdbType = null;
+    tempTmdbPoster = null;
+    tempTmdbOverview = "";
+    tempTmdbTagline = "";
+
     editModal.classList.remove("hidden");
 
     setTimeout(() => editTitolo.focus(), 0);
@@ -1481,7 +1515,12 @@ saveFilmBtn.onclick = function () {
             categoria_personale: editCategorieTags.slice(),
             genere: generiSelezionatiEdit.slice(),
             stato: statoSelezionato,
-            tipo: tempTipo,
+            tipo: tempTipo, 
+            tmdbId: tempTmdbId,
+            tmdbType: tempTmdbType,
+            poster: tempTmdbPoster,
+            overview: tempTmdbOverview,
+            tagline: tempTmdbTagline,
             valutazione: null,
             commento: "",
             addedAt: Date.now()
@@ -1505,6 +1544,11 @@ saveFilmBtn.onclick = function () {
     film.genere = generiSelezionatiEdit.slice();
     film.stato = statoSelezionato;
     film.tipo = tempTipo;
+    film.tmdbId = tempTmdbId;
+    film.tmdbType = tempTmdbType;
+    film.poster = tempTmdbPoster;
+    film.overview = tempTmdbOverview;
+    film.tagline = tempTmdbTagline;
 
     saveToLocalStorage();
     applyAllFilters();
