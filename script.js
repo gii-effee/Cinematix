@@ -369,7 +369,7 @@ function renderFilms(list) {
       emptyText = "Aggiungi un nuovo film per visualizzarlo qui.";
     } else if (currentSection === "serie") {
       emptyTitle = "Nessuna serie trovata 📺";
-      emptyText = "Aggiungi una nuova serie TV e la troverai qui.";
+      emptyText = "Aggiungi una nuova serie TV per visualizzarla qui.";
     }
 
     filmList.innerHTML = `
@@ -463,8 +463,8 @@ function renderFilms(list) {
     applyAllFilters();
   };
 
-  filmList.appendChild(card);
-});
+    filmList.appendChild(card);
+  });
 }
   
 function openModal(film, index) {
