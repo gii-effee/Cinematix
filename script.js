@@ -369,11 +369,13 @@ function renderFilms(list) {
     }
 
     filmList.innerHTML = `
-      <div class="empty-state">
+      <div class="film-empty-screen">
+        <div class="film-empty-state">
         <div class="empty-state-icon">🎬</div>
         <h3>${emptyTitle}</h3>
         <p>${emptyText}</p>
       </div>
+    </div>
     `;
     return;
   }
