@@ -1968,10 +1968,11 @@ input:focus {
 
 .film-empty-screen {
   grid-column: 1 / -1;
-  min-height: 55vh;
-  display: grid;
-  place-items: center;
-  padding: 24px 16px;
+  min-height: 32vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 64px 16px 0;
 }
 
 .film-empty-state {
@@ -2009,8 +2010,8 @@ input:focus {
 
 @media (max-width: 700px) {
   .film-empty-screen {
-    min-height: 42vh;
-    padding: 20px 16px;
+    min-height: 24vh;
+    padding: 40px 16px 0;
   }
 
   .film-empty-state .empty-state-icon {
