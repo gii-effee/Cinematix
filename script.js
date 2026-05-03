@@ -384,83 +384,88 @@ function renderFilms(list) {
   }
 
   list.forEach(function (film) {
-    var card = document.createElement("div");
-    card.className = "film-card film-card-enhanced";
+  var card = document.createElement("div");
+  card.className = "film-card";
 
-    var coverImage = film.backdrop || film.poster || null;
+  var coverImage = film.poster || null;
 
-    var posterHtml = coverImage
-      ? `<img class="film-card-cover" src="${coverImage}" alt="${film.titolo}">`
-      : `<div class="film-card-cover no-poster">Nessuna immagine</div>`;
+  var posterHtml = coverImage
+    ? `<img class="film-card-cover" src="${coverImage}" alt="${film.titolo}">`
+    : `<div class="film-card-cover no-poster">Nessun poster</div>`;
 
-    var regista = (film.regista && film.regista.length > 0)
-      ? film.regista.join(", ")
-      : "Regista non indicato";
+  var anno = film.anno || "—";
 
-    var tipoLabel = film.tipo === "serie" ? "Serie TV" : "Film";
+  var regista = (film.regista && film.regista.length > 0)
+    ? film.regista[0]
+    : "Regista non indicato";
 
-    var statoLabel = film.stato && film.stato.trim() !== ""
-      ? film.stato
-      : "Da definire";
+  var attori = Array.isArray(film.attori)
+    ? film.attori.map(a => a.trim()).filter(Boolean).slice(0, 2)
+    : [];
 
-    var ratingHtml = film.valutazione !== null && film.valutazione !== undefined
-      ? `<span class="film-rating">★ ${film.valutazione}/10</span>`
-      : "";
+  var attoriText = attori.length > 0
+    ? attori.join(", ")
+    : "Attori non indicati";
 
-    var categories = Array.isArray(film.categoria_personale)
-      ? film.categoria_personale
-          .map(c => c.trim())
-          .filter(c => c !== "")
-          .slice(0, 3)
-      : [];
+  var generi = Array.isArray(film.genere)
+    ? film.genere.map(g => g.trim()).filter(Boolean).slice(0, 2)
+    : [];
 
-    var categoriesHtml = categories.length > 0
-      ? categories.map(c => `<span class="tag">${c}</span>`).join("")
-      : `<span class="tag tag-muted">Senza categoria</span>`;
+  var generiHtml = generi.length > 0
+    ? generi.map(g => `<span class="tag">${g}</span>`).join("")
+    : `<span class="tag tag-muted">Genere n.d.</span>`;
 
-    card.innerHTML = `
-  <div class="film-card-media">
-    ${posterHtml}
-    <button type="button" class="favorite-toggle favorite-toggle-card" aria-label="Preferito">
-      ${film.preferito ? "⭐" : "☆"}
-    </button>
-  </div>
+  var statoLabel = film.stato && film.stato.trim() !== ""
+    ? film.stato
+    : "Da definire";
 
-  <div class="film-card-body">
-    <div class="film-card-heading">
-      <h3>${film.titolo}</h3>
-      <p class="film-card-subtitle">${regista} • ${film.anno || "—"}</p>
+  var ratingHtml = film.valutazione !== null && film.valutazione !== undefined
+    ? `<span class="film-rating">★ ${film.valutazione}/10</span>`
+    : `<span class="film-rating is-empty">Nessun voto</span>`;
+
+  card.innerHTML = `
+    <div class="film-card-media">
+      ${posterHtml}
+      <button type="button" class="favorite-toggle favorite-toggle-card" aria-label="Preferito">
+        ${film.preferito ? "⭐" : "☆"}
+      </button>
     </div>
 
-    <div class="film-card-meta-line">
-      <span class="film-type-badge">${tipoLabel}</span>
-      ${ratingHtml}
-      <span class="film-status-badge">${statoLabel}</span>
+    <div class="film-card-body">
+      <div class="film-card-heading">
+        <h3>${film.titolo.toUpperCase()} <span class="film-card-year">• ${anno}</span></h3>
+      </div>
+
+      <p class="film-card-director-line">${regista}</p>
+      <p class="film-card-cast-line">${attoriText}</p>
+
+      <div class="film-card-tags">
+        ${generiHtml}
+      </div>
+
+      <div class="film-card-meta-line">
+        <span class="film-status-badge">${statoLabel}</span>
+        ${ratingHtml}
+      </div>
     </div>
+  `;
 
-    <div class="film-card-tags">
-      ${categoriesHtml}
-    </div>
-  </div>
-`;
-    
-    card.onclick = function () {
-      var realIndex = films.indexOf(film);
-      openModal(film, realIndex);
-    };
+  card.onclick = function () {
+    var realIndex = films.indexOf(film);
+    openModal(film, realIndex);
+  };
 
-    card.querySelector(".favorite-toggle").onclick = function (e) {
-      e.stopPropagation();
-      film.preferito = !film.preferito;
-      this.textContent = film.preferito ? "⭐" : "☆";
-      saveToLocalStorage();
-      applyAllFilters();
-    };
+  card.querySelector(".favorite-toggle").onclick = function (e) {
+    e.stopPropagation();
+    film.preferito = !film.preferito;
+    this.textContent = film.preferito ? "⭐" : "☆";
+    saveToLocalStorage();
+    applyAllFilters();
+  };
 
-    filmList.appendChild(card);
-  });
-}
-
+  filmList.appendChild(card);
+});
+  
 function openModal(film, index) {
     editingIndex = index;
 
