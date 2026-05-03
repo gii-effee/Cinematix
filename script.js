@@ -352,45 +352,102 @@ window.addEventListener("scroll", () => {
 // --- RENDER LISTA FILM ---
 function renderFilms(list) {
   filmList.innerHTML = "";
-  
-  list.forEach(function (film, index) {
-    var card = document.createElement("div");
-    card.className = "film-card";
-    
-    var posterHtml = "";
-    if (film.poster) {
-      posterHtml = `<img src="${film.poster}" alt="${film.titolo}" 
-                    style="width:120px; height:180px; object-fit:cover; border-radius:8px; 
-                           box-shadow: 0 4px 12px rgba(0,0,0,0.3);">`;
-    } else {
-      posterHtml = `<div style="width:120px; height:180px; background:#333; 
-                    border-radius:8px; display:flex; align-items:center; 
-                    justify-content:center; color:#666; font-size:14px;">
-                    No Poster</div>`;
+
+  if (!list || list.length === 0) {
+    let emptyTitle = "Nessun titolo trovato";
+    let emptyText = "Prova a cambiare i filtri oppure aggiungi un nuovo film o serie TV.";
+
+    if (currentSection === "preferiti") {
+      emptyTitle = "Nessun preferito";
+      emptyText = "Non hai ancora contrassegnato nessun titolo come preferito.";
+    } else if (currentSection === "film") {
+      emptyTitle = "Nessun film trovato";
+      emptyText = "Non ci sono film che corrispondono ai filtri attuali.";
+    } else if (currentSection === "serie") {
+      emptyTitle = "Nessuna serie trovata";
+      emptyText = "Non ci sono serie TV che corrispondono ai filtri attuali.";
     }
-    
-    var tagsHtml = "";
-    film.categoria_personale.forEach(function (t) {
-      tagsHtml += '<span class="tag">' + t + '</span>';
-    });
-    
+
+    filmList.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🎬</div>
+        <h3>${emptyTitle}</h3>
+        <p>${emptyText}</p>
+      </div>
+    `;
+    return;
+  }
+
+  list.forEach(function (film) {
+    var card = document.createElement("div");
+    card.className = "film-card film-card-enhanced";
+
+    var posterHtml = film.poster
+      ? `<img class="film-card-poster" src="${film.poster}" alt="${film.titolo}">`
+      : `<div class="film-card-poster no-poster">No Poster</div>`;
+
+    var regista = (film.regista && film.regista.length > 0)
+      ? film.regista.join(", ")
+      : "Regista non indicato";
+
+    var tipoLabel = film.tipo === "serie" ? "Serie TV" : "Film";
+
+    var statoLabel = film.stato && film.stato.trim() !== ""
+      ? film.stato
+      : "Da definire";
+
+    var ratingHtml = film.valutazione !== null && film.valutazione !== undefined
+      ? `<span class="film-rating">★ ${film.valutazione}/10</span>`
+      : "";
+
+    var categories = Array.isArray(film.categoria_personale)
+      ? film.categoria_personale
+          .map(c => c.trim())
+          .filter(c => c !== "")
+          .slice(0, 3)
+      : [];
+
+    var categoriesHtml = categories.length > 0
+      ? categories.map(c => `<span class="tag">${c}</span>`).join("")
+      : `<span class="tag tag-muted">Senza categoria</span>`;
+
     card.innerHTML = `
-      ${posterHtml}
-      <div style="flex:1; padding-left:16px;">
-        <div class="favorite-toggle" data-id="${film.id}">
+      <div class="film-card-media">
+        ${posterHtml}
+        <button type="button" class="favorite-toggle favorite-toggle-card" aria-label="Preferito">
           ${film.preferito ? "⭐" : "☆"}
+        </button>
+      </div>
+
+      <div class="film-card-body">
+        <div class="film-card-top">
+          <div class="film-card-heading">
+            <h3>${film.titolo}</h3>
+            <div class="film-card-meta-line">
+              <span class="film-year">${film.anno || "—"}</span>
+              <span class="film-type-badge">${tipoLabel}</span>
+              ${ratingHtml}
+            </div>
+          </div>
         </div>
-        <h3>${film.titolo} (${film.anno})</h3>
-        <p>di ${film.regista.join(", ")}</p>
-        <div>${tagsHtml}</div>
-        <p>Stato: <strong>${film.stato}</strong></p>
-      </div>`;
-    
+
+        <p class="film-card-director">di ${regista}</p>
+
+        <div class="film-card-tags">
+          ${categoriesHtml}
+        </div>
+
+        <div class="film-card-footer">
+          <span class="film-status-badge">${statoLabel}</span>
+        </div>
+      </div>
+    `;
+
     card.onclick = function () {
       var realIndex = films.indexOf(film);
       openModal(film, realIndex);
     };
-    
+
     card.querySelector(".favorite-toggle").onclick = function (e) {
       e.stopPropagation();
       film.preferito = !film.preferito;
@@ -398,7 +455,7 @@ function renderFilms(list) {
       saveToLocalStorage();
       applyAllFilters();
     };
-    
+
     filmList.appendChild(card);
   });
 }
