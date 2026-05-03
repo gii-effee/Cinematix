@@ -354,24 +354,23 @@ function renderFilms(list) {
   filmList.innerHTML = "";
 
   if (!list || list.length === 0) {
-    let emptyTitle = "Nessun titolo trovato";
-    let emptyText = "Prova a cambiare i filtri oppure aggiungi un nuovo film o serie TV.";
+    let emptyTitle = "Ops... nessun titolo trovato 🫠";
+    let emptyText = "Prova a cambiare i filtri oppure aggiungi un nuovo film o serie TV!";
 
     if (currentSection === "preferiti") {
-      emptyTitle = "Nessun preferito";
-      emptyText = "Non hai ancora contrassegnato nessun titolo come preferito.";
+      emptyTitle = "Nessun preferito 🥲";
+      emptyText = "Aggiungi la ⭐ ai tuoi titoli preferiti e li troverai qui!";
     } else if (currentSection === "film") {
-      emptyTitle = "Nessun film trovato";
-      emptyText = "Non ci sono film che corrispondono ai filtri attuali.";
+      emptyTitle = "Nessun film trovato 🎬";
+      emptyText = "Aggiungi un nuovo film per visualizzarlo qui.";
     } else if (currentSection === "serie") {
-      emptyTitle = "Nessuna serie trovata";
-      emptyText = "Non ci sono serie TV che corrispondono ai filtri attuali.";
+      emptyTitle = "Nessuna serie trovata 📺";
+      emptyText = "Aggiungi una nuova serie TV e la troverai qui.";
     }
 
     filmList.innerHTML = `
       <div class="film-empty-screen">
         <div class="film-empty-state">
-        <div class="empty-state-icon">🎬</div>
         <h3>${emptyTitle}</h3>
         <p>${emptyText}</p>
       </div>
