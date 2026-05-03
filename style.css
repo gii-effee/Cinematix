@@ -1160,41 +1160,6 @@ button:hover {
     overflow-y: auto;
 }
 
-/* --- FIX CARD FILM (VERSIONE 0.4.3) --- */
-.film-card {
-    background: #262626 !important;
-    border: 1px solid #3a3a3a !important;
-    padding: 16px !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.35) !important;
-    transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease !important;
-}
-
-.film-card:hover {
-    background: #2f2f2f !important;
-    border-color: #b02a37 !important;
-    transform: translateY(-3px) !important;
-}
-
-.film-card h3 {
-    margin: 0 0 6px 0;
-    font-size: 18px;
-    color: #fff;
-}
-
-.film-card p {
-    margin: 4px 0;
-    color: #ccc;
-}
-
-.film-card .tag {
-    background: #444;
-    color: #eee;
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 12px;
-}
-
 #modalContent {
     background: #242424;
     padding: 24px 34px;
@@ -1539,23 +1504,6 @@ body:focus {
     gap: 14px;
     margin-top: 12px;
     align-items: end;
-}
-
-.favorite-toggle {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 22px;
-    cursor: pointer;
-    transition: transform 0.15s ease;
-}
-
-.favorite-toggle:hover {
-    transform: scale(1.2);
-}
-
-.film-card {
-    position: relative;
 }
 
 .favorite-toggle-modal {
