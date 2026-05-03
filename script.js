@@ -1,6 +1,7 @@
 // ===== CONFIGURAZIONE TMDb =====
 const TMDB_PROXY_BASE = "https://cinematix.greta-c2b.workers.dev";
-const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w342";
+const TMDB_POSTER_BASE = "https://image.tmdb.org/t/p/w342";
+const TMDB_BACKDROP_BASE = "https://image.tmdb.org/t/p/w780";
 const APP_NAME = "Cinematix";
 
 // ===== FUNZIONI TMDb =====
@@ -47,7 +48,7 @@ function showTmdbResults(items) {
       : "Nessuna descrizione disponibile";
 
     const posterHtml = item.poster_path
-      ? `<img src="${TMDB_IMAGE_BASE}${item.poster_path}" style="width:60px; height:90px; object-fit:cover; border-radius:4px;">`
+      ? `<img src="${TMDB_POSTER_BASE}${item.poster_path}" style="width:60px; height:90px; object-fit:cover; border-radius:4px;">`
       : `<div style="width:60px; height:90px; background:#333; display:flex; align-items:center; justify-content:center; color:#666; font-size:12px;">No Poster</div>`;
 
     div.innerHTML = `
@@ -87,7 +88,8 @@ async function selectTmdbTitle(id, mediaType) {
 
     tempTmdbId = item.id;
     tempTmdbType = mediaType;
-    tempTmdbPoster = item.poster_path ? TMDB_IMAGE_BASE + item.poster_path : null;
+    tempTmdbPoster = item.poster_path ? TMDB_POSTER_BASE + item.poster_path : null;
+    tempTmdbBackdrop = item.backdrop_path ? TMDB_BACKDROP_BASE + item.backdrop_path : null;
     tempTmdbOverview = item.overview || "";
     tempTmdbTagline = item.tagline || "";
 
@@ -196,6 +198,7 @@ function loadFromLocalStorage() {
             if (!("tmdbId" in f)) f.tmdbId = null;
             if (!("tmdbType" in f)) f.tmdbType = null;
             if (!("poster" in f)) f.poster = null;
+            if (!("backdrop" in f)) f.backdrop = null;
             if (!("overview" in f)) f.overview = "";
             if (!("tagline" in f)) f.tagline = "";
             if (!("commento" in f)) f.commento = "";
@@ -336,6 +339,7 @@ var resetFilters = document.getElementById("resetFilters");
 var tempTmdbId = null;
 var tempTmdbType = null;
 var tempTmdbPoster = null;
+var tempTmdbBackdrop = null;
 var tempTmdbOverview = "";
 var tempTmdbTagline = "";
 
@@ -383,9 +387,11 @@ function renderFilms(list) {
     var card = document.createElement("div");
     card.className = "film-card film-card-enhanced";
 
-    var posterHtml = film.poster
-      ? `<img class="film-card-poster" src="${film.poster}" alt="${film.titolo}">`
-      : `<div class="film-card-poster no-poster">No Poster</div>`;
+    var coverImage = film.backdrop || film.poster || null;
+
+    var posterHtml = coverImage
+      ? `<img class="film-card-cover" src="${coverImage}" alt="${film.titolo}">`
+      : `<div class="film-card-cover no-poster">No Image</div>`;
 
     var regista = (film.regista && film.regista.length > 0)
       ? film.regista.join(", ")
@@ -520,6 +526,7 @@ function openEditModalForEditing() {
     tempTmdbId = film.tmdbId || null;
     tempTmdbType = film.tmdbType || null;
     tempTmdbPoster = film.poster || null;
+    tempTmdbBackdrop = film.backdrop || null;
     tempTmdbOverview = film.overview || "";
     tempTmdbTagline = film.tagline || "";
 
@@ -1386,7 +1393,7 @@ var addFilmBtn = document.getElementById("addFilmBtn");
 
 addFilmBtn.onclick = function () {
     editingIndex = -1;
-    editModalTitle.textContent = "Aggiungi film";
+    editModalTitle.textContent = "Aggiungi Titolo";
 
     // reset campi
     editTitolo.value = "";
@@ -1413,6 +1420,7 @@ addFilmBtn.onclick = function () {
     tempTmdbId = null;
     tempTmdbType = null;
     tempTmdbPoster = null;
+    tempTmdbBackdrop = null;
     tempTmdbOverview = "";
     tempTmdbTagline = "";
 
@@ -1551,6 +1559,7 @@ saveFilmBtn.onclick = function () {
             tmdbId: tempTmdbId,
             tmdbType: tempTmdbType,
             poster: tempTmdbPoster,
+            backdrop: tempTmdbBackdrop,
             overview: tempTmdbOverview,
             tagline: tempTmdbTagline,
             valutazione: null,
@@ -1579,6 +1588,7 @@ saveFilmBtn.onclick = function () {
     film.tmdbId = tempTmdbId;
     film.tmdbType = tempTmdbType;
     film.poster = tempTmdbPoster;
+    film.backdrop = tempTmdbBackdrop;
     film.overview = tempTmdbOverview;
     film.tagline = tempTmdbTagline;
 
