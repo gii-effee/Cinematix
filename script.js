@@ -391,7 +391,7 @@ function renderFilms(list) {
 
     var posterHtml = coverImage
       ? `<img class="film-card-cover" src="${coverImage}" alt="${film.titolo}">`
-      : `<div class="film-card-cover no-poster">No Image</div>`;
+      : `<div class="film-card-cover no-poster">Nessuna immagine</div>`;
 
     var regista = (film.regista && film.regista.length > 0)
       ? film.regista.join(", ")
@@ -419,37 +419,31 @@ function renderFilms(list) {
       : `<span class="tag tag-muted">Senza categoria</span>`;
 
     card.innerHTML = `
-      <div class="film-card-media">
-        ${posterHtml}
-        <button type="button" class="favorite-toggle favorite-toggle-card" aria-label="Preferito">
-          ${film.preferito ? "⭐" : "☆"}
-        </button>
-      </div>
+  <div class="film-card-media">
+    ${posterHtml}
+    <button type="button" class="favorite-toggle favorite-toggle-card" aria-label="Preferito">
+      ${film.preferito ? "⭐" : "☆"}
+    </button>
+  </div>
 
-      <div class="film-card-body">
-        <div class="film-card-top">
-          <div class="film-card-heading">
-            <h3>${film.titolo}</h3>
-            <div class="film-card-meta-line">
-              <span class="film-year">${film.anno || "—"}</span>
-              <span class="film-type-badge">${tipoLabel}</span>
-              ${ratingHtml}
-            </div>
-          </div>
-        </div>
+  <div class="film-card-body">
+    <div class="film-card-heading">
+      <h3>${film.titolo}</h3>
+      <p class="film-card-subtitle">${regista} • ${film.anno || "—"}</p>
+    </div>
 
-        <p class="film-card-director">di ${regista}</p>
+    <div class="film-card-meta-line">
+      <span class="film-type-badge">${tipoLabel}</span>
+      ${ratingHtml}
+      <span class="film-status-badge">${statoLabel}</span>
+    </div>
 
-        <div class="film-card-tags">
-          ${categoriesHtml}
-        </div>
-
-        <div class="film-card-footer">
-          <span class="film-status-badge">${statoLabel}</span>
-        </div>
-      </div>
-    `;
-
+    <div class="film-card-tags">
+      ${categoriesHtml}
+    </div>
+  </div>
+`;
+    
     card.onclick = function () {
       var realIndex = films.indexOf(film);
       openModal(film, realIndex);
@@ -470,7 +464,8 @@ function renderFilms(list) {
 function openModal(film, index) {
     editingIndex = index;
 
-    document.getElementById('modalTitoloFilm').textContent = film.titolo + ' (' + film.anno + ')';
+    document.getElementById('modalTitoloFilm').textContent =
+      `${film.titolo} (${film.anno || "—"})`;
     document.getElementById('modalRegista').textContent = (film.regista || []).join(', ') || '-';
     document.getElementById('modalAttori').textContent = (film.attori || []).join(', ') || '-';
     document.getElementById('modalGenere').textContent = (film.genere || []).join(', ') || 'Nessuno';
@@ -1549,7 +1544,7 @@ saveFilmBtn.onclick = function () {
     if (editingIndex === -1) {
         var nuovoFilm = {
             titolo: editTitolo.value.trim(),
-            anno: Number(editAnno.value),
+            anno: editAnno.value ? Number(editAnno.value) : null,
             regista: editRegistaTags.slice(),
             attori: editAttoriTags.slice(),
             categoria_personale: editCategorieTags.slice(),
@@ -1578,7 +1573,7 @@ saveFilmBtn.onclick = function () {
     var film = films[editingIndex];
 
     film.titolo = editTitolo.value.trim();
-    film.anno = Number(editAnno.value);
+    film.anno = editAnno.value ? Number(editAnno.value) : null;
     film.regista = editRegistaTags.slice();
     film.attori = editAttoriTags.slice();
     film.categoria_personale = editCategorieTags.slice();
