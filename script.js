@@ -465,6 +465,7 @@ function renderFilms(list) {
 
   filmList.appendChild(card);
 });
+}
   
 function openModal(film, index) {
     editingIndex = index;
