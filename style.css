@@ -1820,3 +1820,182 @@ input:focus {
     height: 129px;
   }
 }
+
+.film-card-enhanced {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  background: #1f1f1f;
+  border: 1px solid #2f2f2f;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+}
+
+.film-card-enhanced:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  border-color: #444;
+}
+
+.film-card-media {
+  position: relative;
+  flex: 0 0 120px;
+}
+
+.film-card-poster {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  background: #2b2b2b;
+}
+
+.no-poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+  padding: 12px;
+}
+
+.favorite-toggle-card {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.film-card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.film-card-heading h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.film-card-meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.film-year {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.film-type-badge,
+.film-status-badge,
+.film-rating {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.film-type-badge {
+  background: rgba(255,255,255,0.08);
+  color: #f1f1f1;
+}
+
+.film-status-badge {
+  background: rgba(176, 42, 55, 0.16);
+  color: #ffb3bb;
+  border: 1px solid rgba(176, 42, 55, 0.35);
+}
+
+.film-rating {
+  background: rgba(255, 200, 87, 0.14);
+  color: #ffd36a;
+  border: 1px solid rgba(255, 200, 87, 0.28);
+}
+
+.film-card-director {
+  margin: 0 0 12px;
+  color: #b7b7b7;
+  font-size: 14px;
+}
+
+.film-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tag-muted {
+  opacity: 0.7;
+}
+
+.film-card-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.empty-state {
+  background: #1f1f1f;
+  border: 1px solid #2f2f2f;
+  border-radius: 18px;
+  padding: 40px 24px;
+  text-align: center;
+  color: #ddd;
+}
+
+.empty-state-icon {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #aaa;
+}
+
+@media (max-width: 700px) {
+  .film-card-enhanced {
+    flex-direction: column;
+  }
+
+  .film-card-media {
+    flex: none;
+  }
+
+  .film-card-poster {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    aspect-ratio: 2 / 3;
+  }
+}
