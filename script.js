@@ -503,12 +503,22 @@ for (let i = 1; i <= 10; i++) {
     films[editingIndex]
 );
    
-    document.querySelector('.favorite-toggle-modal').onclick = () => {
-        film.preferito = !film.preferito;
-        document.querySelector('.favorite-toggle-modal').textContent = film.preferito ? '⭐' : '☆';
-        saveToLocalStorage();
-        applyAllFilters();
-    };
+    const favoriteBtn = document.querySelector('.favorite-toggle-modal');
+
+// sincronizza la stellina quando il modal si apre
+favoriteBtn.textContent = film.preferito ? '★' : '☆';
+favoriteBtn.classList.toggle('active', film.preferito);
+
+// click sulla stellina del modal
+favoriteBtn.onclick = function () {
+  film.preferito = !film.preferito;
+
+  favoriteBtn.textContent = film.preferito ? '★' : '☆';
+  favoriteBtn.classList.toggle('active', film.preferito);
+
+  saveToLocalStorage();
+  applyAllFilters();
+};
     
     document.getElementById('openEditModalBtn').onclick = openEditModalForEditing;
     document.getElementById('btnDeleteFilm').onclick = () => openDeleteModal(editingIndex);
