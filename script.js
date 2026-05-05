@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// --- DATI DEI FILM ---
+// --- DATI DEI TITOLI ---
 var films = [];
 
 function loadFromLocalStorage() {
@@ -353,7 +353,7 @@ window.addEventListener("scroll", () => {
     }
 });
 
-// --- RENDER LISTA FILM ---
+// --- RENDER LISTA TITOLI ---
 function renderFilms(list) {
   filmList.innerHTML = "";
 
@@ -420,7 +420,7 @@ function renderFilms(list) {
     : "Da definire";
 
   var ratingHtml = film.valutazione !== null && film.valutazione !== undefined
-    ? `<span class="film-rating">★ ${film.valutazione}/10</span>`
+    ? `<span class="film-rating">⭐ ${film.valutazione}/10</span>`
     : `<span class="film-rating is-empty">Nessun voto</span>`;
 
   card.innerHTML = `
@@ -506,14 +506,14 @@ for (let i = 1; i <= 10; i++) {
     const favoriteBtn = document.querySelector('.favorite-toggle-modal');
 
 // sincronizza la stellina quando il modal si apre
-favoriteBtn.textContent = film.preferito ? '★' : '☆';
+favoriteBtn.textContent = film.preferito ? '⭐' : '☆';
 favoriteBtn.classList.toggle('active', film.preferito);
 
 // click sulla stellina del modal
 favoriteBtn.onclick = function () {
   film.preferito = !film.preferito;
 
-  favoriteBtn.textContent = film.preferito ? '★' : '☆';
+  favoriteBtn.textContent = film.preferito ? '⭐' : '☆';
   favoriteBtn.classList.toggle('active', film.preferito);
 
   saveToLocalStorage();
@@ -541,7 +541,7 @@ function openEditModalForEditing() {
     tempTmdbOverview = film.overview || "";
     tempTmdbTagline = film.tagline || "";
 
-    editModalTitle.textContent = "Modifica film";
+    editModalTitle.textContent = "Modifica Titolo";
 
     editTitolo.value = film.titolo;
     editAnno.value = film.anno;
@@ -1398,7 +1398,7 @@ if (btnTutti) btnTutti.click();
     applyAllFilters();
 });
 
-// --- MODAL AGGIUNTA FILM ---
+// --- MODAL AGGIUNTA TITOLO ---
 var editModal = document.getElementById("editModal");
 var addFilmBtn = document.getElementById("addFilmBtn");
 
