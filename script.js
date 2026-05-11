@@ -491,11 +491,6 @@ function renderRatingButtons(film) {
     container.appendChild(btn);
   }
 }
-      saveToLocalStorage();
-      applyAllFilters();
-    };
-  });
-}
   
 function openModal(film, index) {
   currentFilmIndex = index;
