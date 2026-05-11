@@ -1,5 +1,3 @@
-console.log("SCRIPT NUOVO CARICATO");
-
 // ===== CONFIGURAZIONE TMDb =====
 const TMDB_PROXY_BASE = "https://cinematix.greta-c2b.workers.dev";
 const TMDB_POSTER_BASE = "https://image.tmdb.org/t/p/w342";
@@ -470,24 +468,29 @@ function renderFilms(list) {
 }
 
 function renderRatingButtons(film) {
-  var ratingButtons = document.querySelectorAll("#modalRatingBtns .rating-btn");
+  var container = document.getElementById("ratingButtons");
+  container.innerHTML = "";
 
-  ratingButtons.forEach(function (btn) {
-    var value = Number(btn.dataset.value);
+  for (let i = 1; i <= 10; i++) {
+    var btn = document.createElement("button");
+    btn.className = "rating-btn";
+    btn.dataset.value = i;
+    btn.textContent = i;
 
-    btn.classList.toggle("active", film.valutazione === value);
+    if (film.valutazione === i) {
+      btn.classList.add("active");
+    }
 
     btn.onclick = function () {
-      film.valutazione = (film.valutazione === value) ? null : value;
+      film.valutazione = film.valutazione === i ? null : i;
+      saveToLocalStorage();
+      renderRatingButtons(film);
+      applyAllFilters();
+    };
 
-      ratingButtons.forEach(function (b) {
-        b.classList.remove("active");
-      });
-
-      if (film.valutazione === value) {
-        btn.classList.add("active");
-      }
-
+    container.appendChild(btn);
+  }
+}
       saveToLocalStorage();
       applyAllFilters();
     };
@@ -569,15 +572,15 @@ function openModal(film, index) {
   document.getElementById("modalCommentInput").value = film.commento || "";
 
   renderRatingButtons(film);
-  setupStateButtons(document.querySelectorAll("#modalStatoBtns .stato-btn"), film);
+setupStateButtons(document.querySelectorAll("#modalStatoButtons .stato-btn"), film);
 
-document.getElementById("openEditModalBtn").onclick = function () {
+document.getElementById("editFilmBtn").onclick = function () {
   closeModal();
   editingIndex = index;
   openEditModalForEditing();
 };
 
-document.getElementById("btnDeleteFilm").onclick = function () {
+document.getElementById("deleteFilmBtn").onclick = function () {
   openDeleteModal(index);
 };
 
