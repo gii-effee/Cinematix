@@ -468,67 +468,90 @@ function renderFilms(list) {
 }
   
 function openModal(film, index) {
-    editingIndex = index;
+  currentFilmIndex = index;
 
-    document.getElementById('modalTitoloFilm').textContent =
-      `${film.titolo} (${film.anno || "—"})`;
-    document.getElementById('modalRegista').textContent = (film.regista || []).join(', ') || '-';
-    document.getElementById('modalAttori').textContent = (film.attori || []).join(', ') || '-';
-    document.getElementById('modalGenere').textContent = (film.genere || []).join(', ') || 'Nessuno';
-    document.getElementById('modalCategorie').textContent = (film.categoria_personale || []).join(', ') || '-';
-    document.getElementById('modalTipo').textContent = film.tipo === "serie" ? "Serie TV" : "Film";
-    document.getElementById('modalCommentInput').value = film.commento || '';
+  var favoriteBtn = document.querySelector(".favorite-toggle-modal");
+  var modalPoster = document.getElementById("modalPoster");
+  var modalPosterFallback = document.getElementById("modalPosterFallback");
+  var modalBackdrop = document.getElementById("modalBackdrop");
+  var modalTagline = document.getElementById("modalTagline");
 
-    var modalRatingBtns = document.getElementById("modalRatingBtns");
-modalRatingBtns.innerHTML = "";
+  document.getElementById("modalTitoloFilm").textContent = film.titolo || "-";
+  document.getElementById("modalAnnoBadge").textContent = film.anno || "-";
+  document.getElementById("modalTipoBadge").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
+  document.getElementById("modalTipo").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
 
-for (let i = 1; i <= 10; i++) {
-    const btn = document.createElement("button");
-    btn.className = "rating-btn";
-    btn.textContent = i;
+  document.getElementById("modalRegista").textContent =
+    film.regista && film.regista.length ? film.regista.join(", ") : "-";
 
-    if (film.valutazione === i) {
-        btn.classList.add("active");
-    }
+  document.getElementById("modalAttori").textContent =
+    film.attori && film.attori.length ? film.attori.join(", ") : "-";
 
-    btn.onclick = function () {
-        setRating(index, i, btn);
-    };
+  document.getElementById("modalGenere").textContent =
+    film.genere && film.genere.length ? film.genere.join(", ") : "-";
 
-    modalRatingBtns.appendChild(btn);
-}
-    
-    setupStateButtons(
-    document.querySelectorAll('#modalStatoBtns .stato-btn'),
-    films[editingIndex]
-);
-   
-    const favoriteBtn = document.querySelector('.favorite-toggle-modal');
+  document.getElementById("modalCategorie").textContent =
+    film.categoriapersonale && film.categoriapersonale.length ? film.categoriapersonale.join(", ") : "-";
 
-// sincronizza la stellina quando il modal si apre
-favoriteBtn.textContent = film.preferito ? '⭐' : '☆';
-favoriteBtn.classList.toggle('active', film.preferito);
+  document.getElementById("modalPiattaforme").textContent =
+    film.piattaforme && film.piattaforme.length ? film.piattaforme.join(", ") : "-";
 
-// click sulla stellina del modal
-favoriteBtn.onclick = function () {
-  film.preferito = !film.preferito;
+  document.getElementById("modalOverview").textContent =
+    film.overview && film.overview.trim() ? film.overview : "Nessuna trama disponibile.";
 
-  favoriteBtn.textContent = film.preferito ? '⭐' : '☆';
-  favoriteBtn.classList.toggle('active', film.preferito);
+  if (film.tagline && film.tagline.trim()) {
+    modalTagline.textContent = film.tagline;
+    modalTagline.classList.remove("hidden");
+  } else {
+    modalTagline.textContent = "";
+    modalTagline.classList.add("hidden");
+  }
 
-  saveToLocalStorage();
-  applyAllFilters();
-};
-    
-    document.getElementById('openEditModalBtn').onclick = openEditModalForEditing;
-    document.getElementById('btnDeleteFilm').onclick = () => openDeleteModal(editingIndex);
-    
-    document.getElementById('modalCommentInput').oninput = () => {
-        films[editingIndex].commento = document.getElementById('modalCommentInput').value;
-        saveToLocalStorage();
-    };
-    
-    modal.classList.remove('hidden');
+  if (film.poster) {
+    modalPoster.src = film.poster;
+    modalPoster.classList.remove("hidden");
+    modalPosterFallback.classList.add("hidden");
+  } else {
+    modalPoster.removeAttribute("src");
+    modalPoster.classList.add("hidden");
+    modalPosterFallback.classList.remove("hidden");
+  }
+
+  if (film.backdrop) {
+    modalBackdrop.style.backgroundImage =
+      "linear-gradient(rgba(20,20,20,0.45), rgba(36,36,36,0.92)), url('" + film.backdrop + "')";
+    modalBackdrop.classList.remove("hidden");
+  } else {
+    modalBackdrop.style.backgroundImage = "none";
+    modalBackdrop.classList.add("hidden");
+  }
+
+  favoriteBtn.textContent = film.preferito ? "★" : "☆";
+  favoriteBtn.classList.toggle("active", !!film.preferito);
+
+  favoriteBtn.onclick = function () {
+    film.preferito = !film.preferito;
+    favoriteBtn.textContent = film.preferito ? "★" : "☆";
+    favoriteBtn.classList.toggle("active", !!film.preferito);
+    saveToLocalStorage();
+    applyAllFilters();
+  };
+
+  document.getElementById("modalCommentInput").value = film.commento || "";
+
+  renderRatingButtons(film);
+  setupStateButtons(document.querySelectorAll("#modalStatoButtons .stato-btn"), film);
+
+  document.getElementById("closeModalBtn").onclick = closeModal;
+  document.getElementById("editFilmBtn").onclick = function () {
+    closeModal();
+    openEditModalForEditing(index);
+  };
+  document.getElementById("deleteFilmBtn").onclick = function () {
+    openDeleteModal(index);
+  };
+
+  document.getElementById("modal").classList.remove("hidden");
 }
 
 function openEditModalForEditing() {
