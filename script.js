@@ -466,6 +466,31 @@ function renderFilms(list) {
     filmList.appendChild(card);
   });
 }
+
+function renderRatingButtons(film) {
+  var ratingButtons = document.querySelectorAll("#modalRatingBtns .rating-btn");
+
+  ratingButtons.forEach(function (btn) {
+    var value = Number(btn.dataset.value);
+
+    btn.classList.toggle("active", film.valutazione === value);
+
+    btn.onclick = function () {
+      film.valutazione = (film.valutazione === value) ? null : value;
+
+      ratingButtons.forEach(function (b) {
+        b.classList.remove("active");
+      });
+
+      if (film.valutazione === value) {
+        btn.classList.add("active");
+      }
+
+      saveToLocalStorage();
+      applyAllFilters();
+    };
+  });
+}
   
 function openModal(film, index) {
   currentFilmIndex = index;
