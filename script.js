@@ -542,16 +542,17 @@ function openModal(film, index) {
   document.getElementById("modalCommentInput").value = film.commento || "";
 
   renderRatingButtons(film);
-  setupStateButtons(document.querySelectorAll("#modalStatoButtons .stato-btn"), film);
+  setupStateButtons(document.querySelectorAll("#modalStatoBtns .stato-btn"), film);
 
-  document.getElementById("closeModalBtn").onclick = closeModal;
-  document.getElementById("editFilmBtn").onclick = function () {
-    closeModal();
-    openEditModalForEditing(index);
-  };
-  document.getElementById("deleteFilmBtn").onclick = function () {
-    openDeleteModal(index);
-  };
+document.getElementById("openEditModalBtn").onclick = function () {
+  closeModal();
+  editingIndex = index;
+  openEditModalForEditing();
+};
+
+document.getElementById("btnDeleteFilm").onclick = function () {
+  openDeleteModal(index);
+};
 
   document.getElementById("modal").classList.remove("hidden");
 }
