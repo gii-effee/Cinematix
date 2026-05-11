@@ -161,9 +161,9 @@
         <div class="modal-section">
             <h3>Stato</h3>
             <div id="modalStatoButtons">
-                <button class="stato-btn" data-stato="Da vedere">Da vedere</button>
-                <button class="stato-btn" data-stato="Visto">Visto</button>
-                <button class="stato-btn" data-stato="Rivedere">Rivedere</button>
+                <button class="stato-btn" data-value="Da vedere">Da vedere</button>
+                <button class="stato-btn" data-value="Visto">Visto</button>
+                <button class="stato-btn" data-value="Rivedere">Rivedere</button>
             </div>
         </div>
 
@@ -193,16 +193,17 @@
         <div class="modal-body">
 
             <!-- 1. TITOLO + ANNO -->
-            <div class="form-group">
-                  <label for="editTitolo">Titolo <span id="tmdb-search-btn" style="color: #b02a37; cursor: pointer; font-weight: bold;"> 🔍 Cerca su TMDb</span></label>
-                  <input type="text" id="editTitolo" placeholder="es. Pulp Fiction">
-                  <div id="tmdb-results" style="display: none; margin-top: 8px;"></div>
-                </div>
-
+            <div class="modal-section edit-two-cols">
                 <div class="edit-col">
-                    <label for="editAnno">Anno</label>
-                    <input id="editAnno" type="number">
-                </div>
+                    <label for="editTitolo">Titolo <span id="tmdb-search-btn" style="color: #b02a37; cursor: pointer; font-weight: bold;"> 🔍 Cerca su TMDb</span></label>
+                    <input type="text" id="editTitolo" placeholder="es. Pulp Fiction">
+                <div id="tmdb-results" style="display: none; margin-top: 8px;"></div>
+            </div>
+
+              <div class="edit-col">
+                  <label for="editAnno">Anno</label>
+                  <input id="editAnno" type="number">
+              </div>
             </div>
 
             <!-- 2. REGISTI + ATTORI -->
