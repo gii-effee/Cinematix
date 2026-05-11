@@ -1,3 +1,5 @@
+console.log("SCRIPT NUOVO CARICATO");
+
 // ===== CONFIGURAZIONE TMDb =====
 const TMDB_PROXY_BASE = "https://cinematix.greta-c2b.workers.dev";
 const TMDB_POSTER_BASE = "https://image.tmdb.org/t/p/w342";
