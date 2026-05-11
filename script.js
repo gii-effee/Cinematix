@@ -491,7 +491,9 @@ function openModal(film, index) {
     film.genere && film.genere.length ? film.genere.join(", ") : "-";
 
   document.getElementById("modalCategorie").textContent =
-    film.categoriapersonale && film.categoriapersonale.length ? film.categoriapersonale.join(", ") : "-";
+  film.categoria_personale && film.categoria_personale.length
+    ? film.categoria_personale.join(", ")
+    : "-";
 
   document.getElementById("modalPiattaforme").textContent =
     film.piattaforme && film.piattaforme.length ? film.piattaforme.join(", ") : "-";
