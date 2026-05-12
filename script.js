@@ -499,9 +499,8 @@ function openModal(film, index) {
   var modalBackdrop = document.getElementById("modalBackdrop");
   var modalTagline = document.getElementById("modalTagline");
 
-  document.getElementById("modalTitoloFilm").textContent = film.titolo || "-";
   document.getElementById("modalAnnoBadge").textContent = film.anno || "-";
-  document.getElementById("modalTipoBadge").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
+  document.getElementById("modalTipoBadge").textContent = "";
   document.getElementById("modalTipo").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
 
   document.getElementById("modalRegista").textContent =
