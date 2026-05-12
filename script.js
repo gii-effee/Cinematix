@@ -496,8 +496,6 @@ function openModal(film, index) {
   currentFilmIndex = index;
 
   var favoriteBtn = document.querySelector(".favorite-toggle-modal");
-  var modalPoster = document.getElementById("modalPoster");
-  var modalPosterFallback = document.getElementById("modalPosterFallback");
   var modalBackdrop = document.getElementById("modalBackdrop");
   var modalTagline = document.getElementById("modalTagline");
 
@@ -534,24 +532,28 @@ function openModal(film, index) {
     modalTagline.classList.add("hidden");
   }
 
-  if (film.poster) {
-    modalPoster.src = film.poster;
-    modalPoster.classList.remove("hidden");
-    modalPosterFallback.classList.add("hidden");
-  } else {
-    modalPoster.removeAttribute("src");
-    modalPoster.classList.add("hidden");
-    modalPosterFallback.classList.remove("hidden");
-  }
-
   if (film.backdrop) {
-    modalBackdrop.style.backgroundImage =
-      "linear-gradient(rgba(20,20,20,0.45), rgba(36,36,36,0.92)), url('" + film.backdrop + "')";
-    modalBackdrop.classList.remove("hidden");
-  } else {
-    modalBackdrop.style.backgroundImage = "none";
-    modalBackdrop.classList.add("hidden");
-  }
+  modalBackdrop.style.backgroundImage = `
+    linear-gradient(
+      180deg,
+      rgba(20,20,20,0.12) 0%,
+      rgba(20,20,20,0.24) 35%,
+      rgba(24,24,24,0.78) 72%,
+      rgba(36,36,36,0.98) 100%
+    ),
+    url("${film.backdrop}")
+  `;
+  modalBackdrop.classList.remove("hidden");
+} else {
+  modalBackdrop.style.backgroundImage = `
+    linear-gradient(
+      180deg,
+      rgba(40,40,40,0.95) 0%,
+      rgba(28,28,28,0.98) 100%
+    )
+  `;
+  modalBackdrop.classList.remove("hidden");
+}
 
   favoriteBtn.textContent = film.preferito ? "★" : "☆";
   favoriteBtn.classList.toggle("active", !!film.preferito);
