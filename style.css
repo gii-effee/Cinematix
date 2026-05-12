@@ -2305,3 +2305,9 @@ input:focus {
   #modalContent h2 {
     font-size: 24px;
   }
+
+.filter-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20001 !important;
+}
