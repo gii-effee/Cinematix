@@ -2157,3 +2157,140 @@ input:focus {
   right: 8px;
   z-index: 1;
 }
+
+#modalContent {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+}
+
+.favorite-toggle-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  font-size: 26px;
+  cursor: pointer;
+  color: #ffd700;
+  transition: transform 0.15s ease;
+}
+
+.favorite-toggle-modal:hover {
+  transform: scale(1.12);
+}
+
+.modal-hero {
+  position: relative;
+  min-height: 210px;
+  max-height: 240px;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(199, 190, 180, 0.10);
+  overflow: hidden;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  transform: scale(1.02);
+}
+
+.modal-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 18, 18, 0.18) 0%,
+      rgba(18, 18, 18, 0.42) 38%,
+      rgba(24, 24, 24, 0.82) 72%,
+      #242424 100%
+    );
+}
+
+.modal-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 72px 34px 22px 34px;
+}
+
+.modal-hero-top {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.modal-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(6px);
+}
+
+.modal-tagline {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 90%;
+}
+
+#modalContent h2 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.1;
+  color: #fff;
+}
+
+#modalContent .modal-grid,
+#modalContent .modal-section,
+#modalContent .modal-buttons {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+
+#modalContent .modal-grid {
+  padding-top: 22px;
+}
+
+#modalContent .modal-buttons {
+  padding-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .modal-hero {
+    min-height: 180px;
+    max-height: 210px;
+  }
+
+  .modal-hero-content {
+    padding: 68px 18px 18px 18px;
+  }
+
+  #modalContent .modal-grid,
+  #modalContent .modal-section,
+  #modalContent .modal-buttons {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  #modalContent h2 {
+    font-size: 24px;
+  }
+
+  .favorite-toggle-modal {
+    top: 14px;
+    right: 14px;
+  }
+}
