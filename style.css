@@ -2223,26 +2223,6 @@ input:focus {
   padding: 72px 34px 22px 34px;
 }
 
-.modal-meta-inline {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-.modal-type-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #f0f0f0;
-  background: rgba(0, 0, 0, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(6px);
-}
-
 .modal-title-row {
   display: flex;
   align-items: baseline;
