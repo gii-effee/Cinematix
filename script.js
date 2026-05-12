@@ -498,8 +498,8 @@ function openModal(film, index) {
   var favoriteBtn = document.querySelector(".favorite-toggle-modal");
   var modalBackdrop = document.getElementById("modalBackdrop");
   var modalTagline = document.getElementById("modalTagline");
-
-  document.getElementById("modalAnnoBadge").textContent = film.anno || "-";
+  var modalAnnoInline = document.getElementById("modalAnnoInline");
+  modalAnnoInline.textContent = film.anno || "-";
   document.getElementById("modalTipoBadge").textContent = "";
   document.getElementById("modalTipo").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
 
