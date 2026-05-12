@@ -499,6 +499,8 @@ function openModal(film, index) {
   var modalBackdrop = document.getElementById("modalBackdrop");
   var modalTagline = document.getElementById("modalTagline");
   var modalAnnoInline = document.getElementById("modalAnnoInline");
+  
+  document.getElementById("modalTitoloFilm").textContent = film.titolo || "-";
   modalAnnoInline.textContent = film.anno || "-";
   document.getElementById("modalTipoBadge").textContent = "";
   document.getElementById("modalTipo").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
