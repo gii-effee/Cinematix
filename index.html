@@ -94,32 +94,28 @@
 <section id="filmList"></section>
 
 <div id="modal" class="hidden" tabindex="0">
-    <div id="modalContent">
+    <div id="modalContent" role="dialog" aria-modal="true" aria-labelledby="modalTitoloFilm">
         <button type="button" class="favorite-toggle-modal" aria-label="Preferito">☆</button>
 
-        <div class="modal-hero">
-            <div id="modalBackdrop" class="modal-hero-backdrop hidden"></div>
+<div class="modal-hero">
+    <div id="modalBackdrop" class="modal-hero-backdrop hidden"></div>
+    <div class="modal-hero-fade"></div>
 
-            <div class="modal-hero-content">
-                <div class="modal-poster-wrap">
-                    <img id="modalPoster" class="modal-poster hidden" alt="Poster del titolo">
-                    <div id="modalPosterFallback" class="modal-poster-fallback">Nessun poster</div>
-                </div>
-
-                <div class="modal-hero-text">
-                    <div class="modal-title-row">
-                        <h2 id="modalTitoloFilm">Titolo film</h2>
-                        <span id="modalAnnoBadge" class="modal-year-badge">-</span>
-                    </div>
-
-                    <div class="modal-meta-inline">
-                        <span id="modalTipoBadge" class="modal-type-badge">Film</span>
-                    </div>
-
-                    <p id="modalTagline" class="modal-tagline hidden"></p>
-                </div>
+    <div class="modal-hero-content">
+        <div class="modal-hero-text">
+            <div class="modal-meta-inline">
+                <span id="modalTipoBadge" class="modal-type-badge">Film</span>
+                <span id="modalAnnoBadge" class="modal-year-badge">-</span>
             </div>
+
+            <div class="modal-title-row">
+                <h2 id="modalTitoloFilm">Titolo film</h2>
+            </div>
+
+            <p id="modalTagline" class="modal-tagline hidden"></p>
         </div>
+    </div>
+</div>
 
         <div class="modal-grid">
             <div class="modal-grid-item">
@@ -178,9 +174,9 @@
         </div>
 
         <div class="modal-buttons">
-            <button id="closeModalBtn">Chiudi</button>
-            <button id="editFilmBtn">Modifica</button>
-            <button id="deleteFilmBtn" class="danger-btn">Elimina</button>
+            <button type="button" id="closeModalBtn">Chiudi</button>
+            <button type="button" id="editFilmBtn">Modifica</button>
+            <button type="button" id="deleteFilmBtn" class="danger-btn">Elimina</button>
         </div>
     </div>
 </div>
