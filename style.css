@@ -2230,7 +2230,6 @@ input:focus {
   margin-bottom: 10px;
 }
 
-.modal-year-badge,
 .modal-type-badge {
   display: inline-flex;
   align-items: center;
@@ -2242,6 +2241,31 @@ input:focus {
   background: rgba(0, 0, 0, 0.28);
   border: 1px solid rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(6px);
+}
+
+.modal-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+#modalTitoloFilm {
+  display: inline;
+}
+
+.modal-title-separator {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.modal-title-year {
+  color: #c9c9c9;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
 }
 
 .modal-tagline {
@@ -2278,6 +2302,14 @@ input:focus {
   .modal-hero {
     min-height: 190px;
   }
+    
+.modal-title-row {
+  gap: 8px;
+}
+
+.modal-title-year {
+  font-size: 15px;
+}
 
   .modal-hero-content {
     padding: 68px 18px 18px 18px;
