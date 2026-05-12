@@ -1509,7 +1509,7 @@ body:focus {
     position: absolute;
     top: 12px;
     right: 12px;
-    z-index: 5;
+    z-index: 1;
     width: 40px;
     height: 40px;
     display: flex;
