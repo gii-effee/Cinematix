@@ -502,7 +502,6 @@ function openModal(film, index) {
   
   document.getElementById("modalTitoloFilm").textContent = film.titolo || "-";
   modalAnnoInline.textContent = film.anno || "-";
-  document.getElementById("modalTipoBadge").textContent = "";
   document.getElementById("modalTipo").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
 
   document.getElementById("modalRegista").textContent =
