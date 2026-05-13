@@ -1509,7 +1509,6 @@ body:focus {
     position: absolute;
     top: 12px;
     right: 12px;
-    z-index: 1;
     width: 40px;
     height: 40px;
     display: flex;
@@ -1535,12 +1534,6 @@ body:focus {
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
-}
-
-#modalContent,
-#editModalContent {
-  position: relative;
-  z-index: 10000;
 }
 
 textarea:focus,
@@ -2277,34 +2270,6 @@ input:focus {
 #modalContent .modal-buttons {
   padding-bottom: 24px;
 }
-
-@media (max-width: 600px) {
-  .modal-hero {
-    min-height: 190px;
-  }
-    
-.modal-title-row {
-  gap: 8px;
-}
-
-.modal-title-year {
-  font-size: 15px;
-}
-
-  .modal-hero-content {
-    padding: 68px 18px 18px 18px;
-  }
-
-  #modalContent .modal-grid,
-  #modalContent .modal-section,
-  #modalContent .modal-buttons {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  #modalContent h2 {
-    font-size: 24px;
-  }
 
 .filter-modal {
   position: fixed;
