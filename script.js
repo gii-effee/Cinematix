@@ -75,7 +75,7 @@ function showTmdbResults(items) {
     container.appendChild(div);
   });
 
-  container.style.display = "block";
+  container.classList.remove("hidden");
 }
 
 async function selectTmdbTitle(id, mediaType) {
