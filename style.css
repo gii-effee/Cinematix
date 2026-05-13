@@ -1115,7 +1115,7 @@ button:hover {
     width: 90%;
     max-width: 600px;
     max-height: 85vh;
-    overflow-y: auto;
+    overflow: visible;
     border: 1px solid #3a3a3a;
     box-shadow: 0 0 18px rgba(0,0,0,0.45);
     box-sizing: border-box;
@@ -1212,6 +1212,34 @@ button:hover {
     flex: 1;                 
     padding: 8px 0;         
     font-size: 14px;
+}
+
+.tmdb-search-col {
+    position: relative;
+}
+
+.tmdb-search-wrap {
+    position: relative;
+    width: 100%;
+}
+
+#tmdb-results.tmdb-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    max-height: 320px;
+    overflow-y: auto;
+    background: #242424;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px;
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.38);
+    padding: 8px;
+    z-index: 300;
+}
+
+#tmdb-results.tmdb-results.hidden {
+    display: none !important;
 }
 
 /* --- ANIMAZIONE UNIFORME AL CLICK PER TUTTI I BOTTONI E LE CARD --- */
