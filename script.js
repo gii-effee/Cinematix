@@ -30,7 +30,7 @@ function showTmdbResults(items) {
 
   if (items.length === 0) {
     container.innerHTML = '<div style="padding: 12px; color: #666;">Nessun risultato trovato</div>';
-    container.style.display = "block";
+    container.classList.remove("hidden");
     return;
   }
 
@@ -141,19 +141,17 @@ async function selectTmdbTitle(id, mediaType) {
       }
     });
 
-    if (risultatiBox) risultatiBox.style.display = "none";
+    if (risultatiBox) risultatiBox.classList.add("hidden");
   } catch (err) {
     console.error(err);
     alert("Errore caricamento dettagli");
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const tmdbSearchBtn = document.getElementById("tmdb-search-btn");
+const tmdbSearchBtn = document.getElementById("tmdb-search-btn");
 
-  if (!tmdbSearchBtn) return;
-
-  tmdbSearchBtn.addEventListener("click", async () => {
+if (tmdbSearchBtn) {
+  tmdbSearchBtn.addEventListener("click", async function () {
     const titoloInput = document.getElementById("editTitolo");
     const query = titoloInput ? titoloInput.value.trim() : "";
 
@@ -170,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Errore nella ricerca TMDb");
     }
   });
-});
+}
 
 // --- DATI DEI TITOLI ---
 var films = [];
