@@ -853,6 +853,32 @@ button:hover {
     margin-top: 6px;
 }
 
+.modal-meta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 10px;
+}
+
+.modal-meta-col {
+    margin-bottom: 0;
+}
+
+#modalStatoButtons,
+#ratingButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+@media (max-width: 700px) {
+    .modal-meta-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}
+
 .filter-modal:not(.fade-in) {
     pointer-events: none !important;
 }
