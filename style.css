@@ -855,38 +855,39 @@ button:hover {
 
 .modal-meta-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-    column-gap: 30px;
-    row-gap: 10px;
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
     margin-bottom: 10px;
 }
 
 .modal-meta-col {
     margin-bottom: 0;
-    min-width: 0;
 }
 
 .modal-meta-col h3 {
     margin-top: 0;
 }
 
-#modalStatoButtons,
 #ratingButtons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 6px;
 }
 
-#ratingButtons {
-    justify-content: flex-start;
+#ratingButtons .rating-btn {
+    min-width: 0;
+    padding: 6px 0;
+    text-align: center;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 600px) {
     .modal-meta-row {
         grid-template-columns: 1fr;
         gap: 8px;
+    }
+
+    #ratingButtons {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 }
 
