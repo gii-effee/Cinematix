@@ -855,14 +855,20 @@ button:hover {
 
 .modal-meta-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    column-gap: 30px;
+    row-gap: 10px;
     align-items: start;
     margin-bottom: 10px;
 }
 
 .modal-meta-col {
     margin-bottom: 0;
+    min-width: 0;
+}
+
+.modal-meta-col h3 {
+    margin-top: 0;
 }
 
 #modalStatoButtons,
@@ -870,9 +876,14 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    align-items: center;
 }
 
-@media (max-width: 700px) {
+#ratingButtons {
+    justify-content: flex-start;
+}
+
+@media (max-width: 760px) {
     .modal-meta-row {
         grid-template-columns: 1fr;
         gap: 8px;
