@@ -15,6 +15,7 @@
             <button class="nav-link active" data-section="home">Home</button>
             <button class="nav-link" data-section="film">Film</button>
             <button class="nav-link" data-section="serie">Serie TV</button>
+            <button class="nav-link" data-section="categorie">Categorie</button>
             <button class="nav-link" data-section="preferiti">Preferiti</button>
         </nav>
     </div>
@@ -90,12 +91,33 @@
 
 </section>
 
+<section id="categoriePage" class="hidden">
+    <div class="categorie-page-header">
+        <h2>Categorie</h2>
+        <p>Seleziona una categoria per vedere i titoli associati.</p>
+    </div>
+
+    <div id="categorieGrid" class="categorie-grid"></div>
+
+    <div id="categoriaDetail" class="categoria-detail hidden">
+        <div class="categoria-detail-header">
+            <div>
+                <h3 id="categoriaDetailTitle">Nome categoria</h3>
+                <p id="categoriaDetailCount">0 titoli</p>
+            </div>
+
+            <button id="closeCategoriaDetail" class="filter-btn">Tutte le categorie</button>
+        </div>
+
+        <section id="categoriaFilmList" class="film-category-list"></section>
+    </div>
+</section>
+
 <!-- MODAL AGGIUNTA E DETTAGLI -->
 <section id="filmList"></section>
 
 <div id="modal" class="hidden" tabindex="0">
     <div id="modalContent" role="dialog" aria-modal="true" aria-labelledby="modalTitoloFilm">
-        <button type="button" class="favorite-toggle-modal" aria-label="Preferito">☆</button>
 
 <div class="modal-hero">
   <div id="modalBackdrop" class="modal-backdrop"></div>
