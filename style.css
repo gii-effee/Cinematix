@@ -2323,3 +2323,119 @@ input:focus {
   inset: 0;
   z-index: 20001 !important;
 }
+
+.categorie-page-header {
+    padding: 32px 20px 8px;
+}
+
+.categorie-page-header h2 {
+    margin: 0 0 8px;
+    font-size: 32px;
+    color: #fff;
+}
+
+.categorie-page-header p {
+    margin: 0;
+    color: #a7a7a7;
+    font-size: 15px;
+}
+
+.categorie-grid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.categoria-card {
+    background: #242424;
+    border: 1px solid #3a3a3a;
+    border-radius: 14px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+    color: #f2f2f2;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.categoria-card:hover {
+    border-color: #b02a37;
+    background: #2a2a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.categoria-card.active {
+    border-color: #b02a37;
+    background: rgba(176, 42, 55, 0.14);
+}
+
+.categoria-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #fff;
+}
+
+.categoria-card-count {
+    font-size: 14px;
+    color: #b7b7b7;
+}
+
+.categoria-detail {
+    padding: 8px 20px 24px;
+}
+
+.categoria-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.categoria-detail-header h3 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    color: #fff;
+}
+
+.categoria-detail-header p {
+    margin: 0;
+    color: #a7a7a7;
+    font-size: 14px;
+}
+
+.film-category-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+@media (max-width: 700px) {
+    .categorie-page-header {
+        padding: 24px 16px 8px;
+    }
+
+    .categorie-grid {
+        padding: 16px;
+        grid-template-columns: 1fr;
+    }
+
+    .categoria-detail {
+        padding: 8px 16px 24px;
+    }
+
+    .categoria-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .film-category-list {
+        grid-template-columns: 1fr;
+    }
+}
