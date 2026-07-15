@@ -824,7 +824,7 @@ function getCategoryData() {
     var map = {}
 
     films.forEach(function (film) {
-        var cats = Array.isArray(film.categoriapersonale) ? film.categoriapersonale : []
+        var cats = Array.isArray(film.categoria_personale) ? film.categoria_personale : []
 
         cats
             .map(function (cat) { return cat.trim() })
