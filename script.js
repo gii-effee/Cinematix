@@ -263,6 +263,15 @@ var generiDisponibili = [
 
 var editingIndex = -1;
 var currentSection = "home";
+var selectedCategory = null
+var categoriePage = document.getElementById("categoriePage")
+var categorieGrid = document.getElementById("categorieGrid")
+var categoriaDetail = document.getElementById("categoriaDetail")
+var categoriaDetailTitle = document.getElementById("categoriaDetailTitle")
+var categoriaDetailCount = document.getElementById("categoriaDetailCount")
+var categoriaFilmList = document.getElementById("categoriaFilmList")
+var closeCategoriaDetail = document.getElementById("closeCategoriaDetail")
+var filtersSection = document.getElementById("filters")
 
 function activateNav(section) {
     document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
@@ -272,33 +281,58 @@ function activateNav(section) {
 }
 
 function goHome() {
-    currentSection = "home";
-    activateNav("home");
-
-    resetFilters.click();
-    applyAllFilters();
+    currentSection = "home"
+    activateNav("home")
+    selectedCategory = null
+    categoriePage.classList.add("hidden")
+    categoriaDetail.classList.add("hidden")
+    filmList.classList.remove("hidden")
+    filtersSection.classList.remove("hidden")
+    resetFilters.click()
+    applyAllFilters()
 }
 
-function goPreferiti() {
-    currentSection = "preferiti";
-    activateNav("preferiti");
-
-    resetFilters.click();
-    applyAllFilters();
+function goHome() {
+    currentSection = "home"
+    activateNav("home")
+    selectedCategory = null
+    categoriePage.classList.add("hidden")
+    categoriaDetail.classList.add("hidden")
+    filmList.classList.remove("hidden")
+    filtersSection.classList.remove("hidden")
+    resetFilters.click()
+    applyAllFilters()
 }
 
 function goFilm() {
-  currentSection = "film";
-  activateNav("film");
-  resetFilters.click();
-  applyAllFilters();
+    currentSection = "film"
+    activateNav("film")
+    selectedCategory = null
+    categoriePage.classList.add("hidden")
+    categoriaDetail.classList.add("hidden")
+    filmList.classList.remove("hidden")
+    filtersSection.classList.remove("hidden")
+    resetFilters.click()
+    applyAllFilters()
 }
 
 function goSerie() {
-  currentSection = "serie";
-  activateNav("serie");
-  resetFilters.click();
-  applyAllFilters();
+    currentSection = "serie"
+    activateNav("serie")
+    selectedCategory = null
+    categoriePage.classList.add("hidden")
+    categoriaDetail.classList.add("hidden")
+    filmList.classList.remove("hidden")
+    filtersSection.classList.remove("hidden")
+    resetFilters.click()
+    applyAllFilters()
+}
+
+function goCategorie() {
+    currentSection = "categorie"
+    activateNav("categorie")
+    selectedCategory = null
+    renderCategoriePage()
 }
 
 document.querySelector('[data-section="home"]').onclick = goHome;
@@ -306,6 +340,14 @@ document.getElementById('nav-home').onclick = goHome;
 document.querySelector('[data-section="preferiti"]').onclick = goPreferiti;
 document.querySelector('[data-section="film"]').onclick = goFilm;
 document.querySelector('[data-section="serie"]').onclick = goSerie;
+document.querySelector('[data-section="categorie"]').onclick = goCategorie
+
+closeCategoriaDetail.onclick = function () {
+    selectedCategory = null
+    categoriaDetail.classList.add("hidden")
+    categoriaFilmList.innerHTML = ""
+    renderCategoriePage()
+}
 
 // --- FUNZIONE PER I BOTTONI STATO ---
 function setupStateButtons(buttons, film) {
@@ -732,10 +774,10 @@ confermaDelete.onclick = function () {
     setTimeout(() => {
         box.classList.remove("shake");
 
-        // 3. Ora elimina davvero
-        films.splice(deleteIndex, 1);
-        saveToLocalStorage();
-        applyAllFilters();
+        films.splice(deleteIndex, 1)
+saveToLocalStorage()
+applyAllFilters()
+refreshCategorieView()
 
         // 4. Chiudi il modal eliminazione
         modalDelete.classList.remove("fade-in");
@@ -776,6 +818,202 @@ function getAllPersonalCategories() {
         });
     });
     return Object.keys(set);
+}
+
+function getCategoryData() {
+    var map = {}
+
+    films.forEach(function (film) {
+        var cats = Array.isArray(film.categoriapersonale) ? film.categoriapersonale : []
+
+        cats
+            .map(function (cat) { return cat.trim() })
+            .filter(function (cat) { return cat !== "" })
+            .forEach(function (cat) {
+                if (!map[cat]) {
+                    map[cat] = {
+                        name: cat,
+                        films: []
+                    }
+                }
+
+                map[cat].films.push(film)
+            })
+    })
+
+    return Object.values(map).sort(function (a, b) {
+        return a.name.localeCompare(b.name)
+    })
+}
+
+function renderCategoriePage() {
+    filtersSection.classList.add("hidden")
+    filmList.classList.add("hidden")
+    categoriePage.classList.remove("hidden")
+
+    var data = getCategoryData()
+
+    categorieGrid.innerHTML = ""
+    categoriaFilmList.innerHTML = ""
+
+    if (data.length === 0) {
+        categorieGrid.innerHTML = `
+            <div class="film-empty-screen">
+                <div class="film-empty-state">
+                    <h3>Nessuna categoria trovata</h3>
+                    <p>Aggiungi una categoria a un film o a una serie TV per vederla qui.</p>
+                </div>
+            </div>
+        `
+        categoriaDetail.classList.add("hidden")
+        return
+    }
+
+    data.forEach(function (category) {
+        var card = document.createElement("button")
+        card.type = "button"
+        card.className = "categoria-card"
+
+        if (selectedCategory === category.name) {
+            card.classList.add("active")
+        }
+
+        card.innerHTML = `
+            <span class="categoria-card-title">${category.name}</span>
+            <span class="categoria-card-count">${category.films.length} titoli</span>
+        `
+
+        card.onclick = function () {
+    selectedCategory = category.name
+    renderCategoriePage()
+    renderCategoriaFilms(category.name)
+}
+
+        categorieGrid.appendChild(card)
+    })
+
+    if (selectedCategory) {
+    renderCategoriaFilms(selectedCategory)
+} else {
+    categoriaDetail.classList.add("hidden")
+}
+}
+
+function renderCategoriaFilms(categoryName) {
+    var data = getCategoryData()
+
+    var currentCategory = data.find(function (item) {
+        return item.name === categoryName
+    })
+
+    if (!currentCategory) {
+        categoriaDetail.classList.add("hidden")
+        categoriaFilmList.innerHTML = ""
+        return
+    }
+
+    categoriaDetail.classList.remove("hidden")
+    categoriaDetailTitle.textContent = currentCategory.name
+    categoriaDetailCount.textContent = currentCategory.films.length + " titoli"
+
+    categoriaFilmList.innerHTML = ""
+
+    currentCategory.films.forEach(function (film) {
+        var card = document.createElement("div")
+        card.className = "film-card"
+
+        var coverImage = film.poster || null
+        var posterHtml = coverImage
+            ? `<img class="film-card-cover" src="${coverImage}" alt="${film.titolo}">`
+            : `<div class="film-card-cover no-poster">Nessun poster</div>`
+
+        var anno = film.anno || "-"
+        var regista = film.regista && film.regista.length > 0 ? film.regista[0] : "Regista non indicato"
+
+        var attori = Array.isArray(film.attori)
+            ? film.attori.map(function (a) { return a.trim() }).filter(Boolean).slice(0, 2)
+            : []
+
+        var attoriText = attori.length > 0 ? attori.join(", ") : "Attori non indicati"
+
+        var generi = Array.isArray(film.genere)
+            ? film.genere.map(function (g) { return g.trim() }).filter(Boolean).slice(0, 2)
+            : []
+
+        var generiHtml = generi.length > 0
+            ? generi.map(function (g) { return `<span class="tag">${g}</span>` }).join("")
+            : `<span class="tag tag-muted">Genere n.d.</span>`
+
+        var statoLabel = film.stato && film.stato.trim() !== "" ? film.stato : "Da definire"
+
+        var ratingHtml = film.valutazione !== null && film.valutazione !== undefined
+            ? `<span class="film-rating">${film.valutazione}/10</span>`
+            : `<span class="film-rating is-empty">Nessun voto</span>`
+
+        card.innerHTML = `
+            <div class="film-card-media">
+                ${posterHtml}
+                <button type="button" class="favorite-toggle favorite-toggle-card" aria-label="Preferito">
+                    ${film.preferito ? "★" : "☆"}
+                </button>
+            </div>
+
+            <div class="film-card-body">
+                <div class="film-card-heading">
+                    <h3>${film.titolo.toUpperCase()} <span class="film-card-year">${anno}</span></h3>
+                </div>
+
+                <p class="film-card-director-line">${regista}</p>
+                <p class="film-card-cast-line">${attoriText}</p>
+
+                <div class="film-card-tags">
+                    ${generiHtml}
+                </div>
+
+                <div class="film-card-meta-line">
+                    <span class="film-status-badge">${statoLabel}</span>
+                    ${ratingHtml}
+                </div>
+            </div>
+        `
+
+        card.onclick = function () {
+    var realIndex = films.indexOf(film)
+    openModal(film, realIndex)
+}
+
+        card.querySelector(".favorite-toggle").onclick = function (e) {
+            e.stopPropagation()
+            film.preferito = !film.preferito
+            this.textContent = film.preferito ? "★" : "☆"
+            saveToLocalStorage()
+            refreshCategorieView()
+        }
+
+        categoriaFilmList.appendChild(card)
+    })
+}
+
+function refreshCategorieView() {
+    if (currentSection !== "categorie") return
+
+    renderCategoriePage()
+
+    if (selectedCategory) {
+        var data = getCategoryData()
+
+        var exists = data.some(function (item) {
+            return item.name === selectedCategory
+        })
+
+        if (exists) {
+            renderCategoriaFilms(selectedCategory)
+        } else {
+            selectedCategory = null
+            categoriaDetail.classList.add("hidden")
+            categoriaFilmList.innerHTML = ""
+        }
+    }
 }
 
 // --- FILTRO STATO (3 BOTTONI) ---
@@ -1631,11 +1869,12 @@ saveFilmBtn.onclick = function () {
             addedAt: Date.now()
         };
 
-        films.push(nuovoFilm);
-        saveToLocalStorage();
-        applyAllFilters();
-        editModal.classList.add("hidden");
-        return;
+        films.push(nuovoFilm)
+saveToLocalStorage()
+applyAllFilters()
+refreshCategorieView()
+editModal.classList.add("hidden")
+return
     }
 
     // --- MODALITÀ MODIFICA ---
@@ -1656,9 +1895,10 @@ saveFilmBtn.onclick = function () {
     film.overview = tempTmdbOverview;
     film.tagline = tempTmdbTagline;
 
-    saveToLocalStorage();
-    applyAllFilters();
-    editModal.classList.add("hidden");
+    saveToLocalStorage()
+applyAllFilters()
+refreshCategorieView()
+editModal.classList.add("hidden")
 };
 
 var cancelEditBtn = document.getElementById("cancelEditBtn");
