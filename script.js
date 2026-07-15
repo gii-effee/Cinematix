@@ -292,18 +292,6 @@ function goHome() {
     applyAllFilters()
 }
 
-function goHome() {
-    currentSection = "home"
-    activateNav("home")
-    selectedCategory = null
-    categoriePage.classList.add("hidden")
-    categoriaDetail.classList.add("hidden")
-    filmList.classList.remove("hidden")
-    filtersSection.classList.remove("hidden")
-    resetFilters.click()
-    applyAllFilters()
-}
-
 function goFilm() {
     currentSection = "film"
     activateNav("film")
@@ -326,6 +314,18 @@ function goSerie() {
     filtersSection.classList.remove("hidden")
     resetFilters.click()
     applyAllFilters()
+}
+
+function goPreferiti() {
+    currentSection = "preferiti";
+    activateNav("preferiti");
+    selectedCategory = null;
+    categoriePage.classList.add("hidden");
+    categoriaDetail.classList.add("hidden");
+    filmList.classList.remove("hidden");
+    filtersSection.classList.remove("hidden");
+    resetFilters.click();
+    applyAllFilters();
 }
 
 function goCategorie() {
