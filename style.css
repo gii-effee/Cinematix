@@ -36,81 +36,6 @@ header {
 }
 
 /* --- FILTRI (VERSIONE PULITA E DEFINITIVA) --- */
-#filters {
-    padding: 20px;
-}
-
-#filters h2 {
-    margin-top: 24px;
-    margin-bottom: 8px;
-}
-
-#filters .filters-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 24px;
-    margin-bottom: 8px;
-}
-
-#filters .filter-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.filter-btn {
-    background: #3a3a3a;
-    color: #fff;
-    border: 1px solid #555;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.filter-btn:hover {
-    background: #b02a37;
-    border-color: #b02a37;
-}
-
-.filter-btn.active-filter {
-    background-color: #b02a37 !important;
-    color: #fff !important;
-    border-color: #b02a37 !important;
-}
-
-#resetFilters {
-    background: #444;
-    border-color: #666;
-}
-
-#resetFilters:hover {
-    background: #b02a37;
-    border-color: #b02a37;
-    color: #fff;
-}
-
-/* --- FILTRI AVANZATI: SELECT --- */
-#filters select {
-    background: #2f2f2f;
-    color: #fff;
-    border: 1px solid #555;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 14px;
-}
-
-#filters select option {
-    background: #2f2f2f;
-    color: #fff;
-}
-
-#filters select + select {
-    margin-left: 10px;
-}
-
 /* --- LISTA FILM --- */
 #filmList {
     padding: 20px;
@@ -502,43 +427,7 @@ button:hover {
     color: #b02a37;
 }
 
-.filter-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.65);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.filter-modal-content {
-    background: #242424;
-    padding: 24px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 420px;
-}
-
-.filter-option-btn {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #333;
-    border: 1px solid #555;
-    border-radius: 6px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.filter-option-btn:hover {
-    background: #b02a37;
-    border-color: #b02a37;
-}
-
-/* MODAL FILTRI — VERSIONE DEFINITIVA */
+/* --- MODAL FILTRI (versione unica e definitiva) --- */
 .filter-modal {
     position: fixed;
     top: 0;
@@ -559,17 +448,25 @@ button:hover {
     pointer-events: auto;
 }
 
+.filter-modal:not(.fade-in) {
+    pointer-events: none !important;
+}
+
 .filter-modal-content {
     background: #242424;
-    padding: 20px;
+    padding: 18px;
     border-radius: 10px;
     width: 90%;
     max-width: 420px;
     border: 1px solid #3a3a3a;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .filter-modal-content h2 {
-    margin: 0 0 14px 0;
+    margin: 0 0 10px 0;
     font-size: 18px;
     font-weight: 600;
 }
@@ -577,12 +474,18 @@ button:hover {
 .filter-modal-options {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 6px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-bottom: 6px;
+    flex: 1;
+    overflow-y: auto;
 }
 
 .filter-option-btn {
+    width: 100%;
     padding: 10px;
+    margin-bottom: 10px;
     background: #333;
     border: 1px solid #555;
     border-radius: 6px;
@@ -597,39 +500,73 @@ button:hover {
     border-color: #b02a37;
 }
 
+.filter-option-btn:active {
+    transform: scale(0.97);
+}
+
+.filter-option-btn.active {
+    background: #b02a37;
+    border-color: #b02a37;
+    color: #fff;
+}
+
+/* Modal filtro STATO: altezza automatica (unico caso speciale) */
+#modalFiltroStato .filter-modal-content {
+    height: auto !important;
+    min-height: 0 !important;
+}
+
 .filter-modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;              /* spazio tra Annulla e Applica */
-    margin-top: 10px;       /* un po' di respiro sopra */
+    gap: 12px;
+    margin-top: 14px;
 }
 
 .filter-modal-actions button {
-    padding: 10px 16px;     /* più comodi da cliccare */
+    padding: 10px 16px;
     background: #555;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     color: #eee;
     cursor: pointer;
-    transition: 0.2s;
+    font-size: 14px;
+    transition: background-color 0.22s ease, border-color 0.22s ease, transform 0.12s ease;
 }
 
-.filter-modal-actions button:hover {
+.filter-modal-actions button.annulla-btn {
+    background: #555;
+    color: #eee;
+}
+
+.filter-modal-actions button.annulla-btn:hover {
+    background: #666;
+}
+
+.filter-modal-actions button.applica-btn {
     background: #b02a37;
     color: #fff;
 }
 
-.filter-modal-actions button {
-    padding: 8px 14px;
-    background: #555;
-    border: none;
-    border-radius: 6px;
-    color: #eee;
-    cursor: pointer;
+.filter-modal-actions button.applica-btn:hover {
+    background: #8c1f2c;
 }
 
-.filter-modal-actions button:hover {
-    background: #666;
+.filter-modal-actions button:active {
+    background: #8c1f2c;
+    transform: scale(0.96);
+}
+
+.filter-option-btn:focus,
+.filter-modal-actions button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Variante più compatta per il modal di modifica genere */
+#modalEditGenere .filter-modal-actions {
+    gap: 10px;
+    margin-top: 10px;
 }
 
 /* BLOCCO FILTRO — VERSIONE DEFINITIVA */
@@ -678,57 +615,6 @@ button:hover {
     }
 }
 
-.filter-modal-actions button {
-    padding: 8px 14px;
-    background: #555;
-    border: none;
-    border-radius: 6px;
-    color: #eee;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.filter-modal-actions button:hover {
-    background: #b02a37;
-    color: #fff;
-}
-
-.filter-modal-actions button:active {
-    background: #8c1f2c;
-    transform: scale(0.97);
-}
-
-.filter-modal-options {
-    margin-top: 10px;     /* prima era troppo attaccato */
-    margin-bottom: 14px;  /* prima era troppo distante */
-}
-
-.filter-modal-actions {
-    margin-top: 6px;      /* riduce lo spazio enorme */
-}
-
-.filter-modal-content {
-    padding: 18px;   /* prima era 20–26 */
-}
-
-.filter-modal-content h2 {
-    margin-bottom: 10px;
-}
-
-.filter-modal-options {
-    gap: 6px;
-    margin-bottom: 0;
-    padding-bottom: 6px;
-}
-
-.filter-modal-actions {
-    margin-top: 0;
-}
-
-.filter-option-btn:active {
-    transform: scale(0.97);
-}
-
 .filter-block-value {
     text-transform: capitalize;
     color: #e6e6e6;
@@ -736,19 +622,6 @@ button:hover {
 
 .filter-block.active {
     border-color: #b02a37;
-}
-
-.filter-option-btn.active {
-    background: #b02a37;
-    border-color: #b02a37;
-    color: #fff;
-}
-
-#modalEditGenere .filter-modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;   /* separazione */
-    margin-top: 10px;
 }
 
 /* Rende il blocco GENERE largo come gli altri campi del modal editor */
@@ -950,21 +823,6 @@ button:hover {
     color: #fff;
 }
 
-/* Hover solo se NON è attivo (rating) */
-#modalContent .modal-section .rating-btn:hover:not(.active) {
-    background: #b02a37;
-    border-color: #b02a37;
-    color: #fff;
-}
-
-/* Attivo: resta rosso sempre, anche in hover (rating) */
-#modalContent .modal-section .rating-btn.active,
-#modalContent .modal-section .rating-btn.active:hover {
-    background: #b02a37;
-    border-color: #b02a37;
-    color: #fff;
-}
-
 /* Effetto pressione */
 .rating-btn:active,
 .stato-btn:active,
@@ -989,100 +847,6 @@ button:hover {
 
 #resetFilters:active {
     transform: scale(0.96);
-}
-
-/* --- BOTTONI ANNULLA / APPLICA NEI MODAL FILTRO --- */
-.filter-modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;                 /* spazio tra i bottoni */
-    margin-top: 14px;          /* respiro sopra */
-}
-
-.filter-modal-actions button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.22s ease, 
-                border-color 0.22s ease, 
-                transform 0.12s ease;
-}
-
-/* ANNULLA */
-.filter-modal-actions button:first-child {
-    background: #555;
-    color: #eee;
-}
-
-.filter-modal-actions button:first-child:hover {
-    background: #666;
-}
-
-/* APPLICA */
-.filter-modal-actions button:last-child {
-    background: #b02a37;
-    color: #fff;
-}
-
-.filter-modal-actions button:last-child:hover {
-    background: #8c1f2c;
-}
-
-/* Effetto pressione */
-.filter-modal-actions button:active {
-    transform: scale(0.96);
-}
-
-/* --- BOTTONI ANNULLA / APPLICA — MODAL FILTRI (Stato, Genere, Categoria) --- */
-.filter-modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;                 /* spazio tra i bottoni */
-    margin-top: 14px;          /* respiro sopra */
-}
-
-.filter-modal-actions button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.22s ease,
-                border-color 0.22s ease,
-                transform 0.12s ease;
-}
-
-/* --- ANNULLA (sempre grigio in tutti i modal filtro) --- */
-.filter-modal-actions button.annulla-btn {
-    background: #555;
-    color: #eee;
-}
-
-.filter-modal-actions button.annulla-btn:hover {
-    background: #666;
-}
-
-/* --- APPLICA (rosso, come Salva) --- */
-.filter-modal-actions button.applica-btn {
-    background: #b02a37;
-    color: #fff;
-}
-
-.filter-modal-actions button.applica-btn:hover {
-    background: #8c1f2c;
-}
-
-/* Effetto pressione */
-.filter-modal-actions button:active {
-    transform: scale(0.96);
-}
-
-.filter-option-btn:focus,
-.filter-modal-actions button:focus {
-    outline: none;
-    box-shadow: none;
 }
 
 #modalFiltroCategoria input:focus {
@@ -1139,31 +903,6 @@ button:hover {
     border-color: #b02a37;
     box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
     outline: none;
-}
-
-/* Modal filtro: altezza fissa */
-.filter-modal-content {
-    height: 420px;              /* altezza fissa */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-/* La lista delle opzioni scrolla dentro */
-.filter-modal-options {
-    flex: 1;
-    overflow-y: auto;
-    margin-top: 10px;
-}
-
-.filter-modal-content {
-    height: 400px;
-}
-
-/* Modal filtro STATO: altezza automatica */
-#modalFiltroStato .filter-modal-content {
-    height: auto !important;
-    min-height: 0 !important;
 }
 
 #editModalContent {
@@ -1420,117 +1159,10 @@ body:focus {
     color: #eee !important;
 }
 
+/* Unica vera differenza di questi due modal rispetto agli altri: un'ombra più marcata */
 #modalFiltroRegista .filter-modal-content,
 #modalFiltroAttore .filter-modal-content {
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-#modalFiltroRegista .filter-modal-options,
-#modalFiltroAttore .filter-modal-options {
-    flex: 1;
-    overflow-y: auto;
-    margin-top: 10px;
-    gap: 6px;
-    padding-bottom: 6px;
-}
-
-#modalFiltroRegista .filter-modal-actions,
-#modalFiltroAttore .filter-modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 14px;
-}
-
-#modalFiltroRegista .filter-modal-actions button,
-#modalFiltroAttore .filter-modal-actions button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.22s ease,
-                border-color 0.22s ease,
-                transform 0.12s ease;
-}
-
-#modalFiltroRegista .annulla-btn,
-#modalFiltroAttore .annulla-btn {
-    background: #555;
-    color: #eee;
-}
-
-#modalFiltroRegista .annulla-btn:hover,
-#modalFiltroAttore .annulla-btn:hover {
-    background: #666;
-}
-
-#modalFiltroRegista .applica-btn,
-#modalFiltroAttore .applica-btn {
-    background: #b02a37;
-    color: #fff;
-}
-
-#modalFiltroRegista .applica-btn:hover,
-#modalFiltroAttore .applica-btn:hover {
-    background: #8c1f2c;
-}
-
-#modalFiltroRegista .filter-option-btn,
-#modalFiltroAttore .filter-option-btn {
-    padding: 10px;
-    background: #333;
-    border: 1px solid #555;
-    border-radius: 6px;
-    color: #eee;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.2s;
-}
-
-#modalFiltroRegista .filter-option-btn:hover,
-#modalFiltroAttore .filter-option-btn:hover {
-    background: #b02a37;
-    border-color: #b02a37;
-}
-
-#modalFiltroRegista .filter-option-btn.active,
-#modalFiltroAttore .filter-option-btn.active {
-    background: #b02a37;
-    border-color: #b02a37;
-    color: #fff;
-}
-
-.filter-modal {
-    opacity: 0;
-    transition: opacity 0.25s ease;
-}
-
-.filter-modal.fade-in {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-#modalFiltroRegista,
-#modalFiltroAttore {
-    opacity: 0;
-}
-
-#modalFiltroRegista.fade-in,
-#modalFiltroAttore.fade-in {
-    opacity: 1;
-}
-
-#modalFiltroRegista .filter-modal-content,
-#modalFiltroAttore .filter-modal-content {
-    background: #242424;
-    border: 1px solid #3a3a3a;
     box-shadow: 0 0 18px rgba(0,0,0,0.45);
-    border-radius: 10px;
-    padding: 20px;
 }
 
 .filter-row-two-cols {
