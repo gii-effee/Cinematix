@@ -698,6 +698,7 @@ tempTipo = film.tipo;
 function closeModal() {
     modal.classList.add("hidden");
 }
+
 document.getElementById("closeModalBtn").onclick = closeModal;
 
 // --- AGGIORNAMENTO STATO / VALUTAZIONE / COMMENTO ---
@@ -706,27 +707,6 @@ function updateState(index, nuovoStato) {
     saveToLocalStorage();
     applyAllFilters();
     openModal(films[index], index); // ricarica il modal aggiornato
-}
-
-function setRating(index, value, btn) {
-    const ratingButtons = document.querySelectorAll('#modalRatingBtns .rating-btn');
-    const isSameRating = films[index].valutazione === value;
-
-    if (isSameRating) {
-        films[index].valutazione = null;
-    } else {
-        films[index].valutazione = value;
-    }
-
-    saveToLocalStorage();
-
-    ratingButtons.forEach(b => b.classList.remove('active'));
-
-    if (!isSameRating && btn) {
-        btn.classList.add('active');
-    }
-
-    applyAllFilters();
 }
 
 var modalDelete = document.getElementById("modalDelete");
