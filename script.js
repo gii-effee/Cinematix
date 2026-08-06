@@ -698,6 +698,7 @@ tempTipo = film.tipo;
 function closeModal() {
     modal.classList.add("hidden");
 }
+document.getElementById("closeModalBtn").onclick = closeModal;
 
 // --- AGGIORNAMENTO STATO / VALUTAZIONE / COMMENTO ---
 function updateState(index, nuovoStato) {
