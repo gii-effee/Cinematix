@@ -273,6 +273,24 @@ var categoriaFilmList = document.getElementById("categoriaFilmList")
 var closeCategoriaDetail = document.getElementById("closeCategoriaDetail")
 var filtersSection = document.getElementById("filters")
 
+var selectedAttore = null
+var attoriPage = document.getElementById("attoriPage")
+var attoriGrid = document.getElementById("attoriGrid")
+var attoreDetail = document.getElementById("attoreDetail")
+var attoreDetailTitle = document.getElementById("attoreDetailTitle")
+var attoreDetailCount = document.getElementById("attoreDetailCount")
+var attoreFilmList = document.getElementById("attoreFilmList")
+var closeAttoreDetail = document.getElementById("closeAttoreDetail")
+
+var selectedRegista = null
+var registiPage = document.getElementById("registiPage")
+var registiGrid = document.getElementById("registiGrid")
+var registaDetail = document.getElementById("registaDetail")
+var registaDetailTitle = document.getElementById("registaDetailTitle")
+var registaDetailCount = document.getElementById("registaDetailCount")
+var registaFilmList = document.getElementById("registaFilmList")
+var closeRegistaDetail = document.getElementById("closeRegistaDetail")
+
 function activateNav(section) {
     document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
 
@@ -286,6 +304,8 @@ function goHome() {
     selectedCategory = null
     categoriePage.classList.add("hidden")
     categoriaDetail.classList.add("hidden")
+    attoriPage.classList.add("hidden")
+    registiPage.classList.add("hidden")
     filmList.classList.remove("hidden")
     filtersSection.classList.remove("hidden")
     resetFilters.click()
@@ -298,6 +318,8 @@ function goFilm() {
     selectedCategory = null
     categoriePage.classList.add("hidden")
     categoriaDetail.classList.add("hidden")
+    attoriPage.classList.add("hidden")
+    registiPage.classList.add("hidden")
     filmList.classList.remove("hidden")
     filtersSection.classList.remove("hidden")
     resetFilters.click()
@@ -310,6 +332,8 @@ function goSerie() {
     selectedCategory = null
     categoriePage.classList.add("hidden")
     categoriaDetail.classList.add("hidden")
+    attoriPage.classList.add("hidden")
+    registiPage.classList.add("hidden")
     filmList.classList.remove("hidden")
     filtersSection.classList.remove("hidden")
     resetFilters.click()
@@ -322,6 +346,8 @@ function goPreferiti() {
     selectedCategory = null;
     categoriePage.classList.add("hidden");
     categoriaDetail.classList.add("hidden");
+    attoriPage.classList.add("hidden")
+    registiPage.classList.add("hidden")
     filmList.classList.remove("hidden");
     filtersSection.classList.remove("hidden");
     resetFilters.click();
@@ -332,7 +358,29 @@ function goCategorie() {
     currentSection = "categorie"
     activateNav("categorie")
     selectedCategory = null
+    attoriPage.classList.add("hidden")
+    registiPage.classList.add("hidden")
     renderCategoriePage()
+}
+
+function goAttori() {
+    currentSection = "attori"
+    activateNav("attori")
+    selectedAttore = null
+    categoriePage.classList.add("hidden")
+    categoriaDetail.classList.add("hidden")
+    registiPage.classList.add("hidden")
+    renderPersonePage("attori")
+}
+
+function goRegisti() {
+    currentSection = "registi"
+    activateNav("registi")
+    selectedRegista = null
+    categoriePage.classList.add("hidden")
+    categoriaDetail.classList.add("hidden")
+    attoriPage.classList.add("hidden")
+    renderPersonePage("registi")
 }
 
 document.querySelector('[data-section="home"]').onclick = goHome;
@@ -341,12 +389,28 @@ document.querySelector('[data-section="preferiti"]').onclick = goPreferiti;
 document.querySelector('[data-section="film"]').onclick = goFilm;
 document.querySelector('[data-section="serie"]').onclick = goSerie;
 document.querySelector('[data-section="categorie"]').onclick = goCategorie
+document.querySelector('[data-section="attori"]').onclick = goAttori
+document.querySelector('[data-section="registi"]').onclick = goRegisti
 
 closeCategoriaDetail.onclick = function () {
     selectedCategory = null
     categoriaDetail.classList.add("hidden")
     categoriaFilmList.innerHTML = ""
     renderCategoriePage()
+}
+
+closeAttoreDetail.onclick = function () {
+    selectedAttore = null
+    attoreDetail.classList.add("hidden")
+    attoreFilmList.innerHTML = ""
+    renderPersonePage("attori")
+}
+
+closeRegistaDetail.onclick = function () {
+    selectedRegista = null
+    registaDetail.classList.add("hidden")
+    registaFilmList.innerHTML = ""
+    renderPersonePage("registi")
 }
 
 // --- FUNZIONE PER I BOTTONI STATO ---
@@ -993,6 +1057,221 @@ function refreshCategorieView() {
             selectedCategory = null
             categoriaDetail.classList.add("hidden")
             categoriaFilmList.innerHTML = ""
+        }
+    }
+}
+
+// --- ATTORI / REGISTI ---
+// Stessa identica logica delle Categorie, ma raggruppando i film
+// per nome regista/attore invece che per categoria personale.
+
+function getPersonData(tipo) {
+    var field = tipo === "attori" ? "attori" : "regista"
+    var map = {}
+
+    films.forEach(function (film) {
+        var nomi = Array.isArray(film[field]) ? film[field] : []
+
+        nomi
+            .map(function (n) { return n.trim() })
+            .filter(function (n) { return n !== "" })
+            .forEach(function (nome) {
+                if (!map[nome]) {
+                    map[nome] = {
+                        name: nome,
+                        films: []
+                    }
+                }
+
+                map[nome].films.push(film)
+            })
+    })
+
+    return Object.values(map).sort(function (a, b) {
+        return a.name.localeCompare(b.name)
+    })
+}
+
+function renderPersonePage(tipo) {
+    var isAttori = tipo === "attori"
+    var page = isAttori ? attoriPage : registiPage
+    var grid = isAttori ? attoriGrid : registiGrid
+    var detail = isAttori ? attoreDetail : registaDetail
+    var selected = isAttori ? selectedAttore : selectedRegista
+
+    filtersSection.classList.add("hidden")
+    filmList.classList.add("hidden")
+    page.classList.remove("hidden")
+
+    var data = getPersonData(tipo)
+
+    grid.innerHTML = ""
+
+    if (data.length === 0) {
+        var etichetta = isAttori ? "attore" : "regista"
+
+        grid.innerHTML = `
+            <div class="film-empty-screen">
+                <div class="film-empty-state">
+                    <h3>Nessun ${etichetta} trovato</h3>
+                    <p>Aggiungi ${isAttori ? "un attore" : "un regista"} a un titolo per vederlo qui.</p>
+                </div>
+            </div>
+        `
+        detail.classList.add("hidden")
+        return
+    }
+
+    data.forEach(function (persona) {
+        var card = document.createElement("button")
+        card.type = "button"
+        card.className = "categoria-card"
+
+        if (selected === persona.name) {
+            card.classList.add("active")
+        }
+
+        card.innerHTML = `
+            <span class="categoria-card-title">${persona.name}</span>
+            <span class="categoria-card-count">${persona.films.length} titoli</span>
+        `
+
+        card.onclick = function () {
+            if (isAttori) selectedAttore = persona.name
+            else selectedRegista = persona.name
+            renderPersonePage(tipo)
+            renderPersonaFilms(tipo, persona.name)
+        }
+
+        grid.appendChild(card)
+    })
+
+    if (selected) {
+        renderPersonaFilms(tipo, selected)
+    } else {
+        detail.classList.add("hidden")
+    }
+}
+
+function renderPersonaFilms(tipo, personName) {
+    var isAttori = tipo === "attori"
+    var detail = isAttori ? attoreDetail : registaDetail
+    var detailTitle = isAttori ? attoreDetailTitle : registaDetailTitle
+    var detailCount = isAttori ? attoreDetailCount : registaDetailCount
+    var list = isAttori ? attoreFilmList : registaFilmList
+
+    var data = getPersonData(tipo)
+
+    var currentPerson = data.find(function (item) {
+        return item.name === personName
+    })
+
+    if (!currentPerson) {
+        detail.classList.add("hidden")
+        list.innerHTML = ""
+        return
+    }
+
+    detail.classList.remove("hidden")
+    detailTitle.textContent = currentPerson.name
+    detailCount.textContent = currentPerson.films.length + " titoli"
+
+    list.innerHTML = ""
+
+    currentPerson.films.forEach(function (film) {
+        var card = document.createElement("div")
+        card.className = "film-card"
+
+        var coverImage = film.poster || null
+        var posterHtml = coverImage
+            ? `<img class="film-card-cover" src="${coverImage}" alt="${film.titolo}">`
+            : `<div class="film-card-cover no-poster">Nessun poster</div>`
+
+        var anno = film.anno || "-"
+        var regista = film.regista && film.regista.length > 0 ? film.regista[0] : "Regista non indicato"
+
+        var attori = Array.isArray(film.attori)
+            ? film.attori.map(function (a) { return a.trim() }).filter(Boolean).slice(0, 2)
+            : []
+
+        var attoriText = attori.length > 0 ? attori.join(", ") : "Attori non indicati"
+
+        var generi = Array.isArray(film.genere)
+            ? film.genere.map(function (g) { return g.trim() }).filter(Boolean).slice(0, 2)
+            : []
+
+        var generiHtml = generi.length > 0
+            ? generi.map(function (g) { return `<span class="tag">${g}</span>` }).join("")
+            : `<span class="tag tag-muted">Genere n.d.</span>`
+
+        var statoLabel = film.stato && film.stato.trim() !== "" ? film.stato : "Da definire"
+
+        var ratingHtml = film.valutazione !== null && film.valutazione !== undefined
+            ? `<span class="film-rating">${film.valutazione}/10</span>`
+            : `<span class="film-rating is-empty">Nessun voto</span>`
+
+        card.innerHTML = `
+            <div class="film-card-media">
+                ${posterHtml}
+                <button type="button" class="favorite-toggle favorite-toggle-card" aria-label="Preferito">
+                    ${film.preferito ? "★" : "☆"}
+                </button>
+            </div>
+
+            <div class="film-card-body">
+                <div class="film-card-heading">
+                    <h3>${film.titolo.toUpperCase()} <span class="film-card-year">${anno}</span></h3>
+                </div>
+
+                <p class="film-card-director-line">${regista}</p>
+                <p class="film-card-cast-line">${attoriText}</p>
+
+                <div class="film-card-tags">
+                    ${generiHtml}
+                </div>
+
+                <div class="film-card-meta-line">
+                    <span class="film-status-badge">${statoLabel}</span>
+                    ${ratingHtml}
+                </div>
+            </div>
+        `
+
+        card.onclick = function () {
+            var realIndex = films.indexOf(film)
+            openModal(film, realIndex)
+        }
+
+        card.querySelector(".favorite-toggle").onclick = function (e) {
+            e.stopPropagation()
+            film.preferito = !film.preferito
+            this.textContent = film.preferito ? "★" : "☆"
+            saveToLocalStorage()
+            refreshPersoneView(tipo)
+        }
+
+        list.appendChild(card)
+    })
+}
+
+function refreshPersoneView(tipo) {
+    if (currentSection !== tipo) return
+
+    renderPersonePage(tipo)
+
+    var isAttori = tipo === "attori"
+    var selected = isAttori ? selectedAttore : selectedRegista
+
+    if (selected) {
+        var data = getPersonData(tipo)
+
+        var exists = data.some(function (item) {
+            return item.name === selected
+        })
+
+        if (!exists) {
+            if (isAttori) selectedAttore = null
+            else selectedRegista = null
         }
     }
 }
