@@ -313,15 +313,6 @@ button:hover {
     letter-spacing: 0.3px;
 }
 
-/* Header con titolo + reset */
-#filters .filters-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 26px;
-    margin-bottom: 10px;
-}
-
 /* Righe dei filtri */
 #filters .filter-row {
     display: flex;
@@ -409,11 +400,6 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.filter-block-title {
-    font-size: 14px;
-    color: #ccc;
 }
 
 .filter-block-value {
@@ -654,17 +640,6 @@ button:hover {
     border-color: #b02a37;
     box-shadow: 0 0 0 2px rgba(176, 42, 55, 0.3);
     outline: none;
-}
-
-/* Allineamento Titolo + Anno */
-.title-year-row {
-    display: flex;
-    gap: 8px;
-}
-
-.title-col,
-.year-col {
-    flex: 1;
 }
 
 /* Salva = rosso */
@@ -1163,21 +1138,6 @@ body:focus {
 #modalFiltroRegista .filter-modal-content,
 #modalFiltroAttore .filter-modal-content {
     box-shadow: 0 0 18px rgba(0,0,0,0.45);
-}
-
-.filter-row-two-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 12px;
-}
-
-.filter-row-four-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
-    gap: 14px;
-    margin-top: 12px;
-    align-items: end;
 }
 
 .favorite-toggle-modal {
