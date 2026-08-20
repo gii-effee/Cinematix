@@ -172,6 +172,37 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Ricerca TMDb automatica mentre si scrive il titolo (senza dover cliccare la lente)
+document.addEventListener("DOMContentLoaded", () => {
+  const titoloInput = document.getElementById("editTitolo");
+  if (!titoloInput) return;
+
+  var tmdbDebounceTimer = null;
+
+  titoloInput.addEventListener("input", () => {
+    const query = titoloInput.value.trim();
+
+    clearTimeout(tmdbDebounceTimer);
+
+    if (query.length < 2) {
+      const risultatiBox = document.getElementById("tmdb-results");
+      if (risultatiBox) risultatiBox.style.display = "none";
+      return;
+    }
+
+    tmdbDebounceTimer = setTimeout(async () => {
+      try {
+        const results = await searchTitlesTMDb(query);
+        if (titoloInput.value.trim() === query) {
+          showTmdbResults(results);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }, 400);
+  });
+});
+
 // --- DATI DEI TITOLI ---
 var films = [];
 
