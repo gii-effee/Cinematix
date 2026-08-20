@@ -496,10 +496,23 @@ button:hover {
     color: #fff;
 }
 
-/* Modal filtro STATO: altezza automatica (unico caso speciale) */
-#modalFiltroStato .filter-modal-content {
+/* Modal filtro STATO e Aggiungi Persona: altezza automatica (contenuto corto) */
+#modalFiltroStato .filter-modal-content,
+#modalAggiungiPersona .filter-modal-content {
     height: auto !important;
     min-height: 0 !important;
+}
+
+#aggiungiPersonaInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 4px 0 4px;
+    background: #2f2f2f;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 6px;
+    font-size: 14px;
 }
 
 .filter-modal-actions {
@@ -682,6 +695,26 @@ button:hover {
     margin: 0;
     line-height: 1.4;
     color: #eee;
+}
+
+/* Nomi di regista/attore cliccabili per "seguirli" */
+.person-name-link {
+    cursor: pointer;
+    border-bottom: 1px dotted transparent;
+}
+
+.person-name-link:hover {
+    border-bottom-color: #a7a7a7;
+}
+
+.person-name-link.followed {
+    color: #b02a37;
+    font-weight: 600;
+    border-bottom: 1px dotted #b02a37;
+}
+
+.person-name-link.followed:hover {
+    border-bottom-color: #8c1f2c;
 }
 
 /* Responsive: su mobile torna a una colonna */
@@ -1652,6 +1685,16 @@ input:focus {
     align-items: flex-end;
     gap: 16px;
     margin-bottom: 18px;
+}
+
+.categoria-detail-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.categorie-page-header .filter-btn {
+    margin-top: 12px;
 }
 
 .categoria-detail-header h3 {
