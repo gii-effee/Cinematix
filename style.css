@@ -143,6 +143,34 @@ header {
     border: 1px solid #555;
     border-radius: 8px;
     transition: 0.2s;
+    position: relative;
+}
+
+.autocomplete-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 30;
+    background: #2f2f2f;
+    border: 1px solid #555;
+    border-radius: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+.autocomplete-item {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #eee;
+    cursor: pointer;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+    background: #b02a37;
+    color: #fff;
 }
 
 .tag-input:focus-within {
