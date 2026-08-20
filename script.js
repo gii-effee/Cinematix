@@ -2437,10 +2437,91 @@ cancelEditBtn.onclick = function () {
     reopenDetailsModal();
 };
 
+// --- AUTOCOMPLETAMENTO (da valori già presenti nel catalogo) ---
+
+// Restituisce tutti i valori già usati nel catalogo per un dato campo
+// (es. "regista", "attori", "categoria_personale"), senza duplicati, ordinati.
+function getKnownValues(field) {
+    var set = {};
+
+    films.forEach(function (film) {
+        var valori = Array.isArray(film[field]) ? film[field] : [];
+        valori.forEach(function (v) {
+            var trimmed = v.trim();
+            if (trimmed) set[trimmed] = true;
+        });
+    });
+
+    return Object.keys(set).sort(function (a, b) {
+        return a.localeCompare(b);
+    });
+}
+
+// Aggancia un menu di suggerimenti a un input di tag, filtrando in base
+// a quello che l'utente sta scrivendo, escludendo i tag già aggiunti.
+// containerEl = il div.tag-input che contiene l'input
+// getCurrentTagsFn = funzione che restituisce l'array di tag già aggiunti
+// onSelectFn = funzione chiamata con il valore scelto (aggiunge il tag)
+function setupAutocomplete(inputEl, containerEl, field, getCurrentTagsFn, onSelectFn) {
+    var list = document.createElement("div");
+    list.className = "autocomplete-list hidden";
+    containerEl.appendChild(list);
+
+    function hideList() {
+        list.classList.add("hidden");
+        list.innerHTML = "";
+    }
+
+    function showSuggestions() {
+        var query = inputEl.value.trim().toLowerCase();
+        var currentTags = getCurrentTagsFn();
+
+        var candidati = getKnownValues(field).filter(function (v) {
+            return currentTags.indexOf(v) === -1;
+        });
+
+        if (query) {
+            candidati = candidati.filter(function (v) {
+                return v.toLowerCase().indexOf(query) !== -1;
+            });
+        }
+
+        candidati = candidati.slice(0, 8);
+
+        if (candidati.length === 0) {
+            hideList();
+            return;
+        }
+
+        list.innerHTML = "";
+        candidati.forEach(function (valore) {
+            var item = document.createElement("div");
+            item.className = "autocomplete-item";
+            item.textContent = valore;
+            item.onmousedown = function (e) {
+                // mousedown invece di click: evita che il blur dell'input
+                // nasconda la lista prima che il click venga registrato
+                e.preventDefault();
+                onSelectFn(valore);
+                hideList();
+            };
+            list.appendChild(item);
+        });
+
+        list.classList.remove("hidden");
+    }
+
+    inputEl.addEventListener("input", showSuggestions);
+    inputEl.addEventListener("focus", showSuggestions);
+    inputEl.addEventListener("blur", hideList);
+}
+
 function renderCategorieTags() {
-    // pulisce tutto tranne l'input
-    editCategorieTagsContainer.innerHTML = "";
-    
+    // rimuove solo le pillole esistenti, lascia intatti l'input e il menu suggerimenti
+    editCategorieTagsContainer.querySelectorAll(".tag-pill").forEach(function (el) {
+        el.remove();
+    });
+
     editCategorieTags.forEach(function (cat, index) {
         var pill = document.createElement("span");
         pill.className = "tag-pill";
@@ -2455,32 +2536,42 @@ function renderCategorieTags() {
         };
 
         pill.appendChild(btn);
-        editCategorieTagsContainer.appendChild(pill);
+        editCategorieTagsContainer.insertBefore(pill, editCategorieInput);
     });
 
-    // riaggiunge l'input alla fine
-    editCategorieTagsContainer.appendChild(editCategorieInput);
     editCategorieInput.value = "";
+}
+
+function aggiungiCategoriaTag(value) {
+    if (!value) return;
+    if (editCategorieTags.indexOf(value) === -1) {
+        editCategorieTags.push(value);
+        renderCategorieTags();
+    } else {
+        editCategorieInput.value = "";
+    }
 }
 
 // quando premi Invio nell'input delle categorie → aggiunge un tag
 editCategorieInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
         e.preventDefault();
-        var value = editCategorieInput.value.trim();
-        if (!value) return;
-
-        if (editCategorieTags.indexOf(value) === -1) {
-            editCategorieTags.push(value);
-            renderCategorieTags();
-        } else {
-            editCategorieInput.value = "";
-        }
+        aggiungiCategoriaTag(editCategorieInput.value.trim());
     }
 });
 
+setupAutocomplete(
+    editCategorieInput,
+    editCategorieTagsContainer,
+    "categoria_personale",
+    function () { return editCategorieTags; },
+    aggiungiCategoriaTag
+);
+
 function renderRegistaTags() {
-    editRegistaTagsContainer.innerHTML = "";
+    editRegistaTagsContainer.querySelectorAll(".tag-pill").forEach(function (el) {
+        el.remove();
+    });
 
     editRegistaTags.forEach(function (name, index) {
         var pill = document.createElement("span");
@@ -2496,30 +2587,41 @@ function renderRegistaTags() {
         };
 
         pill.appendChild(btn);
-        editRegistaTagsContainer.appendChild(pill);
+        editRegistaTagsContainer.insertBefore(pill, editRegistaInput);
     });
 
-    editRegistaTagsContainer.appendChild(editRegistaInput);
     editRegistaInput.value = "";
+}
+
+function aggiungiRegistaTag(value) {
+    if (!value) return;
+    if (editRegistaTags.indexOf(value) === -1) {
+        editRegistaTags.push(value);
+        renderRegistaTags();
+    } else {
+        editRegistaInput.value = "";
+    }
 }
 
 editRegistaInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
         e.preventDefault();
-        var value = editRegistaInput.value.trim();
-        if (!value) return;
-
-        if (editRegistaTags.indexOf(value) === -1) {
-            editRegistaTags.push(value);
-            renderRegistaTags();
-        } else {
-            editRegistaInput.value = "";
-        }
+        aggiungiRegistaTag(editRegistaInput.value.trim());
     }
 });
 
+setupAutocomplete(
+    editRegistaInput,
+    editRegistaTagsContainer,
+    "regista",
+    function () { return editRegistaTags; },
+    aggiungiRegistaTag
+);
+
 function renderAttoriTags() {
-    editAttoriTagsContainer.innerHTML = "";
+    editAttoriTagsContainer.querySelectorAll(".tag-pill").forEach(function (el) {
+        el.remove();
+    });
 
     editAttoriTags.forEach(function (name, index) {
         var pill = document.createElement("span");
@@ -2535,27 +2637,36 @@ function renderAttoriTags() {
         };
 
         pill.appendChild(btn);
-        editAttoriTagsContainer.appendChild(pill);
+        editAttoriTagsContainer.insertBefore(pill, editAttoriInput);
     });
 
-    editAttoriTagsContainer.appendChild(editAttoriInput);
     editAttoriInput.value = "";
+}
+
+function aggiungiAttoreTag(value) {
+    if (!value) return;
+    if (editAttoriTags.indexOf(value) === -1) {
+        editAttoriTags.push(value);
+        renderAttoriTags();
+    } else {
+        editAttoriInput.value = "";
+    }
 }
 
 editAttoriInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
         e.preventDefault();
-        var value = editAttoriInput.value.trim();
-        if (!value) return;
-
-        if (editAttoriTags.indexOf(value) === -1) {
-            editAttoriTags.push(value);
-            renderAttoriTags();
-        } else {
-            editAttoriInput.value = "";
-        }
+        aggiungiAttoreTag(editAttoriInput.value.trim());
     }
 });
+
+setupAutocomplete(
+    editAttoriInput,
+    editAttoriTagsContainer,
+    "attori",
+    function () { return editAttoriTags; },
+    aggiungiAttoreTag
+);
 
 // --- INIZIALIZZAZIONE ---
 loadFromLocalStorage();
