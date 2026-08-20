@@ -36,16 +36,12 @@ function showTmdbResults(items) {
 
   items.forEach(item => {
     const div = document.createElement("div");
-    div.style.cssText = "display:flex; gap:12px; padding:12px; border:1px solid #444; border-radius:8px; margin-bottom:8px; cursor:pointer; background:#2a2a2a;";
+    div.style.cssText = "display:flex; align-items:center; gap:12px; padding:12px; border:1px solid #444; border-radius:8px; margin-bottom:8px; cursor:pointer; background:#2a2a2a;";
 
     const title = item.title || item.name || "Titolo sconosciuto";
     const date = item.release_date || item.first_air_date || "";
     const year = date ? date.slice(0, 4) : "?";
     const typeLabel = item.media_type === "tv" ? "Serie TV" : "Film";
-
-    const overview = item.overview
-      ? item.overview.slice(0, 120) + (item.overview.length > 120 ? "..." : "")
-      : "Nessuna descrizione disponibile";
 
     const posterHtml = item.poster_path
       ? `<img src="${TMDB_POSTER_BASE}${item.poster_path}" style="width:60px; height:90px; object-fit:cover; border-radius:4px;">`
@@ -55,8 +51,7 @@ function showTmdbResults(items) {
       ${posterHtml}
       <div style="flex:1;">
         <strong style="color:white; display:block;">${title} (${year})</strong>
-        <div style="color:#888; font-size:12px; margin:2px 0 6px;">${typeLabel}</div>
-        <div style="color:#aaa; font-size:14px;">${overview}</div>
+        <div style="color:#888; font-size:12px; margin:2px 0 0;">${typeLabel}</div>
       </div>
       <button type="button" style="background:#b02a37; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">Seleziona</button>
     `;
@@ -184,6 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     clearTimeout(tmdbDebounceTimer);
 
+    // sotto le 2 lettere non cerchiamo, troppo generico e troppe richieste
     if (query.length < 2) {
       const risultatiBox = document.getElementById("tmdb-results");
       if (risultatiBox) risultatiBox.style.display = "none";
@@ -193,11 +189,13 @@ document.addEventListener("DOMContentLoaded", () => {
     tmdbDebounceTimer = setTimeout(async () => {
       try {
         const results = await searchTitlesTMDb(query);
+        // se nel frattempo l'utente ha già cancellato tutto, non mostrare risultati vecchi
         if (titoloInput.value.trim() === query) {
           showTmdbResults(results);
         }
       } catch (err) {
         console.error(err);
+        // niente alert qui: sarebbe fastidioso vederlo comparire mentre si scrive
       }
     }, 400);
   });
