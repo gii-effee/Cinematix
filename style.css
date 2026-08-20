@@ -1028,6 +1028,9 @@ button:hover {
 .edit-col {
     display: flex;
     flex-direction: column;
+}
+
+.modal-section.edit-two-cols {
     position: relative;
 }
 
