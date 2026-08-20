@@ -118,7 +118,8 @@
 <section id="attoriPage" class="hidden">
     <div class="categorie-page-header">
         <h2>Attori</h2>
-        <p>Seleziona un attore per vedere i titoli associati.</p>
+        <p>Le schede degli attori che segui. Clicca un nome nel dettaglio di un titolo per iniziare a seguirlo, oppure aggiungine uno qui.</p>
+        <button id="addAttoreBtn" class="filter-btn">+ Segui un attore</button>
     </div>
 
     <div id="attoriGrid" class="categorie-grid"></div>
@@ -130,7 +131,10 @@
                 <p id="attoreDetailCount">0 titoli</p>
             </div>
 
-            <button id="closeAttoreDetail" class="filter-btn">Tutti gli attori</button>
+            <div class="categoria-detail-actions">
+                <button id="unfollowAttoreBtn" class="filter-btn danger-btn">Non seguire più</button>
+                <button id="closeAttoreDetail" class="filter-btn">Tutti gli attori</button>
+            </div>
         </div>
 
         <section id="attoreFilmList" class="film-category-list"></section>
@@ -140,7 +144,8 @@
 <section id="registiPage" class="hidden">
     <div class="categorie-page-header">
         <h2>Registi</h2>
-        <p>Seleziona un regista per vedere i titoli associati.</p>
+        <p>Le schede dei registi che segui. Clicca un nome nel dettaglio di un titolo per iniziare a seguirlo, oppure aggiungine uno qui.</p>
+        <button id="addRegistaBtn" class="filter-btn">+ Segui un regista</button>
     </div>
 
     <div id="registiGrid" class="categorie-grid"></div>
@@ -152,12 +157,29 @@
                 <p id="registaDetailCount">0 titoli</p>
             </div>
 
-            <button id="closeRegistaDetail" class="filter-btn">Tutti i registi</button>
+            <div class="categoria-detail-actions">
+                <button id="unfollowRegistaBtn" class="filter-btn danger-btn">Non seguire più</button>
+                <button id="closeRegistaDetail" class="filter-btn">Tutti i registi</button>
+            </div>
         </div>
 
         <section id="registaFilmList" class="film-category-list"></section>
     </div>
 </section>
+
+<!-- MODAL AGGIUNGI ATTORE/REGISTA DA ZERO -->
+<div id="modalAggiungiPersona" class="hidden filter-modal" tabindex="0">
+    <div class="filter-modal-content">
+        <h2 id="modalAggiungiPersonaTitle">Segui un attore</h2>
+
+        <input id="aggiungiPersonaInput" type="text" placeholder="Nome e cognome">
+
+        <div class="filter-modal-actions">
+            <button id="annullaAggiungiPersona" class="annulla-btn">Annulla</button>
+            <button id="applicaAggiungiPersona" class="applica-btn">Segui</button>
+        </div>
+    </div>
+</div>
 
 <!-- MODAL AGGIUNTA E DETTAGLI -->
 <section id="filmList"></section>
@@ -455,4 +477,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
