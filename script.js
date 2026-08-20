@@ -281,6 +281,8 @@ var attoreDetailTitle = document.getElementById("attoreDetailTitle")
 var attoreDetailCount = document.getElementById("attoreDetailCount")
 var attoreFilmList = document.getElementById("attoreFilmList")
 var closeAttoreDetail = document.getElementById("closeAttoreDetail")
+var addAttoreBtn = document.getElementById("addAttoreBtn")
+var unfollowAttoreBtn = document.getElementById("unfollowAttoreBtn")
 
 var selectedRegista = null
 var registiPage = document.getElementById("registiPage")
@@ -290,6 +292,15 @@ var registaDetailTitle = document.getElementById("registaDetailTitle")
 var registaDetailCount = document.getElementById("registaDetailCount")
 var registaFilmList = document.getElementById("registaFilmList")
 var closeRegistaDetail = document.getElementById("closeRegistaDetail")
+var addRegistaBtn = document.getElementById("addRegistaBtn")
+var unfollowRegistaBtn = document.getElementById("unfollowRegistaBtn")
+
+var modalAggiungiPersona = document.getElementById("modalAggiungiPersona")
+var modalAggiungiPersonaTitle = document.getElementById("modalAggiungiPersonaTitle")
+var aggiungiPersonaInput = document.getElementById("aggiungiPersonaInput")
+var annullaAggiungiPersona = document.getElementById("annullaAggiungiPersona")
+var applicaAggiungiPersona = document.getElementById("applicaAggiungiPersona")
+var tipoPersonaDaAggiungere = "attori"
 
 function activateNav(section) {
     document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
@@ -412,6 +423,73 @@ closeRegistaDetail.onclick = function () {
     registaFilmList.innerHTML = ""
     renderPersonePage("registi")
 }
+
+// --- NON SEGUIRE PIÙ (dal dettaglio persona) ---
+unfollowAttoreBtn.onclick = function () {
+    if (!selectedAttore) return
+    unfollowPerson("attori", selectedAttore)
+    selectedAttore = null
+    attoreDetail.classList.add("hidden")
+    attoreFilmList.innerHTML = ""
+    renderPersonePage("attori")
+}
+
+unfollowRegistaBtn.onclick = function () {
+    if (!selectedRegista) return
+    unfollowPerson("registi", selectedRegista)
+    selectedRegista = null
+    registaDetail.classList.add("hidden")
+    registaFilmList.innerHTML = ""
+    renderPersonePage("registi")
+}
+
+// --- MODAL "SEGUI UN ATTORE/REGISTA" (creazione da zero) ---
+function apriModalAggiungiPersona(tipo) {
+    tipoPersonaDaAggiungere = tipo
+    modalAggiungiPersonaTitle.textContent = tipo === "attori" ? "Segui un attore" : "Segui un regista"
+    aggiungiPersonaInput.value = ""
+
+    modalAggiungiPersona.classList.remove("hidden")
+    setTimeout(() => modalAggiungiPersona.classList.add("fade-in"), 10)
+    setTimeout(() => aggiungiPersonaInput.focus(), 50)
+}
+
+function chiudiModalAggiungiPersona() {
+    modalAggiungiPersona.classList.remove("fade-in")
+    setTimeout(() => modalAggiungiPersona.classList.add("hidden"), 200)
+}
+
+addAttoreBtn.onclick = function () {
+    apriModalAggiungiPersona("attori")
+}
+
+addRegistaBtn.onclick = function () {
+    apriModalAggiungiPersona("registi")
+}
+
+annullaAggiungiPersona.onclick = function () {
+    chiudiModalAggiungiPersona()
+}
+
+applicaAggiungiPersona.onclick = function () {
+    var nome = aggiungiPersonaInput.value.trim()
+    if (!nome) {
+        aggiungiPersonaInput.focus()
+        return
+    }
+
+    followPerson(tipoPersonaDaAggiungere, nome)
+    chiudiModalAggiungiPersona()
+    renderPersonePage(tipoPersonaDaAggiungere)
+}
+
+modalAggiungiPersona.addEventListener("click", function (e) {
+    if (e.target === modalAggiungiPersona) chiudiModalAggiungiPersona()
+})
+
+modalAggiungiPersona.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") applicaAggiungiPersona.click()
+})
 
 // --- FUNZIONE PER I BOTTONI STATO ---
 function setupStateButtons(buttons, film) {
@@ -598,6 +676,42 @@ function renderRatingButtons(film) {
   }
 }
   
+// Costruisce i nomi di regista/attore come "link" cliccabili per seguirli.
+// tipo = "attori" oppure "registi"
+function renderPersonNames(elementId, names, tipo) {
+    var el = document.getElementById(elementId);
+    el.innerHTML = "";
+
+    var nomiValidi = Array.isArray(names)
+        ? names.map(function (n) { return n.trim() }).filter(Boolean)
+        : [];
+
+    if (nomiValidi.length === 0) {
+        el.textContent = "-";
+        return;
+    }
+
+    nomiValidi.forEach(function (nome, i) {
+        var span = document.createElement("span");
+        span.className = "person-name-link";
+        if (isFollowed(tipo, nome)) span.classList.add("followed");
+        span.textContent = nome;
+        span.title = isFollowed(tipo, nome) ? "Clicca per non seguire più" : "Clicca per seguire";
+
+        span.onclick = function () {
+            toggleFollow(tipo, nome);
+            renderPersonNames(elementId, names, tipo);
+            refreshPersoneView(tipo);
+        };
+
+        el.appendChild(span);
+
+        if (i < nomiValidi.length - 1) {
+            el.appendChild(document.createTextNode(", "));
+        }
+    });
+}
+
 function openModal(film, index) {
   currentFilmIndex = index;
 
@@ -610,11 +724,8 @@ function openModal(film, index) {
   modalAnnoInline.textContent = film.anno || "-";
   document.getElementById("modalTipo").textContent = film.tipo === "tv" ? "Serie TV" : "Film";
 
-  document.getElementById("modalRegista").textContent =
-    film.regista && film.regista.length ? film.regista.join(", ") : "-";
-
-  document.getElementById("modalAttori").textContent =
-    film.attori && film.attori.length ? film.attori.join(", ") : "-";
+  renderPersonNames("modalRegista", film.regista, "registi");
+  renderPersonNames("modalAttori", film.attori, "attori");
 
   document.getElementById("modalGenere").textContent =
     film.genere && film.genere.length ? film.genere.join(", ") : "-";
@@ -852,6 +963,64 @@ function saveToLocalStorage() {
     localStorage.setItem("myCinemaDB", JSON.stringify(films));
 }
 
+// --- ATTORI/REGISTI SEGUITI ---
+var seguitiAttori = [];
+var seguitiRegisti = [];
+
+function loadSeguiti() {
+    try {
+        var a = JSON.parse(localStorage.getItem("cinematixSeguitiAttori"));
+        seguitiAttori = Array.isArray(a) ? a : [];
+    } catch (err) {
+        seguitiAttori = [];
+    }
+
+    try {
+        var r = JSON.parse(localStorage.getItem("cinematixSeguitiRegisti"));
+        seguitiRegisti = Array.isArray(r) ? r : [];
+    } catch (err) {
+        seguitiRegisti = [];
+    }
+}
+
+function saveSeguiti() {
+    localStorage.setItem("cinematixSeguitiAttori", JSON.stringify(seguitiAttori));
+    localStorage.setItem("cinematixSeguitiRegisti", JSON.stringify(seguitiRegisti));
+}
+
+function getSeguitiList(tipo) {
+    return tipo === "attori" ? seguitiAttori : seguitiRegisti;
+}
+
+function isFollowed(tipo, nome) {
+    return getSeguitiList(tipo).indexOf(nome) !== -1;
+}
+
+function followPerson(tipo, nome) {
+    nome = nome.trim();
+    if (!nome || isFollowed(tipo, nome)) return;
+
+    if (tipo === "attori") seguitiAttori.push(nome);
+    else seguitiRegisti.push(nome);
+
+    saveSeguiti();
+}
+
+function unfollowPerson(tipo, nome) {
+    if (tipo === "attori") {
+        seguitiAttori = seguitiAttori.filter(function (n) { return n !== nome });
+    } else {
+        seguitiRegisti = seguitiRegisti.filter(function (n) { return n !== nome });
+    }
+
+    saveSeguiti();
+}
+
+function toggleFollow(tipo, nome) {
+    if (isFollowed(tipo, nome)) unfollowPerson(tipo, nome);
+    else followPerson(tipo, nome);
+}
+
 // --- CATEGORIE PERSONALI ---
 function getAllPersonalCategories() {
     var set = {};
@@ -1067,27 +1236,19 @@ function refreshCategorieView() {
 
 function getPersonData(tipo) {
     var field = tipo === "attori" ? "attori" : "regista"
-    var map = {}
+    var seguiti = getSeguitiList(tipo)
 
-    films.forEach(function (film) {
-        var nomi = Array.isArray(film[field]) ? film[field] : []
+    return seguiti.map(function (nome) {
+        var filmsDellaPersona = films.filter(function (film) {
+            var nomi = Array.isArray(film[field]) ? film[field] : []
+            return nomi.some(function (n) { return n.trim() === nome })
+        })
 
-        nomi
-            .map(function (n) { return n.trim() })
-            .filter(function (n) { return n !== "" })
-            .forEach(function (nome) {
-                if (!map[nome]) {
-                    map[nome] = {
-                        name: nome,
-                        films: []
-                    }
-                }
-
-                map[nome].films.push(film)
-            })
-    })
-
-    return Object.values(map).sort(function (a, b) {
+        return {
+            name: nome,
+            films: filmsDellaPersona
+        }
+    }).sort(function (a, b) {
         return a.name.localeCompare(b.name)
     })
 }
@@ -1108,13 +1269,13 @@ function renderPersonePage(tipo) {
     grid.innerHTML = ""
 
     if (data.length === 0) {
-        var etichetta = isAttori ? "attore" : "regista"
+        var etichetta = isAttori ? "un attore" : "un regista"
 
         grid.innerHTML = `
             <div class="film-empty-screen">
                 <div class="film-empty-state">
-                    <h3>Nessun ${etichetta} trovato</h3>
-                    <p>Aggiungi ${isAttori ? "un attore" : "un regista"} a un titolo per vederlo qui.</p>
+                    <h3>Non segui ancora nessuno</h3>
+                    <p>Clicca il nome di ${etichetta} nel dettaglio di un titolo, oppure usa il bottone "+ Segui" qui sopra.</p>
                 </div>
             </div>
         `
@@ -2398,6 +2559,7 @@ editAttoriInput.addEventListener("keydown", function (e) {
 
 // --- INIZIALIZZAZIONE ---
 loadFromLocalStorage();
+loadSeguiti();
 populateAdvancedFilters();
 applyAllFilters();
 
