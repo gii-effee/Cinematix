@@ -44,8 +44,8 @@ function showTmdbResults(items) {
     const typeLabel = item.media_type === "tv" ? "Serie TV" : "Film";
 
     const posterHtml = item.poster_path
-      ? `<img src="${TMDB_POSTER_BASE}${item.poster_path}" style="width:60px; height:90px; object-fit:cover; border-radius:4px;">`
-      : `<div style="width:60px; height:90px; background:#333; display:flex; align-items:center; justify-content:center; color:#666; font-size:12px;">No Poster</div>`;
+      ? `<img src="${TMDB_POSTER_BASE}${item.poster_path}" style="width:46px; height:69px; object-fit:cover; border-radius:4px; flex-shrink:0;">`
+      : `<div style="width:46px; height:69px; background:#333; display:flex; align-items:center; justify-content:center; color:#666; font-size:10px; flex-shrink:0;">No Poster</div>`;
 
     div.innerHTML = `
       ${posterHtml}
