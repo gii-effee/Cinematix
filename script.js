@@ -188,10 +188,15 @@ function posizionaTmdbResults() {
     var box = document.getElementById("tmdb-results");
     if (!input || !box) return;
 
-    var rect = input.getBoundingClientRect();
-    box.style.top = (rect.bottom + 6) + "px";
-    box.style.left = rect.left + "px";
-    box.style.width = rect.width + "px";
+    // ci appoggiamo all'intera riga "Titolo + Anno", non al solo input,
+    // così il menu resta largo quanto tutto il modal e non si restringe
+    var riga = input.closest(".modal-section.edit-two-cols") || input;
+    var inputRect = input.getBoundingClientRect();
+    var rigaRect = riga.getBoundingClientRect();
+
+    box.style.top = (inputRect.bottom + 6) + "px";
+    box.style.left = rigaRect.left + "px";
+    box.style.width = rigaRect.width + "px";
 }
 
 // Mostra/nasconde il bottone "×" per cancellare la ricerca del titolo
