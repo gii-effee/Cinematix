@@ -1034,12 +1034,37 @@ button:hover {
     position: relative;
 }
 
-#tmdb-results {
+.titolo-input-wrapper {
+    position: relative;
+    display: flex;
+}
+
+.titolo-input-wrapper input {
+    width: 100%;
+    padding-right: 34px;
+}
+
+.clear-input-btn {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 40;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 6px;
+}
+
+.clear-input-btn:hover {
+    color: #fff;
+}
+
+#tmdb-results {
+    position: fixed;
+    z-index: 3000;
     max-height: 320px;
     overflow-y: auto;
     background: #242424;
