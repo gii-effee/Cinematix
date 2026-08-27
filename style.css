@@ -1060,6 +1060,7 @@ button:hover {
 
 .clear-input-btn:hover {
     color: #fff;
+    transform: translateY(-50%);
 }
 
 #tmdb-results {
