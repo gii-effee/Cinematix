@@ -179,26 +179,6 @@ function hideTmdbResults() {
     }
 }
 
-// Posiziona il menu dei risultati appena sotto il campo Titolo.
-// Usiamo position:fixed calcolato in JS (invece di CSS assoluto legato
-// al modal) apposta per non fare allungare il modal e non generare
-// una doppia barra di scorrimento.
-function posizionaTmdbResults() {
-    var input = document.getElementById("editTitolo");
-    var box = document.getElementById("tmdb-results");
-    if (!input || !box) return;
-
-    // ci appoggiamo all'intera riga "Titolo + Anno", non al solo input,
-    // così il menu resta largo quanto tutto il modal e non si restringe
-    var riga = input.closest(".modal-section.edit-two-cols") || input;
-    var inputRect = input.getBoundingClientRect();
-    var rigaRect = riga.getBoundingClientRect();
-
-    box.style.top = (inputRect.bottom + 6) + "px";
-    box.style.left = rigaRect.left + "px";
-    box.style.width = rigaRect.width + "px";
-}
-
 // Mostra/nasconde il bottone "×" per cancellare la ricerca del titolo
 function aggiornaVisibilitaClearTitolo() {
     var titoloInput = document.getElementById("editTitolo");
@@ -245,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const results = await searchTitlesTMDb(query);
         // se nel frattempo l'utente ha già cancellato tutto, non mostrare risultati vecchi
         if (titoloInput.value.trim() === query) {
-          posizionaTmdbResults();
           showTmdbResults(results);
         }
       } catch (err) {
