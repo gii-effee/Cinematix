@@ -94,6 +94,7 @@ async function selectTmdbTitle(id, mediaType) {
 
     if (titoloInput) titoloInput.value = titolo;
     if (annoInput) annoInput.value = anno;
+    aggiornaVisibilitaClearTitolo();
 
     const regista = mediaType === "movie"
       ? (item.credits && item.credits.crew
@@ -136,7 +137,7 @@ async function selectTmdbTitle(id, mediaType) {
       }
     });
 
-    if (risultatiBox) risultatiBox.style.display = "none";
+    hideTmdbResults();
   } catch (err) {
     console.error(err);
     alert("Errore caricamento dettagli");
@@ -167,6 +168,55 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Nasconde e svuota il menu dei risultati TMDb (usata ogni volta che il
+// modal Aggiungi/Modifica Titolo si apre o si chiude, per non ritrovarsi
+// una ricerca vecchia ancora visibile)
+function hideTmdbResults() {
+    var box = document.getElementById("tmdb-results");
+    if (box) {
+        box.style.display = "none";
+        box.innerHTML = "";
+    }
+}
+
+// Posiziona il menu dei risultati appena sotto il campo Titolo.
+// Usiamo position:fixed calcolato in JS (invece di CSS assoluto legato
+// al modal) apposta per non fare allungare il modal e non generare
+// una doppia barra di scorrimento.
+function posizionaTmdbResults() {
+    var input = document.getElementById("editTitolo");
+    var box = document.getElementById("tmdb-results");
+    if (!input || !box) return;
+
+    var rect = input.getBoundingClientRect();
+    box.style.top = (rect.bottom + 6) + "px";
+    box.style.left = rect.left + "px";
+    box.style.width = rect.width + "px";
+}
+
+// Mostra/nasconde il bottone "×" per cancellare la ricerca del titolo
+function aggiornaVisibilitaClearTitolo() {
+    var titoloInput = document.getElementById("editTitolo");
+    var clearBtn = document.getElementById("clearTitoloBtn");
+    if (!titoloInput || !clearBtn) return;
+    clearBtn.classList.toggle("hidden", titoloInput.value.trim() === "");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const titoloInput = document.getElementById("editTitolo");
+    const clearBtn = document.getElementById("clearTitoloBtn");
+    if (!titoloInput || !clearBtn) return;
+
+    titoloInput.addEventListener("input", aggiornaVisibilitaClearTitolo);
+
+    clearBtn.onclick = function () {
+        titoloInput.value = "";
+        hideTmdbResults();
+        aggiornaVisibilitaClearTitolo();
+        titoloInput.focus();
+    };
+});
+
 // Ricerca TMDb automatica mentre si scrive il titolo (senza dover cliccare la lente)
 document.addEventListener("DOMContentLoaded", () => {
   const titoloInput = document.getElementById("editTitolo");
@@ -181,8 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // sotto le 2 lettere non cerchiamo, troppo generico e troppe richieste
     if (query.length < 2) {
-      const risultatiBox = document.getElementById("tmdb-results");
-      if (risultatiBox) risultatiBox.style.display = "none";
+      hideTmdbResults();
       return;
     }
 
@@ -191,6 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const results = await searchTitlesTMDb(query);
         // se nel frattempo l'utente ha già cancellato tutto, non mostrare risultati vecchi
         if (titoloInput.value.trim() === query) {
+          posizionaTmdbResults();
           showTmdbResults(results);
         }
       } catch (err) {
@@ -833,6 +883,8 @@ document.getElementById("deleteFilmBtn").onclick = function () {
 function openEditModalForEditing() {
     var film = films[editingIndex];
 
+    hideTmdbResults();
+
     tempTmdbId = film.tmdbId || null;
     tempTmdbType = film.tmdbType || null;
     tempTmdbPoster = film.poster || null;
@@ -843,6 +895,7 @@ function openEditModalForEditing() {
     editModalTitle.textContent = "Modifica Titolo";
 
     editTitolo.value = film.titolo;
+    aggiornaVisibilitaClearTitolo();
     editAnno.value = film.anno;
     editRegistaTags = film.regista.slice();
     renderRegistaTags();
@@ -2147,10 +2200,12 @@ addFilmBtn.onclick = function () {
     editingIndex = -1;
     editModalTitle.textContent = "Aggiungi Titolo";
 
+    hideTmdbResults();
+
     // reset campi
     editTitolo.value = "";
-    editAnno.value = "";
-    editRegistaTags = [];
+    aggiornaVisibilitaClearTitolo();
+    editAnno.value = "";    editRegistaTags = [];
     renderRegistaTags();
     editAttoriTags = [];
     renderAttoriTags();
@@ -2198,6 +2253,7 @@ document.addEventListener("keydown", function (e) {
     // 1. Se è aperto il modal editor → chiudi SOLO quello
     if (!editModal.classList.contains("hidden")) {
         editModal.classList.add("hidden");
+hideTmdbResults();
 reopenDetailsModal();
 return;
     }
@@ -2324,6 +2380,7 @@ saveToLocalStorage()
 applyAllFilters()
 refreshCategorieView()
 editModal.classList.add("hidden")
+hideTmdbResults()
 return
     }
 
@@ -2349,6 +2406,7 @@ return
 applyAllFilters()
 refreshCategorieView()
 editModal.classList.add("hidden")
+hideTmdbResults()
 };
 
 var cancelEditBtn = document.getElementById("cancelEditBtn");
@@ -2463,6 +2521,7 @@ resetEditGenere.onclick = function (e) {
 
 cancelEditBtn.onclick = function () { 
     editModal.classList.add("hidden");
+    hideTmdbResults();
     reopenDetailsModal();
 };
 
@@ -2711,6 +2770,7 @@ modal.addEventListener("click", function (e) {
 editModal.addEventListener("click", function (e) {
     if (e.target === editModal) {
         editModal.classList.add("hidden");
+        hideTmdbResults();
         reopenDetailsModal();
     }
 });
