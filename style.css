@@ -161,6 +161,9 @@ header {
 }
 
 .autocomplete-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding: 8px 12px;
     font-size: 14px;
     color: #eee;
@@ -171,6 +174,18 @@ header {
 .autocomplete-item.active {
     background: #b02a37;
     color: #fff;
+}
+
+.autocomplete-item-photo {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.autocomplete-item-photo-empty {
+    background: #444;
 }
 
 .tag-input:focus-within {
