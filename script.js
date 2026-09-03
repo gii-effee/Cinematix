@@ -2588,6 +2588,134 @@ function setupAutocomplete(inputEl, containerEl, field, getCurrentTagsFn, onSele
     inputEl.addEventListener("blur", hideList);
 }
 
+// Cerca SOLO le persone (regista/attore) tra i risultati TMDb, riusando
+// lo stesso endpoint già usato per la ricerca dei titoli.
+async function searchPeopleTMDb(query) {
+    const url = `${TMDB_PROXY_BASE}/search?q=${encodeURIComponent(query)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Errore ricerca persone TMDb");
+    const data = await res.json();
+    return data.results
+        .filter(item => item.media_type === "person")
+        .slice(0, 6);
+}
+
+// Come setupAutocomplete, ma per Regista/Attori: mostra prima i nomi già
+// presenti nel catalogo (istantanei), poi aggiunge sotto anche i risultati
+// live da TMDb (con foto), con un piccolo ritardo per non esagerare con le richieste.
+function setupPersonAutocomplete(inputEl, containerEl, field, getCurrentTagsFn, onSelectFn) {
+    var list = document.createElement("div");
+    list.className = "autocomplete-list hidden";
+    containerEl.appendChild(list);
+
+    var tmdbDebounceTimer = null;
+
+    function hideList() {
+        list.classList.add("hidden");
+        list.innerHTML = "";
+    }
+
+    function buildItem(nome, fotoUrl) {
+        var item = document.createElement("div");
+        item.className = "autocomplete-item";
+
+        if (fotoUrl) {
+            var img = document.createElement("img");
+            img.className = "autocomplete-item-photo";
+            img.src = fotoUrl;
+            item.appendChild(img);
+        } else {
+            var placeholder = document.createElement("span");
+            placeholder.className = "autocomplete-item-photo autocomplete-item-photo-empty";
+            item.appendChild(placeholder);
+        }
+
+        var testo = document.createElement("span");
+        testo.textContent = nome;
+        item.appendChild(testo);
+
+        item.onmousedown = function (e) {
+            e.preventDefault();
+            onSelectFn(nome);
+            hideList();
+        };
+
+        return item;
+    }
+
+    function nomiGiaNellaLista() {
+        return Array.prototype.map.call(
+            list.querySelectorAll(".autocomplete-item span:last-child"),
+            function (el) { return el.textContent; }
+        );
+    }
+
+    function showLocalSuggestions() {
+        var query = inputEl.value.trim().toLowerCase();
+        var currentTags = getCurrentTagsFn();
+
+        var candidati = getKnownValues(field).filter(function (v) {
+            return currentTags.indexOf(v) === -1;
+        });
+
+        if (query) {
+            candidati = candidati.filter(function (v) {
+                return v.toLowerCase().indexOf(query) !== -1;
+            });
+        }
+
+        candidati = candidati.slice(0, 6);
+
+        list.innerHTML = "";
+        candidati.forEach(function (valore) {
+            list.appendChild(buildItem(valore, null));
+        });
+
+        list.classList.toggle("hidden", list.children.length === 0);
+    }
+
+    inputEl.addEventListener("focus", showLocalSuggestions);
+    inputEl.addEventListener("blur", hideList);
+
+    inputEl.addEventListener("input", function () {
+        showLocalSuggestions();
+
+        var query = inputEl.value.trim();
+        clearTimeout(tmdbDebounceTimer);
+
+        if (query.length < 2) return;
+
+        tmdbDebounceTimer = setTimeout(async function () {
+            try {
+                var persone = await searchPeopleTMDb(query);
+
+                // se nel frattempo l'input è cambiato, ignora questi risultati
+                if (inputEl.value.trim() !== query) return;
+
+                var currentTags = getCurrentTagsFn();
+                var giaMostrati = nomiGiaNellaLista();
+
+                persone.forEach(function (persona) {
+                    if (currentTags.indexOf(persona.name) !== -1) return;
+                    if (giaMostrati.indexOf(persona.name) !== -1) return;
+
+                    var foto = persona.profile_path
+                        ? "https://image.tmdb.org/t/p/w92" + persona.profile_path
+                        : null;
+
+                    list.appendChild(buildItem(persona.name, foto));
+                    giaMostrati.push(persona.name);
+                });
+
+                list.classList.toggle("hidden", list.children.length === 0);
+            } catch (err) {
+                console.error(err);
+                // niente alert: sarebbe fastidioso mentre si scrive
+            }
+        }, 400);
+    });
+}
+
 function renderCategorieTags() {
     // rimuove solo le pillole esistenti, lascia intatti l'input e il menu suggerimenti
     editCategorieTagsContainer.querySelectorAll(".tag-pill").forEach(function (el) {
@@ -2682,7 +2810,7 @@ editRegistaInput.addEventListener("keydown", function (e) {
     }
 });
 
-setupAutocomplete(
+setupPersonAutocomplete(
     editRegistaInput,
     editRegistaTagsContainer,
     "regista",
@@ -2732,7 +2860,7 @@ editAttoriInput.addEventListener("keydown", function (e) {
     }
 });
 
-setupAutocomplete(
+setupPersonAutocomplete(
     editAttoriInput,
     editAttoriTagsContainer,
     "attori",
